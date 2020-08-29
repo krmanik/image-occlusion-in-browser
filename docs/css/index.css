@@ -1,0 +1,93 @@
+.container-editor {
+  height:100%;
+  position:relative;
+}
+
+svg {
+    cursor: grab;
+    position: fixed;
+    border: 1px solid #000000;
+  }
+
+ img {
+    z-index: -1;
+    position: fixed;
+ }
+
+ .sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  text-align:center;
+  background: white;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover{
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+
+.sidenav-right {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  right: 0;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  text-align:center;
+  background: white;
+}
+
+.sidenav-right .closebtn {
+  position: absolute;
+  top: 0;
+  left: 25px;
+  font-size: 36px;
+}
+
+.sidenav-right a {
+  text-decoration: none;
+  font-size: 25px;
+  display: block;
+  transition: 0.3s;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav-right {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.input-note {
+  margin: 8px; 
+}
+
+.input-add-note {
+  width: 100%;
+}
+
+.anki-buttons {}
