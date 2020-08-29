@@ -30,9 +30,9 @@ After enter deck details and export deck.
 That deck can be imported to AnkiDroid.
 
 # Demo
-<img src="demo/demo_img_occ.gif" height="520"></img>
+<img src="demo/demo_img.gif" height="520"></img>
 
-# Requirements 
+# Requirements for running it offline
 1. Termux or any app that create localhost
 2. Pydroid 3
 
@@ -70,10 +70,12 @@ localhost:8000
 10. Import it in AnkiDroid and start reviewing.
 
 
+# Demo
+[View this](demo/demo_img_occ.gif)
+
 # Limitations
 - I tried to create with more than six rectangle but it failed to generate svg files. I also tried async/await function but still not working. 
 - The user experience is not so good as compared to desktop but it can be used to create decks.
-- One image created at one time. More features to be added.
 
 # Contributions
 Contribution will be appreciated for adding features generating more than six files at one time. 
