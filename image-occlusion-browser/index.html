@@ -1,0 +1,89 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/svg.min.js"></script>
+  <script src="js/svg.draggable.min.js"></script>
+  <script src="js/svg.resize.min.js"></script>
+  <script src="js/svg.select.min.js"></script>
+  <script src="js/index.js"></script>
+
+  <link href="css/index.css" rel=stylesheet type=text/css>
+  <link href="css/svg.select.min.css" rel=stylesheet type=text/css>
+</head>
+
+<body>
+
+  <div>
+    <input id="uploadImage" type="file" name="myPhoto" onchange="PreviewImage();" />
+    <button onclick="downloadNote()">Download</button>
+  </div>
+
+  <div>
+    <button onclick="addNote();">Add Note</button>
+    <button onclick="viewNote();">View Note</button>
+
+    <button onclick="zoomOut();">Zoom Out</button>
+    <button onclick="zoomIn();">Zoom In</button>
+  </div>
+
+  <div>
+    <button onclick="addRect();">Add Rect</button>
+    <button onclick="removeRect();">Remove Rect</button>
+  </div>
+
+  <div id="drawing" class="container-editor"></div>
+
+
+  <!-- Note Form -->
+  <!-- Header, Footer, Remarks, Sources, Extra 1, Extra 2-->
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <div class="input-note">
+      <input id="noteHeader" class="input-add-note" type="text" placeholder="Header..." required>
+    </div>
+
+    <div class="input-note">
+      <input id="noteFooter" class="input-add-note" type="text" placeholder="Footer..." required>
+    </div>
+
+    <div class="input-note">
+      <input id="noteRemarks" class="input-add-note" type="text" placeholder="Remarks..." required>
+    </div>
+
+    <div class="input-note">
+      <input id="noteSources" class="input-add-note" type="text" placeholder="Sources..." required>
+    </div>
+
+    <div class="input-note">
+      <input id="noteExtra1" class="input-add-note" type="text" placeholder="Extra..." required>
+    </div>
+
+    <div class="input-note">
+      <input id="noteExtra2" class="input-add-note" type="text" placeholder="Extra..." required>
+    </div>
+
+  </div>
+  <!-- Note Form -->
+
+
+  <!-- View Added Notes -->
+  <!--/*
+        header, image, question mask, footer, remarks, sources, extra1, extra2, answer mask, origin mask
+        */-->
+  <div id="viewNoteSideNav" class="sidenav-right" style="right: 0;">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeViewNoteNav()">&times;</a>
+
+    <table>
+      <tbody id="noteData">
+
+      </tbody>
+    </table>
+
+  </div>
+  <!-- Note Form -->
+
+</body>
+
+</html>
