@@ -76,6 +76,10 @@ localhost:8000
 # Limitations
 - I tried to create with more than six rectangle but it failed to generate svg files. I also tried async/await function but still not working. 
 - The user experience is not so good as compared to desktop but it can be used to create decks.
+- output.txt created per image
+
+# TODO
+- Appends multiple notes output to one files
 
 # Contributions
 Contribution will be appreciated for adding features generating more than six files at one time. 
