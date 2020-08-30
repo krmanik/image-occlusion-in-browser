@@ -13,7 +13,6 @@ document.addEventListener('click', function (e) {
 }, false);
 
 
-var csvLine = "";
 var originalImageName;
 var draw;
 var rect;
@@ -35,65 +34,89 @@ var rect;
 
 
 function addRect() {
-    draw.rect(200, 50).move(100, 50).fill('#f06')
-        .on('click', function () {
-            this
-                .draggable()
-                .selectize()
-                .resize()
-        })
+    try {
+        draw.rect(200, 50).move(100, 50).fill('#f06')
+            .on('click', function () {
+                this
+                    .draggable()
+                    .selectize()
+                    .resize()
+            })
+        document.getElementById("statusMsg").innerHTML = "";
+    } catch (e) {
+        console.log(e);
+        document.getElementById("statusMsg").innerHTML = "Add image first";
+    }
+
 }
 
 function removeRect() {
-    if (document.getElementById(selectedElement).tagName == "rect") {
-        var svgEle = SVG.adopt(document.getElementById(selectedElement))
-        svgEle.selectize(false);
-        svgEle.remove();
+    try {
+        if (document.getElementById(selectedElement).tagName == "rect") {
+            var svgEle = SVG.adopt(document.getElementById(selectedElement))
+            svgEle.selectize(false);
+            svgEle.remove();
+            document.getElementById("statusMsg").innerHTML = "";
+        }
+    } catch (e) {
+        console.log(e);
+        document.getElementById("statusMsg").innerHTML = "Select a rectangle";
     }
 }
 
 
+
 var imgHeight;
 var imgWidth;
-function PreviewImage() {
+function addImage() {
 
-    document.getElementById("drawing").innerHTML = "<img id='uploadPreview'/>";
+    try {
+        document.getElementById("drawing").innerHTML = "<img id='uploadPreview'/>";
 
-    var selectedFile = event.target.files[0];
-    var reader = new FileReader();
+        var selectedFile = event.target.files[0];
+        var reader = new FileReader();
 
-    var imgtag = document.getElementById("uploadPreview");
-    imgtag.title = selectedFile.name;
+        var imgtag = document.getElementById("uploadPreview");
+        imgtag.title = selectedFile.name;
 
-    originalImageName = imgtag.title;
+        originalImageName = imgtag.title;
 
-    reader.onload = function (event) {
-        imgtag.src = event.target.result;
+        reader.onload = function (event) {
+            imgtag.src = event.target.result;
 
-        imgtag.onload = function () {
-            // access image size here 
-            console.log(this.width);
-            console.log(this.height);
+            imgtag.onload = function () {
+                // access image size here 
+                //console.log(this.width);
+                //console.log(this.height);
 
-            imgHeight = this.height;
-            imgWidth = this.width;
+                imgHeight = this.height;
+                imgWidth = this.width;
 
-            draw = SVG('drawing')
-                .height(imgHeight)
-                .width(imgWidth)
-                .id("SVG101")
+                draw = SVG('drawing')
+                    .height(imgHeight)
+                    .width(imgWidth)
+                    .id("SVG101")
 
+                document.getElementById("statusMsg").innerHTML = "";
+
+            };
         };
-    };
 
-    reader.readAsDataURL(selectedFile);
+        reader.readAsDataURL(selectedFile);
+    } catch (e) {
+        console.log(e);
+        document.getElementById("statusMsg").innerHTML = "Image import error";
+    }
+
 };
 
 /* Download */
 async function downloadNote() {
+    
     var childs = document.getElementById("SVG101").childNodes;
 
     var oneTime = true;
+    var csvLine = "";
 
     for (i = 0; i < childs.length; i++) {
 
@@ -136,7 +159,7 @@ async function downloadNote() {
 
             if (oneTime) {
                 // origin mask
-                console.log("orig " + origSVG);
+                //console.log("orig " + origSVG);
                 var origFileName = "img-occ-orig-" + timeStamp;
                 saveSVG(origFileName, origSVG, imgHeight, imgWidth);
                 oneTime = false;
@@ -144,13 +167,13 @@ async function downloadNote() {
 
             // Question Mask
             var quesFileName = "img-occ-ques-" + timeStamp;
-            console.log("Ques " + svgQues);
+            //console.log("Ques " + svgQues);
 
             await saveSVG(quesFileName, svgQues, imgHeight, imgWidth);
 
             // Answer mask
             var ansFileName = "img-occ-ans-" + timeStamp;
-            console.log("ans " + svgAns);
+            //console.log("ans " + svgAns);
 
             await saveSVG(ansFileName, svgAns, imgHeight, imgWidth);
 
@@ -174,20 +197,22 @@ async function downloadNote() {
 
     }
 
-    // add to table
-    // TODO
+    exportFile(csvLine, "output-note.txt");
+
+    // add to view note side bar
+    addCsvLineToViewNote(csvLine);
     //document.getElementById("noteData").innerHTML = csvLine;
 
-    exportFile(csvLine);
+
 
 }
 
 
-function exportFile(csv) {
+function exportFile(csv, filename) {
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
 
-    var filename = "output.txt";
+    //var filename = "output.txt";
     element.setAttribute('download', filename);
 
     element.style.display = 'none';
@@ -245,6 +270,29 @@ function getNoteFromForm() {
 }
 
 
+var textare_id = 0;
+function addCsvLineToViewNote(csv) {
+    var container = document.getElementById("noteData");
+    var textarea = document.createElement("textarea");
+    textarea.id = "note-text-area-" + textare_id;
+    textarea.setAttribute("style", "display: block; width:90%; height:10vh; margin-top:6px;");
+    textarea.value = csv;
+    container.appendChild(textarea);
+    document.getElementById(textarea.id).readOnly = true;
+    textare_id += 1;
+}
+
+function downloadAllNotes() {
+    var container = document.getElementById("noteData");
+
+    var textToExport = "";
+    for (i=0; i < container.childElementCount; i++) {
+        textToExport += container.children[i].value;
+    }
+
+    exportFile(textToExport, "output-all-notes.txt");
+}
+
 function addNote() {
     document.getElementById("mySidenav").style.width = "100%";
 }
@@ -264,11 +312,20 @@ function closeViewNoteNav() {
 
 var zoomVar = 100;
 function zoomOut() {
-    zoomVar += 5;
+    zoomVar -= 4;
     document.getElementById("drawing").style.zoom = zoomVar + "%";
 }
 
 function zoomIn() {
-    zoomVar -= 5;
+    zoomVar += 4;
     document.getElementById("drawing").style.zoom = zoomVar + "%";
+}
+
+
+function viewHelp() {
+    document.getElementById("viewHelpSideNav").style.height = "100%";
+}
+
+function closeViewHelpNav() {
+    document.getElementById("viewHelpSideNav").style.height = "0";
 }
