@@ -35,13 +35,14 @@ body {
 
 svg {
     cursor: grab;
-    position: fixed;
+    /*position: fixed;*/
     border: 1px solid #f44336;
   }
 
  img {
     z-index: -1;
-    position: fixed;
+    /*position: fixed;*/
+    position: absolute;
  }
 
  .sidenav {
