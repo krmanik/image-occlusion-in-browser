@@ -86,8 +86,6 @@ localhost:8000
 - Deck export from browser
 - Create rectangle by drawing on screen
 
-# Contributions
-Contribution will be appreciated for adding features generating more than six files at one time. 
 
 # License
 ### Deck Template
