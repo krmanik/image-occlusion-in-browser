@@ -78,8 +78,13 @@ localhost:8000
 [View this](demo/demo_img_occ.gif)
 
 # Limitations
-- I tried to create with more than six rectangle but it failed to generate svg files. I also tried async/await function but still not working. 
+- <s>I tried to create with more than six rectangle but it failed to generate svg files. I also tried async/await function but still not working.</s> 
+<br>Solved using: https://stackoverflow.com/questions/53560991/automatic-file-downloads-limited-to-10-files-on-chrome-browser
 - The user experience is not so good as compared to desktop but it can be used to create decks.
+
+# Todo
+- Deck export from browser
+- Create rectangle by drawing on screen
 
 # Contributions
 Contribution will be appreciated for adding features generating more than six files at one time. 
