@@ -10,30 +10,42 @@
 
   <link href="css/index.css" rel=stylesheet type=text/css>
   <link href="css/svg.select.min.css" rel=stylesheet type=text/css>
+  <title>
+    Image Occlusion In Browser
+  </title>
 </head>
 
 <body>
 
+  <div class="page-title">Image Occlusion In Browser</div>
+
+  <div style="font-size: 24px; color:gray; margin-top: 14px;">Options</div>
   <div>
-    <input id="uploadImage" type="file" name="myPhoto" onchange="PreviewImage();" />
-    <button onclick="downloadNote()">Download</button>
+    <div class="button">
+      <label for="uploadImage"><i class="material-icons" style="color: #43a047;">add_photo_alternate</i></label>
+      <input id="uploadImage" type="file" name="myPhoto" onchange="addImage();"></input>
+    </div>
+
+    <div onclick="addNote();" class="button"><i class="material-icons" style="color: #5c6bc0;">post_add</i></div>
+    <div onclick="viewNote();" class="button"><i class="material-icons" style="color: #FF6F00;">view_list</i></div>
+
+    <div onclick="downloadNote()" class="button"><i class="material-icons" style="color: #1e88e5;">get_app</i></div>
+    <div onclick="viewHelp()" class="button"><i class="material-icons" style="color: #607D8B;">live_help</i></div>
   </div>
 
-  <div>
-    <button onclick="addNote();">Add Note</button>
-    <button onclick="viewNote();">View Note</button>
+  <div style="font-size: 24px; color:gray; margin-top: 14px;">Tools</div>
+  <div style="padding-bottom: 14px;">
+    <div onclick="addRect();" class="button"><i class="material-icons" style="color: #1e88e5;">add_box</i></div>
+    <div onclick="removeRect();" class="button"><i class="material-icons" style="color: #f44336;">delete_forever</i>
+    </div>
 
-    <button onclick="zoomOut();">Zoom Out</button>
-    <button onclick="zoomIn();">Zoom In</button>
-  </div>
-
-  <div>
-    <button onclick="addRect();">Add Rect</button>
-    <button onclick="removeRect();">Remove Rect</button>
+    <div onclick="zoomIn();" class="button"><i class="material-icons" style="color: #455A64;">zoom_in</i></div>
+    <div onclick="zoomOut();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out</i></div>
   </div>
 
   <div id="drawing" class="container-editor"></div>
 
+  <div id="statusMsg" class="status-message"></div>
 
   <!-- Note Form -->
   <!-- Header, Footer, Remarks, Sources, Extra 1, Extra 2-->
@@ -41,27 +53,27 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
     <div class="input-note">
-      <input id="noteHeader" class="input-add-note" type="text" placeholder="Header..." required>
+      <textarea id="noteHeader" class="input-add-note" type="text" placeholder="Header..." required></textarea>
     </div>
 
     <div class="input-note">
-      <input id="noteFooter" class="input-add-note" type="text" placeholder="Footer..." required>
+      <textarea id="noteFooter" class="input-add-note" type="text" placeholder="Footer..." required></textarea>
     </div>
 
     <div class="input-note">
-      <input id="noteRemarks" class="input-add-note" type="text" placeholder="Remarks..." required>
+      <textarea id="noteRemarks" class="input-add-note" type="text" placeholder="Remarks..." required></textarea>
     </div>
 
     <div class="input-note">
-      <input id="noteSources" class="input-add-note" type="text" placeholder="Sources..." required>
+      <textarea id="noteSources" class="input-add-note" type="text" placeholder="Sources..." required></textarea>
     </div>
 
     <div class="input-note">
-      <input id="noteExtra1" class="input-add-note" type="text" placeholder="Extra..." required>
+      <textarea id="noteExtra1" class="input-add-note" type="text" placeholder="Extra..." required></textarea>
     </div>
 
     <div class="input-note">
-      <input id="noteExtra2" class="input-add-note" type="text" placeholder="Extra..." required>
+      <textarea id="noteExtra2" class="input-add-note" type="text" placeholder="Extra..." required></textarea>
     </div>
 
   </div>
@@ -72,17 +84,113 @@
   <!--/*
         header, image, question mask, footer, remarks, sources, extra1, extra2, answer mask, origin mask
         */-->
-  <div id="viewNoteSideNav" class="sidenav-right" style="right: 0;">
+  <div id="viewNoteSideNav" class="sidenav-right" style="right: 0; text-align: -webkit-center;">
     <a href="javascript:void(0)" class="closebtn" onclick="closeViewNoteNav()">&times;</a>
 
-    <table>
-      <tbody id="noteData">
+    <div onclick="downloadAllNotes()" class="button"><i class="material-icons" style="color: #1e88e5;">get_app</i></div>
 
+    <div id="noteData"></div>
+
+  </div>
+  <!-- View Note -->
+
+  <!--Help Side Nav -->
+  <div id="viewHelpSideNav" class="sidenav-help" style="right: 0;">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeViewHelpNav()">&times;</a>
+
+    <div class="page-title">Image occlusion in browser for Anki</div>
+
+    <!-- buttons only for showing (no function) -->
+    <table class="help-sidebar">
+      <tbody>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #43a047;">add_photo_alternate</i></div>
+          </td>
+          <td>Import image file for creating question mask and answer mask</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #5c6bc0;">post_add</i></div>
+          </td>
+          <td>Add note for the imported image.</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #FF6F00;">view_list</i></div>
+          </td>
+          <td>After downloading svg files and output-note.txt, the details get add this view note sidebar. Click this to
+            view all added notes.</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #1e88e5;">get_app</i></div>
+          </td>
+          <td>On editor window, this button will create questions mask, answers mask and output-note.txt and will
+            download. On View note window, this button will download output-all-notes.txt file combining all previous
+            notes.</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #607D8B;">live_help</i></div>
+          </td>
+          <td>View help window</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #1e88e5;">add_box</i></div>
+          </td>
+          <td>Add rectangle to editor after importing image to window.</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #f44336;">delete_forever</i></div>
+          </td>
+          <td>Select a rectangle on editor window and delete that rectangle</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #455A64;">zoom_in</i></div>
+          </td>
+          <td>Layout style is set to fixed. So click this to zoom in.</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #455A64;">zoom_out</i></div>
+          </td>
+          <td>Layout style is set to fixed. So click this to zoom out.</td>
+        </tr>
       </tbody>
     </table>
 
+    <div style="text-align: left; padding: 20px;">
+      <div>Copy all svg files and original images to <b>collection.media</b> folder.</div>
+
+      <br>
+      <div> On Desktop, import <b>output-all-notes.txt</b> with allow html selected.</div>
+      <br>
+
+      <div>On Android, use <a target="_blank"
+          href="https://github.com/infinyte7/image-occlusion-in-browser/blob/master/image-occ-deck-export.py"><b>image-occ-deck-export.py</b></a>
+        in Pydroid 3 to create anki decks. Download script from GitHub <a href="https://github.com/infinyte7/image-occlusion-in-browser/releases">Release page</a></div>
+
+      <br>
+
+      <div>
+        View Source : <a target="_blank"
+          href="https://github.com/infinyte7/image-occlusion-in-browser"><b>image-occlusion-in-browser</b></a>
+      </div>
+
+      <div>
+        License: MIT License
+
+        Copyright (c) 2020 Mani
+      </div>
+
+    </div>
+
   </div>
-  <!-- Note Form -->
+  <!--Help Side Nav -->
 
 </body>
 
