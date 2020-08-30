@@ -12,7 +12,7 @@ document.addEventListener('click', function (e) {
     selectedElement = e.target.id;
 }, false);
 
-
+var note_num = 1;
 var originalImageName;
 var draw;
 var rect;
@@ -197,7 +197,9 @@ async function downloadNote() {
 
     }
 
-    exportFile(csvLine, "output-note.txt");
+    var f = "output-note" + note_num + ".txt";
+    exportFile(csvLine, f);
+    note_num++;
 
     // add to view note side bar
     addCsvLineToViewNote(csvLine);

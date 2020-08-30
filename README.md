@@ -4,33 +4,38 @@ Create image occlusion in browser.
 
 For desktop there is already addon for creating image occlusion. This is implementation for using mobile and creating deck with image occlusion.
 
-# Quick Start
+
+# Demo
+<img src="demo/demo_create.gif" height="380"></img>
+
+## Create image occlusion Anki decks in three steps
+
+### Step 1 - Create svg question and answers mask 
 
 1. Visit
 [https://infinyte7.github.io/image-occlusion-in-browser/](https://infinyte7.github.io/image-occlusion-in-browser/)
 
-2. First add image then rectangles. After add notes and then download.
+2. Add rectangles to editor window by pressing "+" in tools.
+(Drag or resize to specific location)
 
-It will generated following files
+3. Add notes for the image
 
-```
-svg files - total number = number of rectangles * 2 + 1 
-(Question Mask, Answer Mask, Original Mask)
-```
+4. Download the notes. It will download svg question masks, answer masks, ```output-note.txt``` and also it will add individual note to view note window.
 
-Copy these files to collection.media folder.
+5. Then download combined notes from view note window. It will download ```output-all-notes.txt``` file. This file will be used to create deck.
 
-```
-output.tx file
-```
+### Step 2 - Copy all svg files to AnkiDroid folder
+1. Copy question and answer svg files and original image to ```collection.media``` folder
 
-The deck from output.txt file can be generated using ```image-occ-deck-export.py```. Open this .py file in ```Pydroid 3``` and run.
-After enter deck details and export deck.
+### Step 3 - Generate decks using Pydroid 3
+1. Download and install Pydroid 3 from play store.
+2. Install ```genanki``` in Pydroid using Pip. View demo below.
+3. Download ```image-occ-deck-export.py``` from release page.
+4. Open ```image-occ-deck-export.py``` in Pydroid 3 and run
+5. Select ```output-all-notes.txt``` and import 
+6. Enter deck details and export.
 
-That deck can be imported to AnkiDroid.
-
-# Demo
-<img src="demo/demo_img.gif" height="520"></img>
+View demo [Generate deck using Pydroid 3](demo/demo_pydroid_3.gif)
 
 # Requirements for running it offline
 1. Termux or any app that create localhost
@@ -38,7 +43,7 @@ That deck can be imported to AnkiDroid.
 
 Download from playstore.
 
-# Steps
+# Steps for running offline
 
 1. If using termux then install ```python```
 ```
@@ -61,7 +66,7 @@ python -m http.server
 ```
 localhost:8000
 ```
-7. First add image then add rectangle (Add Rect). After adding notes, click on download to get svg files with question mask and answer mask. 
+7. First, add image then add rectangle. After adding notes, click on download to get svg files with question mask and answer mask. 
 
 8. Copy all the files (svg files and original image) to ```collection.media``` folder
 
@@ -69,17 +74,12 @@ localhost:8000
 
 10. Import it in AnkiDroid and start reviewing.
 
-
 # Demo
 [View this](demo/demo_img_occ.gif)
 
 # Limitations
 - I tried to create with more than six rectangle but it failed to generate svg files. I also tried async/await function but still not working. 
 - The user experience is not so good as compared to desktop but it can be used to create decks.
-- output.txt created per image
-
-# TODO
-- Appends multiple notes output to one files
 
 # Contributions
 Contribution will be appreciated for adding features generating more than six files at one time. 
