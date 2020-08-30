@@ -6,7 +6,7 @@ For desktop there is already addon for creating image occlusion. This is impleme
 
 
 # Demo
-<img src="demo/demo_create.gif" height="380"></img>
+<img src="demo/demo_create.gif" height="380"></img> | <img src="demo/demo_draw_anywhere.gif" height="380"></img>
 
 ## Create image occlusion Anki decks in three steps
 
