@@ -240,7 +240,7 @@ var xmlns = "http://www.w3.org/2000/svg";
 
 async function saveSVG(name, rect, height, width) {
 
-    await pause(1000);
+    await pause(200);
 
     var svg = document.createElementNS(svgNS, "svg");
 
