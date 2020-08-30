@@ -226,11 +226,21 @@ function exportFile(csv, filename) {
 }
 
 
+/* https://stackoverflow.com/questions/53560991/automatic-file-downloads-limited-to-10-files-on-chrome-browser */
+function pause(msec) {
+    return new Promise(
+        (resolve, reject) => {
+            setTimeout(resolve, msec || 1000);
+        }
+    );
+}
+
 var svgNS = "http://www.w3.org/2000/svg";
 var xmlns = "http://www.w3.org/2000/svg";
 
-
 async function saveSVG(name, rect, height, width) {
+
+    await pause(1000);
 
     var svg = document.createElementNS(svgNS, "svg");
 
