@@ -84,7 +84,8 @@ localhost:8000
 
 # Todo
 - Deck export from browser
-- Create rectangle by drawing on screen
+- <s>Create rectangle by drawing on screen</s>. To create rectangle at any part of screen then first select the button (below image), then tap at two points (top left corner and bottom right corner) to create rectangle of that width and height inside editor window. Note: Always reset zoom before creating rectangle using this.
+<br>![](demo/select_to_create.PNG)
 
 
 # License

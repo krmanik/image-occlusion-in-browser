@@ -6,6 +6,7 @@
   <script src="js/svg.draggable.min.js"></script>
   <script src="js/svg.resize.min.js"></script>
   <script src="js/svg.select.min.js"></script>
+  <script src="js/svg.draw.min.js"></script>
   <script src="js/index.js"></script>
 
   <link href="css/index.css" rel=stylesheet type=text/css>
@@ -36,11 +37,14 @@
   <div style="font-size: 24px; color:gray; margin-top: 14px;">Tools</div>
   <div style="padding-bottom: 14px;">
     <div onclick="addRect();" class="button"><i class="material-icons" style="color: #1e88e5;">add_box</i></div>
+    <div onclick="drawRect();" class="button"><i class="material-icons" style="color: #009688;" id="drawRectId">dashboard</i></div>
     <div onclick="removeRect();" class="button"><i class="material-icons" style="color: #f44336;">delete_forever</i>
     </div>
 
     <div onclick="zoomIn();" class="button"><i class="material-icons" style="color: #455A64;">zoom_in</i></div>
     <div onclick="zoomOut();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out</i></div>
+    <div onclick="resetZoom();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out_map</i></div>
+
   </div>
 
   <div id="drawing" class="container-editor"></div>
@@ -143,6 +147,10 @@
           <td>Add rectangle to editor after importing image to window.</td>
         </tr>
         <tr>
+          <td><div class="button"><i class="material-icons" style="color: #009688;">dashboard</i></div></td>
+          <td>Use this button to create rectangle to any part of screen inside editor area. First click this, then tap on two points (top left corner, bottom right corner) to create rectangle of that width and height. Reset zoom then use this.</td>
+        </tr>
+        <tr>
           <td>
             <div class="button"><i class="material-icons" style="color: #f44336;">delete_forever</i></div>
           </td>
@@ -159,6 +167,10 @@
             <div class="button"><i class="material-icons" style="color: #455A64;">zoom_out</i></div>
           </td>
           <td>Layout style is set to fixed. So click this to zoom out.</td>
+        </tr>
+        <tr>
+          <td><div class="button"><i class="material-icons" style="color: #455A64;">zoom_out_map</i></div></td>
+          <td>Reset zoom value. Use it create rectangle at right coordinates.</td>
         </tr>
       </tbody>
     </table>

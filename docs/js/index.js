@@ -32,6 +32,28 @@ var rect;
         })
 })*/
 
+function drawRect() {
+    try {
+        
+        document.getElementById("drawRectId").style.color = "#fdd835";
+
+        draw.rect().draw().fill('#f06')
+        .on('drawstop', function() {
+            document.getElementById("drawRectId").style.color = "#009688";
+        })
+        .on('click', function () {
+            this
+                .draggable()
+                .selectize()
+                .resize()
+        });
+
+    } catch(e) {
+        console.log(e);
+        document.getElementById("statusMsg").innerHTML = "Add image first";
+        document.getElementById("drawRectId").style.color = "#009688";
+    }
+}
 
 function addRect() {
     try {
@@ -63,8 +85,6 @@ function removeRect() {
         document.getElementById("statusMsg").innerHTML = "Select a rectangle";
     }
 }
-
-
 
 var imgHeight;
 var imgWidth;
@@ -204,11 +224,7 @@ async function downloadNote() {
     // add to view note side bar
     addCsvLineToViewNote(csvLine);
     //document.getElementById("noteData").innerHTML = csvLine;
-
-
-
 }
-
 
 function exportFile(csv, filename) {
     var element = document.createElement('a');
@@ -224,7 +240,6 @@ function exportFile(csv, filename) {
 
     document.body.removeChild(element);
 }
-
 
 /* https://stackoverflow.com/questions/53560991/automatic-file-downloads-limited-to-10-files-on-chrome-browser */
 function pause(msec) {
@@ -333,6 +348,10 @@ function zoomIn() {
     document.getElementById("drawing").style.zoom = zoomVar + "%";
 }
 
+
+function resetZoom() {
+    document.getElementById("drawing").style.zoom = "100%";   
+}
 
 function viewHelp() {
     document.getElementById("viewHelpSideNav").style.height = "100%";

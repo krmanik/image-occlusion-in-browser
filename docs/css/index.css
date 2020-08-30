@@ -136,6 +136,7 @@ svg {
 .sidenav-help a {
   text-decoration: none;
   transition: 0.3s;
+  color: #f44336;
 }
 
 @media screen and (max-height: 450px) {
