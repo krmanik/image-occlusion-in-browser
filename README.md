@@ -66,6 +66,7 @@ Enter details and it will create the deck
 
 5. Download the deck from Show file browser
 
+View demo: [Generate deck using Google colab in browser](demo/demo_export_from_browser.gif)
 
 # Requirements for running it offline
 1. Termux or any app that create localhost
@@ -113,7 +114,7 @@ localhost:8000
 - The user experience is not so good as compared to desktop but it can be used to create decks.
 
 # Todo
-- Deck export from browser
+- <s>Deck export from browser</s> View: https://github.com/infinyte7/image-occlusion-in-browser#step-3-b
 - <s>Create rectangle by drawing on screen</s>. To create rectangle at any part of screen then first select the button (below image), then tap at two points (top left corner and bottom right corner) to create rectangle of that width and height inside editor window. Note: Always reset zoom before creating rectangle using this.
 <br>![](demo/select_to_create.PNG)
 
