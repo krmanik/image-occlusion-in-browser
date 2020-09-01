@@ -27,7 +27,8 @@ For desktop there is already addon for creating image occlusion. This is impleme
 ### Step 2 - Copy all svg files to AnkiDroid folder
 1. Copy question and answer svg files and original image to ```collection.media``` folder
 
-### Step 3 - Generate decks using Pydroid 3
+### Step 3 - Generate decks using Pydroid 3 or Use Google colab to run the script
+#### Step 3 (a)
 1. Download and install Pydroid 3 from play store.
 2. Install ```genanki``` in Pydroid using Pip. View demo below.
 3. Download ```image-occ-deck-export.py``` from release page.
@@ -36,6 +37,35 @@ For desktop there is already addon for creating image occlusion. This is impleme
 6. Enter deck details and export.
 
 View demo [Generate deck using Pydroid 3](demo/demo_pydroid_3.gif)
+
+#### Step 3 (b)
+The deck can also be generate without installing any software using Google colab.
+1. View this link
+[https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing](https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing)
+
+2. Upload ```output-all-notes.txt``` file
+a) Click top left icon
+b) Show file browser  
+
+```
+connecting to a runtime to enable file browsing
+```
+   
+c) click to upload output-all-notes.txt
+
+3. Tap on play icon to install ```genanki```
+```
+!pip install genanki
+```
+4. Tap on next to run and export
+```
+Enter filename with extension: output-all-notes.txt           # uploaded file name  
+Enter title of the deck: learn                                # any title
+```
+Enter details and it will create the deck
+
+5. Download the deck from Show file browser
+
 
 # Requirements for running it offline
 1. Termux or any app that create localhost
