@@ -1,5 +1,7 @@
 body {
   font-family: sans-serif;
+  margin: 2px;
+
 }
 
 @font-face {
@@ -12,11 +14,11 @@ body {
 .material-icons {
   border: solid;
   border-radius: 8px;
-
+  background: white;
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 36px;
+  font-size: 28px;
   line-height: 1;
   letter-spacing: normal;
   text-transform: none;
@@ -33,12 +35,15 @@ body {
   width: 100%;
   height: 100%;
   position:relative;
+
+  cursor: auto;
+  overflow: auto;
 }
 
 svg {
     cursor: grab;
     /*position: fixed;*/
-    border: 1px solid #f44336;
+    border: 2px solid #f44336;
   }
 
  img {
@@ -175,8 +180,8 @@ input[type="file"] {
   font-size: 20px;
   background: #1E88E5;
   color: white;
-  padding: 12px;
-  margin: 12px;
+  padding: 4px;
+  margin: 4px;
   font-weight: bold;
 }
 
@@ -184,6 +189,8 @@ input[type="file"] {
   position: fixed;
   bottom: 0;
   width: 100%;
+  background: #F44336;
+  color: white;
 }
 
 .help-sidebar {

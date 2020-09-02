@@ -38,16 +38,17 @@ Author: Infinyte7 (Mani)
   </div>
 
   <div style="font-size: 24px; color:gray; margin-top: 14px;">Tools</div>
-  <div style="padding-bottom: 14px;">
-    <div onclick="addRect();" class="button"><i class="material-icons" style="color: #1e88e5;">add_box</i></div>
-    <div onclick="drawRect();" class="button"><i class="material-icons" style="color: #009688;" id="drawRectId">dashboard</i></div>
+  <div id="tools-bar" style="padding-bottom: 14px; z-index: 2;">
+    <!--<div onclick="addRect();" class="button"><i class="material-icons" style="color: #1e88e5;">add_box</i></div>-->
+    <div onclick="drawRect();" class="button"><i class="material-icons" style="color: #009688;"
+        id="drawRectId">dashboard</i></div>
     <div onclick="removeRect();" class="button"><i class="material-icons" style="color: #f44336;">delete_forever</i>
     </div>
 
     <div onclick="zoomIn();" class="button"><i class="material-icons" style="color: #455A64;">zoom_in</i></div>
     <div onclick="zoomOut();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out</i></div>
     <div onclick="resetZoom();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out_map</i></div>
-
+    <div class="button"><i class="material-icons" style="color: #1e88e5;">drag_handle</i></div>
   </div>
 
   <div id="drawing" class="container-editor"></div>
@@ -105,7 +106,7 @@ Author: Infinyte7 (Mani)
   <div id="viewHelpSideNav" class="sidenav-help" style="right: 0;">
     <a href="javascript:void(0)" class="closebtn" onclick="closeViewHelpNav()">&times;</a>
 
-    <div class="page-title">Image occlusion in browser for Anki</div>
+    <div class="page-title">Help</div>
 
     <!-- buttons only for showing (no function) -->
     <table class="help-sidebar">
@@ -135,7 +136,9 @@ Author: Infinyte7 (Mani)
           </td>
           <td>On editor window, this button will create questions mask, answers mask and output-note.txt and will
             download. On View note window, this button will download output-all-notes.txt file combining all previous
-            notes. <div><br>Note: Wait for all files to be downloaded. For example, if there are 10 rectangles on screen then total files will be 22 (10 question SVG, 10 Answer SVG, 1 Original SVG, 1 txt file). </div></td>
+            notes. <div><br>Note: Wait for all files to be downloaded. For example, if there are 10 rectangles on screen
+              then total files will be 22 (10 question SVG, 10 Answer SVG, 1 Original SVG, 1 txt file). </div>
+          </td>
         </tr>
         <tr>
           <td>
@@ -143,15 +146,19 @@ Author: Infinyte7 (Mani)
           </td>
           <td>View help window</td>
         </tr>
-        <tr>
+        <!--<tr>
           <td>
             <div class="button"><i class="material-icons" style="color: #1e88e5;">add_box</i></div>
           </td>
           <td>Add rectangle to editor after importing image to window.</td>
-        </tr>
+        </tr>-->
         <tr>
-          <td><div class="button"><i class="material-icons" style="color: #009688;">dashboard</i></div></td>
-          <td>Use this button to create rectangle to any part of screen inside editor area. First click this, then tap on two points (top left corner, bottom right corner) to create rectangle of that width and height. Reset zoom then use this.</td>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #009688;">dashboard</i></div>
+          </td>
+          <td>Use this button to create rectangle to any part of screen inside editor area. First click this, then tap
+            on two points (top left corner, bottom right corner) to create rectangle of that width and height. Reset
+            zoom then use this.</td>
         </tr>
         <tr>
           <td>
@@ -172,8 +179,18 @@ Author: Infinyte7 (Mani)
           <td>Layout style is set to fixed. So click this to zoom out.</td>
         </tr>
         <tr>
-          <td><div class="button"><i class="material-icons" style="color: #455A64;">zoom_out_map</i></div></td>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #455A64;">zoom_out_map</i></div>
+          </td>
           <td>Reset zoom value. Use it create rectangle at right coordinates.</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #1e88e5;">drag_handle</i></div>
+          </td>
+          <td>
+            Drag tools
+          </td>
         </tr>
       </tbody>
     </table>
@@ -190,8 +207,11 @@ Author: Infinyte7 (Mani)
       <div><b>Android</b></div>
       <div>On Android, use <a target="_blank"
           href="https://github.com/infinyte7/image-occlusion-in-browser/blob/master/image-occ-deck-export.py"><b>image-occ-deck-export.py</b></a>
-        in Pydroid 3 to create anki decks. Download script from GitHub <a target="_blank" href="https://github.com/infinyte7/image-occlusion-in-browser/releases">Release page</a>
-      <br> <br>View demo: <a target="_blank" href="https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_pydroid_3.gif">Generate deck using Pydroid 3</a>
+        in Pydroid 3 to create anki decks. Download script from GitHub <a target="_blank"
+          href="https://github.com/infinyte7/image-occlusion-in-browser/releases">Release page</a>
+        <br> <br>View demo: <a target="_blank"
+          href="https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_pydroid_3.gif">Generate
+          deck using Pydroid 3</a>
       </div>
 
       <br>
@@ -199,10 +219,13 @@ Author: Infinyte7 (Mani)
       <div><b>Browser</b></div>
       <div>
         Create anki deck using Google colab
-        View the demo and then visit this, 
-        <a target="_blank" href="https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing">https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing</a>
+        View the demo and then visit this,
+        <a target="_blank"
+          href="https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing">https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing</a>
         <br><br>
-        <div>View demo: <a target="_blank" href="https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_export_from_browser.gif">Generate deck on Google Colab</a></div>
+        <div>View demo: <a target="_blank"
+            href="https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_export_from_browser.gif">Generate
+            deck on Google Colab</a></div>
 
       </div>
       <br><br>

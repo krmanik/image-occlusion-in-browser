@@ -50,21 +50,21 @@ var rect;
 
 function drawRect() {
     try {
-        
+        document.getElementById("drawing").style.zoom = "100%";
         document.getElementById("drawRectId").style.color = "#fdd835";
 
         draw.rect().draw().fill('#f06')
-        .on('drawstop', function() {
-            document.getElementById("drawRectId").style.color = "#009688";
-        })
-        .on('click', function () {
-            this
-                .draggable()
-                .selectize()
-                .resize()
-        });
+            .on('drawstop', function () {
+                document.getElementById("drawRectId").style.color = "#009688";
+            })
+            .on('click', function () {
+                this
+                    .draggable()
+                    .selectize()
+                    .resize()
+            });
 
-    } catch(e) {
+    } catch (e) {
         console.log(e);
         document.getElementById("statusMsg").innerHTML = "Add image first";
         document.getElementById("drawRectId").style.color = "#009688";
@@ -72,7 +72,7 @@ function drawRect() {
 }
 
 function addRect() {
-    try {
+/*    try {
         draw.rect(200, 50).move(100, 50).fill('#f06')
             .on('click', function () {
                 this
@@ -85,7 +85,7 @@ function addRect() {
         console.log(e);
         document.getElementById("statusMsg").innerHTML = "Add image first";
     }
-
+*/
 }
 
 function removeRect() {
@@ -108,6 +108,8 @@ function addImage() {
 
     try {
         document.getElementById("drawing").innerHTML = "<img id='uploadPreview'/>";
+        document.getElementById("tools-bar").style.position = "absolute";
+        document.getElementById("tools-bar").style.padding = "10px";
 
         var selectedFile = event.target.files[0];
         var reader = new FileReader();
@@ -148,7 +150,7 @@ function addImage() {
 
 /* Download */
 async function downloadNote() {
-    
+
     var childs = document.getElementById("SVG101").childNodes;
 
     var oneTime = true;
@@ -329,7 +331,7 @@ function downloadAllNotes() {
     var container = document.getElementById("noteData");
 
     var textToExport = "";
-    for (i=0; i < container.childElementCount; i++) {
+    for (i = 0; i < container.childElementCount; i++) {
         textToExport += container.children[i].value;
     }
 
@@ -355,18 +357,19 @@ function closeViewNoteNav() {
 
 var zoomVar = 100;
 function zoomOut() {
-    zoomVar -= 4;
+    zoomVar -= 10;
     document.getElementById("drawing").style.zoom = zoomVar + "%";
 }
 
 function zoomIn() {
-    zoomVar += 4;
+    zoomVar += 10;
     document.getElementById("drawing").style.zoom = zoomVar + "%";
 }
 
 
 function resetZoom() {
-    document.getElementById("drawing").style.zoom = "100%";   
+    document.getElementById("drawing").style.zoom = "100%";
+    zoomVar = 100;
 }
 
 function viewHelp() {
@@ -375,4 +378,87 @@ function viewHelp() {
 
 function closeViewHelpNav() {
     document.getElementById("viewHelpSideNav").style.height = "0";
+}
+
+
+window.onbeforeunload = function () {
+    return "Have you downloaded output-all-notes.txt?";
+};
+
+/* https://stackoverflow.com/questions/9334084/moveable-draggable-div */
+window.onload = function () {
+    var e = document.getElementById('tools-bar')
+    draggable(e);
+
+    touchDraggable(e);
+}
+
+function draggable(el) {
+    el.addEventListener('mousedown', function (e) {
+        var offsetX = e.clientX - parseInt(window.getComputedStyle(this).left);
+        var offsetY = e.clientY - parseInt(window.getComputedStyle(this).top);
+
+        function mouseMoveHandler(e) {
+            el.style.top = (e.clientY - offsetY) + 'px';
+            el.style.left = (e.clientX - offsetX) + 'px';
+        }
+
+        function reset() {
+            window.removeEventListener('mousemove', mouseMoveHandler);
+            window.removeEventListener('mouseup', reset);
+        }
+
+        window.addEventListener('mousemove', mouseMoveHandler);
+        window.addEventListener('mouseup', reset);
+    });
+}
+
+/* https://www.kirupa.com/html5/drag.htm */
+function touchDraggable(el) {
+    var currentX;
+    var currentY;
+    var initialX;
+    var initialY;
+    var xOffset = 0;
+    var yOffset = 0;
+
+    el.addEventListener("touchstart", dragStart, false);
+    el.addEventListener("touchend", dragEnd, false);
+    el.addEventListener("touchmove", drag, false);
+
+    function dragStart(e) {
+        if (e.type === "touchstart") {
+            initialX = e.touches[0].clientX - xOffset;
+            initialY = e.touches[0].clientY - yOffset;
+        } else {
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+        }
+    }
+
+    function dragEnd(e) {
+        initialX = currentX;
+        initialY = currentY;
+    }
+
+    function drag(e) {
+        e.preventDefault();
+
+        if (e.type === "touchmove") {
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+        } else {
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+        }
+
+        xOffset = currentX;
+        yOffset = currentY;
+
+        setTranslate(currentX, currentY, el);
+    }
+
+    function setTranslate(xPos, yPos, el) {
+        el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+    }
 }
