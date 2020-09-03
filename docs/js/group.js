@@ -22,11 +22,69 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+
+/*
+  Not a good implementation for creating group element.
+  Help wanted for improving the codes.
+*/
+
 var selectedElement = "";
+var svgGroup = "";
+var addedList = [];
 document.addEventListener('click', function (e) {
     //console.log(e.target.id);
     selectedElement = e.target.id;
+
+
+    document.getElementById("addState").onclick = function () {
+        if (document.getElementById("addState").value == "false") {
+            document.getElementById("addState").value = true;
+            document.getElementById("iconGroup").style.color = "#FF6F00";
+
+            createOrigSvg();
+
+        } else {
+            document.getElementById("addState").value = false;
+            document.getElementById("iconGroup").style.color = "#607d8b";
+
+            if (svgGroup != "") {
+                createQuesSvg();
+                createGroup(addedList)
+            }
+        }
+    }
+
+    if (document.getElementById("addState").value == "true") {
+        if (document.getElementById(selectedElement).tagName == "rect") {
+            svgGroup = "added";
+
+            if (document.getElementById(selectedElement).style.fill == "" || document.getElementById(selectedElement).style.fill == hexToRgb(originalColor)) {
+                document.getElementById(selectedElement).style.fill = questionColor;
+                addedList.push(selectedElement);
+            } else {
+
+                // if again tap then remove from list
+                for (i = 0; i < addedList.length; i++) {
+                    if (selectedElement == addedList[i]) {
+                        document.getElementById(selectedElement).style.fill = originalColor;
+                        addedList.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
 }, false);
+
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
 
 var note_num = 1;
 var originalImageName;
@@ -91,10 +149,20 @@ function addRect() {
 function removeRect() {
     try {
         if (document.getElementById(selectedElement).tagName == "rect") {
-            var svgEle = SVG.adopt(document.getElementById(selectedElement))
+            var svgEle = SVG.adopt(document.getElementById(selectedElement));
             svgEle.selectize(false);
+
+            // remove from list also
+            for (i = 0; i < addedList.length; i++) {
+                if (selectedElement == addedList[i]) {
+                    addedList.splice(i, 1);
+                    break;
+                }
+            }
+
             svgEle.remove();
             document.getElementById("statusMsg").innerHTML = "";
+
         }
     } catch (e) {
         console.log(e);
@@ -148,88 +216,100 @@ function addImage() {
 
 };
 
-/* Download */
-async function downloadNote() {
+var origSVG = "";
+function createOrigSvg() {
+    var child = document.getElementById("SVG101").childNodes;
 
-    var childs = document.getElementById("SVG101").childNodes;
+    for (j = 0; j < child.length; j++) {
 
-    var oneTime = true;
-    var csvLine = "";
-
-    for (i = 0; i < childs.length; i++) {
-
-        var origSVG = "";
-        var svgQues = "";
-        var svgAns = "";
-
-        for (j = 0; j < childs.length; j++) {
-
-            if (childs[j].tagName == "rect") {
-
-                childs[j].style.fill = originalColor;
-
-                origSVG += childs[j].outerHTML;
-
-                if (i == j) {
-
-                    childs[j].style.fill = questionColor;
-
-                    svgQues += childs[j].outerHTML;
-
-                    childs[j].style.fill = originalColor;
-
-                } else {
-
-                    svgQues += childs[j].outerHTML;
-                    svgAns += childs[j].outerHTML;
-                }
-            }
+        if (child[j].tagName == "rect") {
+            origSVG += child[j].outerHTML;
         }
-
-        // add time stamp
-        var timeStamp = new Date().getTime();
-
-        if (childs[i].tagName == "rect") {
-
-            if (oneTime) {
-                // origin mask
-                //console.log("orig " + origSVG);
-                var origFileName = "img-occ-orig-" + timeStamp;
-                saveSVG(origFileName, origSVG, imgHeight, imgWidth);
-                oneTime = false;
-            }
-
-            // Question Mask
-            var quesFileName = "img-occ-ques-" + timeStamp;
-            //console.log("Ques " + svgQues);
-
-            await saveSVG(quesFileName, svgQues, imgHeight, imgWidth);
-
-            // Answer mask
-            var ansFileName = "img-occ-ans-" + timeStamp;
-            //console.log("ans " + svgAns);
-
-            await saveSVG(ansFileName, svgAns, imgHeight, imgWidth);
-
-            // get all input note from form
-            getNoteFromForm();
-
-            var noteId = "img-occ-note-" + timeStamp;
-
-            csvLine += noteId +
-                "\t" + noteHeader +
-                "\t" + "<img src='" + originalImageName + "'></img>" +
-                "\t" + "<img src='" + quesFileName + ".svg'></img>" +
-                "\t" + noteFooter +
-                "\t" + noteRemarks +
-                "\t" + noteSources +
-                "\t" + noteExtra1 +
-                "\t" + noteExtra2 +
-                "\t" + "<img src='" + ansFileName + ".svg'></img>" +
-                "\t" + "<img src='" + origFileName + ".svg'></img>" + "\n";
-        }
-
     }
+}
+
+var svgQues = "";
+function createQuesSvg() {
+    var child = document.getElementById("SVG101").childNodes;
+
+    for (j = 0; j < child.length; j++) {
+        if (child[j].tagName == "rect") {
+            svgQues += child[j].outerHTML;
+        }
+    }
+}
+
+/* Download */
+async function createGroup(list) {
+
+    var child = document.getElementById("SVG101").childNodes;
+
+    var csvLine = "";
+    var svgAns = "";
+
+    // remove selection
+    for (i = 0; i < child.length; i++) {
+        try {
+            if (child[i].tagName == "rect") {
+                var svgEle = SVG.adopt(document.getElementById(child[i].id))
+                svgEle.selectize(false);
+            }
+        } catch (e) {
+            console.log("error");
+        }
+    }
+
+    // remove selected rect to create answer mask
+    for (j = 0; j < list.length; j++) {
+        document.getElementById(list[j]).outerHTML = "";
+    }
+
+    // add remaining to answer mask
+    for (j = 0; j < child.length; j++) {
+        if (child[j].tagName == "rect") {
+            svgAns += child[j].outerHTML;
+        }
+    }
+
+    // add time stamp
+    var timeStamp = new Date().getTime();
+
+    // origin mask
+    //console.log("orig " + origSVG);
+    var origFileName = "img-occ-orig-" + timeStamp;
+    await saveSVG(origFileName, origSVG, imgHeight, imgWidth);
+    oneTime = false;
+    origSVG = "";
+
+    // Question Mask
+    var quesFileName = "img-occ-ques-" + timeStamp;
+    //console.log("Ques " + svgQues);
+
+    await saveSVG(quesFileName, svgQues, imgHeight, imgWidth);
+    svgQues = "";
+
+    // Answer mask
+    var ansFileName = "img-occ-ans-" + timeStamp;
+    //console.log("ans " + svgAns);
+
+    await saveSVG(ansFileName, svgAns, imgHeight, imgWidth);
+
+    // get all input note from form
+    getNoteFromForm();
+
+    var noteId = "img-occ-note-" + timeStamp;
+
+    csvLine += noteId +
+        "\t" + noteHeader +
+        "\t" + "<img src='" + originalImageName + "'></img>" +
+        "\t" + "<img src='" + quesFileName + ".svg'></img>" +
+        "\t" + noteFooter +
+        "\t" + noteRemarks +
+        "\t" + noteSources +
+        "\t" + noteExtra1 +
+        "\t" + noteExtra2 +
+        "\t" + "<img src='" + ansFileName + ".svg'></img>" +
+        "\t" + "<img src='" + origFileName + ".svg'></img>" + "\n";
 
     var f = "output-note" + note_num + ".txt";
     exportFile(csvLine, f);
@@ -238,6 +318,10 @@ async function downloadNote() {
     // add to view note side bar
     addCsvLineToViewNote(csvLine);
     //document.getElementById("noteData").innerHTML = csvLine;
+
+    //reset all
+    svgGroup = "";
+    addedList = [];
 }
 
 function exportFile(csv, filename) {
@@ -269,7 +353,7 @@ var xmlns = "http://www.w3.org/2000/svg";
 
 async function saveSVG(name, rect, height, width) {
 
-    await pause(200);
+    await pause(600);
 
     var svg = document.createElementNS(svgNS, "svg");
 
@@ -381,8 +465,22 @@ function viewSettings() {
 }
 
 function closeSettingsNav() {
-    settings();
     document.getElementById("settingsSideNav").style.height = "0";
+    document.getElementById("statusMsg").innerHTML = "";
+
+    settings();
+    // check if valid hex value, set to default if not valid
+    if (!/^#[0-9A-F]{6}$/i.test(questionColor)) {
+        questionColor = "#F44336";
+        document.getElementById("settingsSideNav").style.height = "100%";
+        document.getElementById("statusMsg").innerHTML = "Not a valid color";
+    }
+
+    if (!/^#[0-9A-F]{6}$/i.test(originalColor)) {
+        originalColor = "#fdd835";
+        document.getElementById("settingsSideNav").style.height = "100%";
+        document.getElementById("statusMsg").innerHTML = "Not a valid color";
+    }
 }
 
 // assign to input
@@ -392,18 +490,8 @@ var originalColor = "#fdd835";
 function settings() {
     questionColor = document.getElementById("QColor").value;
     originalColor = document.getElementById("OColor").value;
-
-    // check if valid hex value, set to default if not valid
-    if (!/^#[0-9A-F]{6}$/i.test(questionColor)) {
-        questionColor = "#F44336";
-        viewSettings();
-    }
-
-    if (!/^#[0-9A-F]{6}$/i.test(originalColor)) {
-        originalColor = "#fdd835";
-        viewSettings();
-    }
 }
+
 
 window.onbeforeunload = function () {
     return "Have you downloaded output-all-notes.txt?";
@@ -418,6 +506,7 @@ window.onload = function () {
 
     document.getElementById("QColor").value = questionColor;
     document.getElementById("OColor").value = originalColor;
+
 }
 
 function draggable(el) {

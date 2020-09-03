@@ -41,7 +41,7 @@ body {
 }
 
 svg {
-    cursor: grab;
+    cursor: crosshair;
     /*position: fixed;*/
     border: 2px solid #f44336;
   }
@@ -187,6 +187,7 @@ input[type="file"] {
 
 .status-message {
   position: fixed;
+  z-index: 25;
   bottom: 0;
   width: 100%;
   background: #F44336;
