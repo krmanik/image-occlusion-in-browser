@@ -171,6 +171,10 @@ svg {
   font-size: 36px;
 }
 
+.button:active{
+  opacity: 0.5;
+}
+
 input[type="file"] {
     display: none;
 }
