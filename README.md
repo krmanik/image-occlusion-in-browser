@@ -6,14 +6,16 @@ For desktop there is already addon for creating image occlusion. This is impleme
 
 
 # Demo
-<img src="demo/demo_create.gif" height="380"></img> | <img src="demo/demo_draw_anywhere.gif" height="380"></img>
+<img src="demo/demo_create.gif" height="380"></img> | <img src="demo/demo_draw_anywhere.gif" height="380"></img> | <img src="demo/demo_change_color.gif" height="380"></img>
 
 ## Create image occlusion Anki decks in three steps
 
 ### Step 1 - Create svg question and answers mask 
 
 1. Visit
-[https://infinyte7.github.io/image-occlusion-in-browser/](https://infinyte7.github.io/image-occlusion-in-browser/)
+- [https://infinyte7.github.io/image-occlusion-in-browser/](https://infinyte7.github.io/image-occlusion-in-browser/)
+- To create group cloze, view this
+<br> [https://infinyte7.github.io/image-occlusion-in-browser/group.html](https://infinyte7.github.io/image-occlusion-in-browser/group.html)
 
 2. Add rectangles to editor window by pressing "+" in tools.
 (Drag or resize to specific location)
