@@ -8,13 +8,21 @@ For desktop there is already addon for creating image occlusion. This is impleme
 # Demo
 <img src="demo/demo_create.gif" height="380"></img> | <img src="demo/demo_draw_anywhere.gif" height="380"></img> | <img src="demo/demo_change_color.gif" height="380"></img>
 
-## Create image occlusion Anki decks in three steps
+# Tutorials / Features
+- [Create question and answer mask](demo/demo_create.gif)
+- [Draw anywhere inside editor window](demo/demo_draw_anywhere.gif)
+- [Create group question and answer mask](demo/demo_group_element.gif)
+- [Change color of masks](demo/demo_change_color.gif)
+- [Export deck on mobile in browser](demo/demo_export_from_browser)
+- [Export deck on mobile in Pydroid 3](demo/demo_pydroid_3.gif)
+- [Using offline](demo/demo_img_occ.gif)
 
-### Step 1 - Create svg question and answers mask 
+# Create image occlusion Anki decks in three steps
 
-1. Visit
-- [https://infinyte7.github.io/image-occlusion-in-browser/](https://infinyte7.github.io/image-occlusion-in-browser/)
-- To create group cloze, view this
+## Step 1 - Create svg question and answers mask 
+
+1. - Visit [https://infinyte7.github.io/image-occlusion-in-browser/](https://infinyte7.github.io/image-occlusion-in-browser/)
+   - To create group cloze, view this
 <br> [https://infinyte7.github.io/image-occlusion-in-browser/group.html](https://infinyte7.github.io/image-occlusion-in-browser/group.html)
 
 2. Add rectangles to editor window by pressing "+" in tools.
@@ -26,11 +34,11 @@ For desktop there is already addon for creating image occlusion. This is impleme
 
 5. Then download combined notes from view note window. It will download ```output-all-notes.txt``` file. This file will be used to create deck.
 
-### Step 2 - Copy all svg files to AnkiDroid folder
+## Step 2 - Copy all svg files to AnkiDroid folder
 1. Copy question and answer svg files and original image to ```collection.media``` folder
 
-### Step 3 - Generate decks using Pydroid 3 or Use Google colab to run the script
-#### Step 3 (a)
+## Step 3 - Generate decks using Pydroid 3 or Use Google colab to run the script
+### Step 3 (a)
 1. Download and install Pydroid 3 from play store.
 2. Install ```genanki``` in Pydroid using Pip. View demo below.
 3. Download ```image-occ-deck-export.py``` from release page.
@@ -40,7 +48,7 @@ For desktop there is already addon for creating image occlusion. This is impleme
 
 View demo [Generate deck using Pydroid 3](demo/demo_pydroid_3.gif)
 
-#### Step 3 (b)
+### Step 3 (b)
 The deck can also be generate without installing any software using Google colab.
 1. View this link
 [https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing](https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing)
@@ -107,30 +115,21 @@ localhost:8000
 
 10. Import it in AnkiDroid and start reviewing.
 
-# Demo
-[View this](demo/demo_img_occ.gif)
+View demo: [Using offline](demo/demo_img_occ.gif)
 
-# Limitations
-- <s>I tried to create with more than six rectangle but it failed to generate svg files. I also tried async/await function but still not working.</s> 
-<br>Solved using: https://stackoverflow.com/questions/53560991/automatic-file-downloads-limited-to-10-files-on-chrome-browser
-- The user experience is not so good as compared to desktop but it can be used to create decks.
-
-# Todo
-- <s>Deck export from browser</s> View: https://github.com/infinyte7/image-occlusion-in-browser#step-3-b
-- <s>Create rectangle by drawing on screen</s>. To create rectangle at any part of screen then first select the button (below image), then tap at two points (top left corner and bottom right corner) to create rectangle of that width and height inside editor window. Note: Always reset zoom before creating rectangle using this.
-<br>![](demo/select_to_create.PNG)
-
+# Contributions
+This is implemented using javascript. It has bugs and issues. Any contributions to improvement of codes and features will be appreceated. 
 
 # License
-### Deck Template
+## Deck Template
 AGPL-3.0 License
 <br>Copyright (c) glutanimate
 <br>https://github.com/glutanimate/image-occlusion-enhanced
 
-### svg.js
+## svg.js and its plugins
 Copyright (c) 2012-2018 Wout Fierens
 <br>https://svgdotjs.github.io/
 
-### image occlusion in browser
+## image occlusion in browser
 MIT License
 <br>Copyright (c) 2020 Mani
