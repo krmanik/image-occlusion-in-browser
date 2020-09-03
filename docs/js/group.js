@@ -58,7 +58,9 @@ document.addEventListener('click', function (e) {
         if (document.getElementById(selectedElement).tagName == "rect") {
             svgGroup = "added";
 
-            if (document.getElementById(selectedElement).style.fill == "" || document.getElementById(selectedElement).style.fill == hexToRgb(originalColor)) {
+            var c =  hexToRgb(originalColor);
+            var color = "rgb(" + c.r +", " + c.g + ", " + c.b + ")";
+            if (document.getElementById(selectedElement).style.fill == "" || document.getElementById(selectedElement).style.fill == color) {
                 document.getElementById(selectedElement).style.fill = questionColor;
                 addedList.push(selectedElement);
             } else {
@@ -71,12 +73,16 @@ document.addEventListener('click', function (e) {
                         break;
                     }
                 }
+                if (addedList.length == 0) {
+                    svgGroup = "";
+                }
             }
         }
     }
 
 }, false);
 
+/* https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb */
 function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
