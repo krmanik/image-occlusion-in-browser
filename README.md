@@ -13,8 +13,8 @@ For desktop there is already addon for creating image occlusion. This is impleme
 - [Create rectangles by tapping two point anywhere inside editor window](demo/demo_draw_anywhere.gif)
 - [Create group question and answer mask](demo/demo_group_element.gif) (Need improvements)
 - [Change color of masks](demo/demo_change_color.gif)
-- [Export deck on mobile in browser](demo/demo_export_from_browser)
-- [Export deck on mobile in Pydroid 3](demo/demo_pydroid_3.gif)
+- [Export deck on mobile using browser](demo/demo_export_from_browser)
+- [Export deck on mobile using Pydroid 3](demo/demo_pydroid_3.gif)
 - [Using offline](demo/demo_img_occ.gif)
 
 # Create image occlusion Anki decks in three steps
