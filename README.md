@@ -118,7 +118,7 @@ localhost:8000
 View demo: [Using offline](demo/demo_img_occ.gif)
 
 # Contributions
-This is implemented using javascript. It has bugs and issues. Any contributions to improvement of codes and features will be appreceated. 
+This is implemented using javascript. It has bugs and issues. Any contributions to improvement of codes and features will be appreciated.
 
 # License
 ## Deck Template
