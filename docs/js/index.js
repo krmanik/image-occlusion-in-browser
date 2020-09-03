@@ -72,7 +72,7 @@ function drawRect() {
 }
 
 function addRect() {
-    try {
+ /*   try {
         draw.rect(200, 50).move(100, 50).fill(originalColor)
             .on('click', function () {
                 this
@@ -85,7 +85,7 @@ function addRect() {
         console.log(e);
         document.getElementById("statusMsg").innerHTML = "Add image first";
     }
-
+*/
 }
 
 function removeRect() {
