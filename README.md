@@ -10,7 +10,7 @@ For desktop there is already addon for creating image occlusion. This is impleme
 
 # Tutorials / Features
 - [Create question and answer mask](demo/demo_create.gif)
-- [Draw anywhere inside editor window](demo/demo_draw_anywhere.gif)
+- [Create rectangles by tapping two point anywhere inside editor window](demo/demo_draw_anywhere.gif)
 - [Create group question and answer mask](demo/demo_group_element.gif) (Need improvements)
 - [Change color of masks](demo/demo_change_color.gif)
 - [Export deck on mobile in browser](demo/demo_export_from_browser)
