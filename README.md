@@ -130,6 +130,9 @@ AGPL-3.0 License
 Copyright (c) 2012-2018 Wout Fierens
 <br>https://svgdotjs.github.io/
 
+## Image in demo
+Wikipedia
+
 ## image occlusion in browser
 MIT License
 <br>Copyright (c) 2020 Mani

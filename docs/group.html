@@ -35,6 +35,10 @@ Author: Infinyte7 (Mani)
     <div onclick="viewNote();" class="button"><i class="material-icons" style="color: #FF6F00;">view_list</i></div>
     <div onclick="viewHelp()" class="button"><i class="material-icons" style="color: #607D8B;">live_help</i></div>
     <div onclick="viewSettings()" class="button"><i class="material-icons" style="color: #455A64;">settings</i></div>
+    <div class="button">
+      <label for="addState"><i id="iconGroup" class="material-icons" style="color: #607d8b;">collections</i></label>
+      <input id="addState" type="checkbox" style="display: none;" value="false"></input>
+    </div>
   </div>
 
   <div style="font-size: 24px; color:gray; margin-top: 14px;">Tools</div>
@@ -42,13 +46,6 @@ Author: Infinyte7 (Mani)
     <div onclick="addRect();" class="button"><i class="material-icons" style="color: #1e88e5;">add_box</i></div>
     <div onclick="drawRect();" class="button"><i class="material-icons" style="color: #009688;"
         id="drawRectId">dashboard</i></div>
-
-
-    <div class="button">
-      <label for="addState"><i id="iconGroup" class="material-icons" style="color: #607d8b;">collections</i></label>
-      <input id="addState" type="checkbox" style="display: none;" value="false"></input>
-    </div>
-
 
     <div onclick="removeRect();" class="button"><i class="material-icons" style="color: #f44336;">delete_forever</i>
     </div>
