@@ -13,7 +13,7 @@ For desktop there is already addon for creating image occlusion. This is impleme
 - [Create rectangles by tapping two point anywhere inside editor window](demo/demo_draw_anywhere.gif)
 - [Create group question and answer mask](demo/demo_group_element.gif) (Need improvements)
 - [Change color of masks](demo/demo_change_color.gif)
-- [Export deck on mobile using browser](demo/demo_export_from_browser)
+- [Export deck on mobile using browser](demo/demo_create_deck.gif)
 - [Export deck on mobile using Pydroid 3](demo/demo_pydroid_3.gif)
 - [Using offline](demo/demo_img_occ.gif)
 
@@ -53,7 +53,7 @@ The deck can also be generate without installing any software using Google colab
 1. Due to some reason, I have removed it. 
 
    <s>View this link
-[https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing](https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing)</s>
+https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing</s>
 
    But code can be used by copying [deck_export_console.py](/blob/master/deck_export_console.py) to Google colab.
 
