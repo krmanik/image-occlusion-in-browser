@@ -53,7 +53,7 @@ The deck can also be generate without installing any software using Google colab
 1. Due to some reason, I have removed it. 
 
    <s>View this link
-https://colab.research.google.com<span>/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing</s>
+https://colab.research.google.com<span></span>/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing</s>
 
    But code can be used by copying [deck_export_console.py](deck_export_console.py) to Google colab.
 
