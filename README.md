@@ -50,9 +50,20 @@ View demo [Generate deck using Pydroid 3](demo/demo_pydroid_3.gif)
 
 ### Step 3 (b)
 The deck can also be generate without installing any software using Google colab.
-1. View this link
-[https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing](https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing)
+1. Due to some reason, I have removed it. 
 
+   <s>View this link
+[https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing](https://colab.research.google.com/drive/1FH_ylTPG-HgZauFsk6sk58B0OVJK4yLw?usp=sharing)</s>
+
+   But code can be used by copying [deck_export_console.py](/blob/master/deck_export_console.py) to Google colab.
+
+   <br>a) Click on [Raw](https://raw.githubusercontent.com/infinyte7/image-occlusion-in-browser/master/deck_export_console.py) and copy all code
+<br>b) Login to https://colab.research.google.com and paste all the code.
+<br>c) If getting any error then copy this and run it 
+   ```
+   !pip install genanki
+   ```
+<br>
 2. Upload ```output-all-notes.txt``` file
 a) Click top left icon
 b) Show file browser  
