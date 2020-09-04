@@ -50,7 +50,6 @@ var rect;
 
 function drawRect() {
     try {
-        document.getElementById("drawing").style.zoom = "100%";
         document.getElementById("drawRectId").style.color = "#fdd835";
 
         draw.rect().draw().fill(originalColor)
@@ -72,7 +71,7 @@ function drawRect() {
 }
 
 function addRect() {
- /*   try {
+    try {
         draw.rect(200, 50).move(100, 50).fill(originalColor)
             .on('click', function () {
                 this
@@ -85,7 +84,6 @@ function addRect() {
         console.log(e);
         document.getElementById("statusMsg").innerHTML = "Add image first";
     }
-*/
 }
 
 function removeRect() {
@@ -151,93 +149,100 @@ function addImage() {
 /* Download */
 async function downloadNote() {
 
-    var childs = document.getElementById("SVG101").childNodes;
+    var child = document.getElementById("SVG101").childNodes;
 
     var oneTime = true;
     var csvLine = "";
 
-    for (i = 0; i < childs.length; i++) {
+
+
+    for (i = 0; i < child.length; i++) {
 
         var origSVG = "";
         var svgQues = "";
         var svgAns = "";
+        // don't add svg with 0 width and 0 height
+        if (child[i].getBBox().height != 0 && child[i].getBBox().width != 0) {
 
-        for (j = 0; j < childs.length; j++) {
+            for (j = 0; j < child.length; j++) {
 
-            if (childs[j].tagName == "rect") {
+                if (child[j].tagName == "rect") {
 
-                childs[j].style.fill = originalColor;
+                    child[j].style.fill = originalColor;
 
-                origSVG += childs[j].outerHTML;
+                    origSVG += child[j].outerHTML;
 
-                if (i == j) {
+                    if (i == j) {
 
-                    childs[j].style.fill = questionColor;
+                        child[j].style.fill = questionColor;
 
-                    svgQues += childs[j].outerHTML;
+                        svgQues += child[j].outerHTML;
 
-                    childs[j].style.fill = originalColor;
+                        child[j].style.fill = originalColor;
 
-                } else {
+                    } else {
 
-                    svgQues += childs[j].outerHTML;
-                    svgAns += childs[j].outerHTML;
+                        svgQues += child[j].outerHTML;
+                        svgAns += child[j].outerHTML;
+                    }
                 }
             }
-        }
 
-        // add time stamp
-        var timeStamp = new Date().getTime();
+            // add time stamp
+            var timeStamp = new Date().getTime();
 
-        if (childs[i].tagName == "rect") {
+            if (child[i].tagName == "rect") {
 
-            if (oneTime) {
-                // origin mask
-                //console.log("orig " + origSVG);
-                var origFileName = "img-occ-orig-" + timeStamp;
-                saveSVG(origFileName, origSVG, imgHeight, imgWidth);
-                oneTime = false;
+                if (oneTime) {
+                    // origin mask
+                    //console.log("orig " + origSVG);
+                    var origFileName = "img-occ-orig-" + timeStamp;
+                    saveSVG(origFileName, origSVG, imgHeight, imgWidth);
+                    oneTime = false;
+                }
+
+                // Question Mask
+                var quesFileName = "img-occ-ques-" + timeStamp;
+                //console.log("Ques " + svgQues);
+
+                await saveSVG(quesFileName, svgQues, imgHeight, imgWidth);
+
+                // Answer mask
+                var ansFileName = "img-occ-ans-" + timeStamp;
+                //console.log("ans " + svgAns);
+
+                await saveSVG(ansFileName, svgAns, imgHeight, imgWidth);
+
+                // get all input note from form
+                getNoteFromForm();
+
+                var noteId = "img-occ-note-" + timeStamp;
+
+                csvLine += noteId +
+                    "\t" + noteHeader +
+                    "\t" + "<img src='" + originalImageName + "'></img>" +
+                    "\t" + "<img src='" + quesFileName + ".svg'></img>" +
+                    "\t" + noteFooter +
+                    "\t" + noteRemarks +
+                    "\t" + noteSources +
+                    "\t" + noteExtra1 +
+                    "\t" + noteExtra2 +
+                    "\t" + "<img src='" + ansFileName + ".svg'></img>" +
+                    "\t" + "<img src='" + origFileName + ".svg'></img>" + "\n";
             }
 
-            // Question Mask
-            var quesFileName = "img-occ-ques-" + timeStamp;
-            //console.log("Ques " + svgQues);
-
-            await saveSVG(quesFileName, svgQues, imgHeight, imgWidth);
-
-            // Answer mask
-            var ansFileName = "img-occ-ans-" + timeStamp;
-            //console.log("ans " + svgAns);
-
-            await saveSVG(ansFileName, svgAns, imgHeight, imgWidth);
-
-            // get all input note from form
-            getNoteFromForm();
-
-            var noteId = "img-occ-note-" + timeStamp;
-
-            csvLine += noteId +
-                "\t" + noteHeader +
-                "\t" + "<img src='" + originalImageName + "'></img>" +
-                "\t" + "<img src='" + quesFileName + ".svg'></img>" +
-                "\t" + noteFooter +
-                "\t" + noteRemarks +
-                "\t" + noteSources +
-                "\t" + noteExtra1 +
-                "\t" + noteExtra2 +
-                "\t" + "<img src='" + ansFileName + ".svg'></img>" +
-                "\t" + "<img src='" + origFileName + ".svg'></img>" + "\n";
         }
-
     }
 
-    var f = "output-note" + note_num + ".txt";
-    exportFile(csvLine, f);
-    note_num++;
+    if (csvLine != "") {
+        var f = "output-note" + note_num + ".txt";
+        exportFile(csvLine, f);
+        note_num++;
 
-    // add to view note side bar
-    addCsvLineToViewNote(csvLine);
-    //document.getElementById("noteData").innerHTML = csvLine;
+        // add to view note side bar
+        addCsvLineToViewNote(csvLine);
+        //document.getElementById("noteData").innerHTML = csvLine;
+    }
 }
 
 function exportFile(csv, filename) {
@@ -351,21 +356,24 @@ function closeViewNoteNav() {
     document.getElementById("viewNoteSideNav").style.width = "0";
 }
 
-var zoomVar = 100;
+var scaleVar = 1.0;
 function zoomOut() {
-    zoomVar -= 10;
-    document.getElementById("drawing").style.zoom = zoomVar + "%";
+    scaleVar -= 0.1;
+    document.getElementById("SVG101").style.transform = "scale(" + scaleVar + ")";
+    document.getElementById("uploadPreview").style.transform = "scale(" + scaleVar + ")";
 }
 
 function zoomIn() {
-    zoomVar += 10;
-    document.getElementById("drawing").style.zoom = zoomVar + "%";
+    scaleVar += 0.1;
+    document.getElementById("SVG101").style.transform = "scale(" + scaleVar + ")";
+    document.getElementById("uploadPreview").style.transform = "scale(" + scaleVar + ")";
 }
 
 
 function resetZoom() {
-    document.getElementById("drawing").style.zoom = "100%";
-    zoomVar = 100;
+    document.getElementById("SVG101").style.transform = "scale(1.0)";
+    document.getElementById("uploadPreview").style.transform = "scale(1.0)";
+    scaleVar = 1.0;
 }
 
 function viewHelp() {

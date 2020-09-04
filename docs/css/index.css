@@ -34,7 +34,7 @@ body {
 .container-editor {
   width: 100%;
   height: 100%;
-  position:relative;
+  position: absolute;;
 
   cursor: auto;
   overflow: auto;

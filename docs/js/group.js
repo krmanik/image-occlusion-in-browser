@@ -58,8 +58,8 @@ document.addEventListener('click', function (e) {
         if (document.getElementById(selectedElement).tagName == "rect") {
             svgGroup = "added";
 
-            var c =  hexToRgb(originalColor);
-            var color = "rgb(" + c.r +", " + c.g + ", " + c.b + ")";
+            var c = hexToRgb(originalColor);
+            var color = "rgb(" + c.r + ", " + c.g + ", " + c.b + ")";
             if (document.getElementById(selectedElement).style.fill == "" || document.getElementById(selectedElement).style.fill == color) {
                 document.getElementById(selectedElement).style.fill = questionColor;
                 addedList.push(selectedElement);
@@ -111,10 +111,9 @@ var rect;
                 .resize()
         })
 })*/
-
+var rec;
 function drawRect() {
     try {
-        document.getElementById("drawing").style.zoom = "100%";
         document.getElementById("drawRectId").style.color = "#fdd835";
 
         draw.rect().draw().fill(originalColor)
@@ -265,8 +264,11 @@ async function createGroup(list) {
         }
     }
 
+    var removedSvgList = [];
     // remove selected rect to create answer mask
     for (j = 0; j < list.length; j++) {
+        document.getElementById(list[j]).style.fill = originalColor;
+        removedSvgList.push(document.getElementById(list[j]).outerHTML);
         document.getElementById(list[j]).outerHTML = "";
     }
 
@@ -276,6 +278,13 @@ async function createGroup(list) {
             svgAns += child[j].outerHTML;
         }
     }
+
+    // add removed svg again to svg main
+    for (i = 0; i < removedSvgList.length; i++) {
+        document.getElementById("SVG101").innerHTML += removedSvgList[i];
+    }
+
+    removedSvgList = [];
 
     // again allow selection
     for (i = 0; i < child.length; i++) {
@@ -453,21 +462,24 @@ function closeViewNoteNav() {
     document.getElementById("viewNoteSideNav").style.width = "0";
 }
 
-var zoomVar = 100;
+var scaleVar = 1.0;
 function zoomOut() {
-    zoomVar -= 10;
-    document.getElementById("drawing").style.zoom = zoomVar + "%";
+    scaleVar -= 0.1;    
+    document.getElementById("SVG101").style.transform = "scale("+ scaleVar +")";
+    document.getElementById("uploadPreview").style.transform = "scale("+ scaleVar +")";
 }
 
 function zoomIn() {
-    zoomVar += 10;
-    document.getElementById("drawing").style.zoom = zoomVar + "%";
+    scaleVar += 0.1;
+    document.getElementById("SVG101").style.transform = "scale("+ scaleVar +")";
+    document.getElementById("uploadPreview").style.transform = "scale("+ scaleVar +")";
 }
 
 
 function resetZoom() {
-    document.getElementById("drawing").style.zoom = "100%";
-    zoomVar = 100;
+    document.getElementById("SVG101").style.transform = "scale(1.0)";
+    document.getElementById("uploadPreview").style.transform = "scale(1.0)";
+    scaleVar = 1.0;
 }
 
 function viewHelp() {
