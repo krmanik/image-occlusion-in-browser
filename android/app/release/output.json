@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "io.cordova.ankiimageocclusion",
+  "applicationId": "io.cordova.hellocordova",
   "variantName": "release",
   "elements": [
     {
