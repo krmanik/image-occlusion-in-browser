@@ -258,6 +258,8 @@ async function createGroup(list) {
             if (child[i].tagName == "rect") {
                 var svgEle = SVG.adopt(document.getElementById(child[i].id))
                 svgEle.selectize(false);
+                svgEle.draggable(true);
+                svgEle.resize(true);
             }
         } catch (e) {
             console.log("error");
