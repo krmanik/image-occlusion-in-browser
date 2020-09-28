@@ -20,12 +20,12 @@ For desktop there is already addon for creating image occlusion. This is impleme
 
 # Create deck using Android app [Anki Image Occlusion]
 - Download from Github release page.
-https://github.com/infinyte7/image-occlusion-in-browser/releases/tag/v1.0
+https://github.com/infinyte7/image-occlusion-in-browser/releases
 
 - First, make sure to give storage and additional permissions
 - Create card click on download icon.
 - Card will be added one by one. But wait till ```card added``` toast showing on screen.
-- Copy svg image from ```Internal Storage/ Android/ data/ io.cordova.hellocordova/ files/``` and original image file to AnkiDroid ```collection.media``` folder.
+- Copy svg image from ```Internal Storage/ Android/ data/ io.infinyte7.ankiimageocclusion/ files/``` and original image file to AnkiDroid ```collection.media``` folder.
 
 ### Demo
 <img src="demo/ankidroid_img_occlusion.gif" height="450"></img>
