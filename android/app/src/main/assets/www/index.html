@@ -16,15 +16,13 @@ Author: Infinyte7 (Mani)
   <link href="css/index.css" rel=stylesheet type=text/css>
   <link href="css/svg.select.min.css" rel=stylesheet type=text/css>
   <title>
-    Image Occlusion In Browser
+    Anki Image Occlusion [Normal]
   </title>
 </head>
 
 <body>
 
-  <div class="page-title">Image Occlusion In Browser (Normal)</div>
-  <div>Create group cloze, view this: <a href="group.html">Create group image occlusion</a></div>
-
+  <div class="page-title">Anki Image Occlusion [Normal]</div>
   <div style="font-size: 24px; color:gray; margin-top: 14px;">Options</div>
   <div>
     <div class="button">
@@ -33,11 +31,12 @@ Author: Infinyte7 (Mani)
     </div>
 
     <div onclick="addNote();" class="button"><i class="material-icons" style="color: #5c6bc0;">post_add</i></div>
-    <div onclick="viewNote();" class="button"><i class="material-icons" style="color: #FF6F00;">view_list</i></div>
+    <!--<div onclick="viewNote();" class="button"><i class="material-icons" style="color: #FF6F00;">view_list</i></div>-->
 
     <div onclick="downloadNote()" class="button"><i class="material-icons" style="color: #1e88e5;">get_app</i></div>
-    <div onclick="viewHelp()" class="button"><i class="material-icons" style="color: #607D8B;">live_help</i></div>
     <div onclick="viewSettings()" class="button"><i class="material-icons" style="color: #455A64;">settings</i></div>
+    <div onclick="viewHelp()" class="button"><i class="material-icons" style="color: #03a9f4;">live_help</i></div>
+    <div onclick="changeOcclusionMode()" class="button"><i class="material-icons" style="color: #455A64;">more_vert</i></div>
   </div>
 
   <div style="font-size: 24px; color:gray; margin-top: 14px;">Tools</div>
@@ -126,21 +125,18 @@ Author: Infinyte7 (Mani)
           </td>
           <td>Add note for the imported image.</td>
         </tr>
-        <tr>
+        <!--<tr>
           <td>
             <div class="button"><i class="material-icons" style="color: #FF6F00;">view_list</i></div>
           </td>
           <td>After downloading svg files and output-note.txt, the details get add this view note sidebar. Click this to
             view all added notes.</td>
-        </tr>
+        </tr>-->
         <tr>
           <td>
             <div class="button"><i class="material-icons" style="color: #1e88e5;">get_app</i></div>
           </td>
-          <td>On editor window, this button will create questions mask, answers mask and output-note.txt and will
-            download. On View note window, this button will download output-all-notes.txt file combining all previous
-            notes. <div><br>Note: Wait for all files to be downloaded. For example, if there are 10 rectangles on screen
-              then total files will be 22 (10 question SVG, 10 Answer SVG, 1 Original SVG, 1 txt file). </div>
+          <td>Click this to download generated SVG files and add card to AnkiDroid. Note: Wait till 'card added' showing on screen.
           </td>
         </tr>
         <tr>
@@ -200,47 +196,26 @@ Author: Infinyte7 (Mani)
 
     <div style="text-align: left; padding: 20px;">
       <div><b>Note:</b></div>
-      <div>Copy all svg files and original images to <b>collection.media</b> folder.</div>
-
+      <div>All SVG files are in <b>Internal Storage/ Android/ data/ io.infinyte7.ankiimageocclusion/ files/</b> folder.</div>
+      <div>Copy all svg files and original images to AnkiDroid<b>collection.media</b> folder.</div>
       <br>
-      <div><b>Desktop</b></div>
-      <div> On Desktop, import <b>output-all-notes.txt</b> with allow html selected.</div>
-      <br>
-
-      <div><b>Android</b></div>
-      <div>On Android, use <a target="_blank"
-          href="https://github.com/infinyte7/image-occlusion-in-browser/blob/master/image-occ-deck-export.py"><b>image-occ-deck-export.py</b></a>
-        in Pydroid 3 to create anki decks. Download script from GitHub <a target="_blank"
-          href="https://github.com/infinyte7/image-occlusion-in-browser/releases">Release page</a>
-        <br> <br>View demo: <a target="_blank"
-          href="https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_pydroid_3.gif">Generate
-          deck using Pydroid 3</a>
-      </div>
-
-      <br>
-
-      <div><b>Browser</b></div>
-      <div>
-        Create anki deck using Google colab
-        View <a href="https://github.com/infinyte7/image-occlusion-in-browser#step-3-b">Create deck in Google colab</a>
-      </div>
-      <br><br>
-      <div><b>License</b></div>
       <div>
         View Source : <a target="_blank"
           href="https://github.com/infinyte7/image-occlusion-in-browser"><b>image-occlusion-in-browser</b></a>
       </div>
 
-      <br><br>
+      <br>
       <div><b>Report bugs and issues</b></div>
       <div>
         <a target="_blank"
           href="https://github.com/infinyte7/image-occlusion-in-browser/issues"><b>Issues</b></a>
       </div>
-
+    <br>
+      <div><b>License:</b></div>
       <div>
-        License: MIT License
-
+        MIT License
+      </div>
+      <div>
         Copyright (c) 2020 Mani
       </div>
 
@@ -266,6 +241,19 @@ Author: Infinyte7 (Mani)
 
   </div>
   <!--settings Side Nav -->
+
+
+  <!-- change occlusion create mode side nav -->
+  <div id="changeModeSideNav" class="sidenav-change-mode" style="right: 0;">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeChangeModeNav()">&times;</a>
+    <div class="page-title">Create Mode</div>
+      <br>
+      <div><a href="index.html">Create Normal Image Occlusion</a></div>
+      <br>
+      <div><a href="group.html">Create Group Image Occlusion</a></div>
+  </div>
+  <!--change occlusion  Side Nav -->
+
 
 </body>
 

@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.ichi2.anki.api.AddContentApi;
@@ -29,16 +28,7 @@ public class AnkiDroidCardAdd extends CordovaPlugin {
             this.addCard(noteData, callbackContext);
             return true;
         }
-
         return false;
-    }
-
-    private void coolMethod(String message, CallbackContext callbackContext) {
-        if (message != null && message.length() > 0) {
-            callbackContext.success(message);
-        } else {
-            callbackContext.error("Expected one non-empty string argument.");
-        }
     }
 
     private void addCard(String noteData, CallbackContext callbackContext) {
@@ -54,14 +44,6 @@ public class AnkiDroidCardAdd extends CordovaPlugin {
             Toast.makeText(context, "AnkiDroid API Error", Toast.LENGTH_LONG).show();
             return;
         }
-
-//        Log.i("deckID", deckId.toString());
-//        Log.i("modelId", modelId.toString());
-//        Log.i("message", noteData);
-
-        //String[] cardData = {noteId, noteHeader, origImgSVG, quesImgSVG, noteFooter, noteRemarks, noteSources, noteExtra1, noteExtra2, ansImgSVG, origFile};
-
-        // Log.i("card data", Arrays.toString(cardData));
 
         final AddContentApi api = new AddContentApi(context);
 
@@ -90,9 +72,11 @@ public class AnkiDroidCardAdd extends CordovaPlugin {
 
                 api.addNote(modelId, deckId, cardData, null);
                 Toast.makeText(context, "Card Added", Toast.LENGTH_SHORT).show();
+                callbackContext.success("Card added");
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            callbackContext.success("Card add failed.");
+            Toast.makeText(context, "Error: " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

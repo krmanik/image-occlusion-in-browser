@@ -1,8 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <feature name="Whitelist">
-        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
-        <param name="onload" value="true" />
+<widget id="io.infinyte7.ankiimageocclusion" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="AnkiDroidCardAdd">
+        <param name="android-package" value="cordova.plugin.ankiaddcard.AnkiDroidCardAdd.AnkiDroidCardAdd" />
     </feature>
     <feature name="File">
         <param name="android-package" value="org.apache.cordova.file.FileUtils" />
@@ -18,15 +17,19 @@
     <feature name="md5chksum">
         <param name="android-package" value="com.manuelramonlopez.cordova.plugins.md5chksum" />
     </feature>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <feature name="Zip">
         <param name="android-package" value="org.apache.cordova.Zip" />
     </feature>
     <name>HelloCordova</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Create image occlusion for AnkiDroid.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="" href="https://github.com/infinyte7">
+	Mani ( Infinyte7 )
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -38,7 +41,4 @@
     <allow-intent href="geo:*" />
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
-    <feature name="AnkiDroidCardAdd">
-        <param name="android-package" value="cordova.plugin.ankiaddcard.AnkiDroidCardAdd.AnkiDroidCardAdd" />
-    </feature>
 </widget>

@@ -178,7 +178,7 @@ function removeRect() {
 var imgHeight;
 var imgWidth;
 function addImage() {
-
+    scaleVar = 1.0;
     try {
         document.getElementById("drawing").innerHTML = "<img id='uploadPreview'/>";
         document.getElementById("tools-bar").style.position = "absolute";
@@ -292,6 +292,8 @@ async function createGroup(list) {
             if (child[i].tagName == "rect") {
                 var svgEle = SVG.adopt(document.getElementById(child[i].id))
                 svgEle.selectize(true);
+                svgEle.draggable(true);
+                svgEle.resize(true);
             }
         } catch (e) {
             console.log("error");
@@ -303,20 +305,20 @@ async function createGroup(list) {
 
     // origin mask
     //console.log("orig " + origSVG);
-    var origFileName = "img-occ-orig-" + timeStamp;
+    var origFileName = "cordova-img-occ-orig-" + timeStamp;
     await saveSVG(origFileName, origSVG, imgHeight, imgWidth);
     oneTime = false;
     origSVG = "";
 
     // Question Mask
-    var quesFileName = "img-occ-ques-" + timeStamp;
+    var quesFileName = "cordova-img-occ-ques-" + timeStamp;
     //console.log("Ques " + svgQues);
 
     await saveSVG(quesFileName, svgQues, imgHeight, imgWidth);
     svgQues = "";
 
     // Answer mask
-    var ansFileName = "img-occ-ans-" + timeStamp;
+    var ansFileName = "cordova-img-occ-ans-" + timeStamp;
     //console.log("ans " + svgAns);
 
     await saveSVG(ansFileName, svgAns, imgHeight, imgWidth);
@@ -324,9 +326,9 @@ async function createGroup(list) {
     // get all input note from form
     getNoteFromForm();
 
-    var noteId = "img-occ-note-" + timeStamp;
+    var noteId = "cordova-img-occ-note-" + timeStamp;
 
-    csvLine += noteId +
+    /*csvLine += noteId +
         "\t" + noteHeader +
         "\t" + "<img src='" + originalImageName + "'></img>" +
         "\t" + "<img src='" + quesFileName + ".svg'></img>" +
@@ -336,14 +338,23 @@ async function createGroup(list) {
         "\t" + noteExtra1 +
         "\t" + noteExtra2 +
         "\t" + "<img src='" + ansFileName + ".svg'></img>" +
-        "\t" + "<img src='" + origFileName + ".svg'></img>" + "\n";
+        "\t" + "<img src='" + origFileName + ".svg'></img>" + "\n";*/
 
-    var f = "output-note" + note_num + ".txt";
-    exportFile(csvLine, f);
-    note_num++;
+    //var f = "output-note" + note_num + ".txt";
+    //exportFile(csvLine, f);
+    //note_num++;
+
+    var origImgSVG = "<img src='" + originalImageName + "'></img>";
+    var quesImgSVG = "<img src='" + quesFileName + ".svg'></img>";
+    var ansImgSVG = "<img src='" + ansFileName + ".svg'></img>";
+    var origFile = "<img src='" + origFileName + ".svg'></img>";
+
+    var cardData = [noteId, noteHeader, origImgSVG, quesImgSVG, noteFooter, noteRemarks, noteSources, noteExtra1, noteExtra2, ansImgSVG, origFile];
+
+    addCardToAnkiDroid(cardData);
 
     // add to view note side bar
-    addCsvLineToViewNote(csvLine);
+    //addCsvLineToViewNote(csvLine);
     //document.getElementById("noteData").innerHTML = csvLine;
 
     //reset all
@@ -398,11 +409,13 @@ async function saveSVG(name, rect, height, width) {
     var svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
 
     var svgUrl = URL.createObjectURL(svgBlob);
-    var downloadLink = document.createElement("a");
+    /*var downloadLink = document.createElement("a");
     downloadLink.href = svgUrl;
     downloadLink.download = name;
     document.body.appendChild(downloadLink);
-    downloadLink.click();
+    downloadLink.click();*/
+
+    saveFile(name+".svg", svgBlob);
 }
 
 var noteHeader;
@@ -492,6 +505,14 @@ function closeViewHelpNav() {
 
 function viewSettings() {
     document.getElementById("settingsSideNav").style.height = "100%";
+}
+
+function changeOcclusionMode() {
+    document.getElementById("changeModeSideNav").style.width = "100%";
+}
+
+function closeChangeModeNav() {
+    document.getElementById("changeModeSideNav").style.width = "0%";
 }
 
 function closeSettingsNav() {
@@ -607,4 +628,66 @@ function touchDraggable(el) {
     function setTranslate(xPos, yPos, el) {
         el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
     }
+}
+
+
+// save to app directory
+function saveFile (fileName, fileData) {
+    window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (directoryEntry) {
+        //console.log(directoryEntry);
+        directoryEntry.getFile(fileName, { create: true, exclusive: false }, function (entry) {
+            entry.createWriter(function (writer) {
+                //console.log("Writing..." + fileName);
+                writer.write(fileData);
+            }, function (error) {
+                console.log("Error " + error.code);
+            });
+        });
+     });
+}
+
+function success(result){
+    alert("plugin result: " + result);
+};
+
+var card_added_num = 1;
+function addCardToAnkiDroid(cardData) {
+    //console.log(cardData);
+    // noteId, noteHeader, origImgSVG, quesImgSVG, noteFooter, noteRemarks, noteSources, noteExtra1, noteExtra2, ansImgSVG, origFile
+    var note = {
+        "noteId" : cardData[0],
+        "header" : cardData[1],
+
+        "origImgSvg" : cardData[2],
+        "quesImgSvg" : cardData[3],
+
+        "footer" : cardData[4],
+        "remarks" : cardData[5],
+        "sources" : cardData[6],
+
+        "extra1" : cardData[7],
+        "extra2" : cardData[8],
+
+        "ansImgSvg" : cardData[9],
+        "origImg" : cardData[10]
+    }
+
+    var noteData = JSON.stringify(note);
+
+    cordova.plugins.addCard(noteData, function (result) {
+            console.log(result);
+            if (result == "Card added") {
+                document.getElementById("statusMsg").style.background = "#4caf50";
+                document.getElementById("statusMsg").innerHTML = card_added_num + " card added";
+
+                card_added_num++;
+
+            } else if (result == "Permission required"){
+                document.getElementById("statusMsg").style.background = "#f44336";
+                document.getElementById("statusMsg").innerHTML = "Storage and additional permission required.";
+            } else {
+                document.getElementById("statusMsg").style.background = "#f44336";
+                document.getElementById("statusMsg").innerHTML = "Card not added";
+            }
+        });
 }

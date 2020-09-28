@@ -1,6 +1,14 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
   module.exports = [
     {
+      "id": "cordova-plugin-ankiaddcard.AnkiDroidCardAdd",
+      "file": "plugins/cordova-plugin-ankiaddcard/www/AnkiDroidCardAdd.js",
+      "pluginId": "cordova-plugin-ankiaddcard",
+      "clobbers": [
+        "cordova.plugins"
+      ]
+    },
+    {
       "id": "cordova-plugin-file.DirectoryEntry",
       "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
       "pluginId": "cordova-plugin-file",
@@ -229,24 +237,16 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "downloader"
       ]
-    },
-    {
-      "id": "cordova-plugin-ankiaddcard.AnkiDroidCardAdd",
-      "file": "plugins/cordova-plugin-ankiaddcard/www/AnkiDroidCardAdd.js",
-      "pluginId": "cordova-plugin-ankiaddcard",
-      "clobbers": [
-        "cordova.plugins"
-      ]
     }
   ];
   module.exports.metadata = {
-    "cordova-plugin-whitelist": "1.3.4",
+    "cordova-plugin-ankiaddcard": "0.0.1",
     "cordova-plugin-file": "6.0.2",
     "cordova-plugin-file-transfer": "1.7.1",
     "cordova-plugin-network-information": "2.0.2",
     "cordova-plugin-zip": "3.1.0",
     "cordova-plugin-file-md5": "0.3.3",
     "cordova-plugin-file-downloader": "0.4.0",
-    "cordova-plugin-ankiaddcard": "0.0.1"
+    "cordova-plugin-whitelist": "1.3.4"
   };
 });

@@ -144,6 +144,34 @@ svg {
   color: #f44336;
 }
 
+.sidenav-change-mode {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  right: 0;
+  overflow-x: hidden;
+  transition: 0.5s;
+  text-align:center;
+  background: white;
+}
+
+.sidenav-change-mode .closebtn {
+  position: absolute;
+  top: 0;
+  left: 25px;
+  font-size: 36px;
+  user-select: none;
+}
+
+.sidenav-change-mode a {
+  text-decoration: none;
+  transition: 0.3s;
+  color: #f44336;
+}
+
+
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav-right {padding-top: 15px;}

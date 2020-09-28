@@ -103,6 +103,7 @@ function removeRect() {
 var imgHeight;
 var imgWidth;
 function addImage() {
+    scaleVar = 1.0;
 
     try {
         document.getElementById("drawing").innerHTML = "<img id='uploadPreview'/>";
@@ -116,7 +117,7 @@ function addImage() {
         imgtag.title = selectedFile.name;
 
         originalImageName = imgtag.title;
-        console.log("Img Name "+ originalImageName );
+        //console.log("Img Name "+ originalImageName );
 
         reader.onload = function (event) {
             imgtag.src = event.target.result;
@@ -219,17 +220,17 @@ async function downloadNote() {
 
                 var noteId = "cordova-img-occ-note-" + timeStamp;
 
-                csvLine += noteId +
-                    "\t" + noteHeader +
-                    "\t" + "<img src='" + originalImageName + "'></img>" +
-                    "\t" + "<img src='" + quesFileName + ".svg'></img>" +
-                    "\t" + noteFooter +
-                    "\t" + noteRemarks +
-                    "\t" + noteSources +
-                    "\t" + noteExtra1 +
-                    "\t" + noteExtra2 +
-                    "\t" + "<img src='" + ansFileName + ".svg'></img>" +
-                    "\t" + "<img src='" + origFileName + ".svg'></img>" + "\n";
+//                csvLine += noteId +
+//                    "\t" + noteHeader +
+//                    "\t" + "<img src='" + originalImageName + "'></img>" +
+//                    "\t" + "<img src='" + quesFileName + ".svg'></img>" +
+//                    "\t" + noteFooter +
+//                    "\t" + noteRemarks +
+//                    "\t" + noteSources +
+//                    "\t" + noteExtra1 +
+//                    "\t" + noteExtra2 +
+//                    "\t" + "<img src='" + ansFileName + ".svg'></img>" +
+//                    "\t" + "<img src='" + origFileName + ".svg'></img>" + "\n";
 
 
                 var origImgSVG = "<img src='" + originalImageName + "'></img>";
@@ -238,23 +239,20 @@ async function downloadNote() {
                 var origFile = "<img src='" + origFileName + ".svg'></img>";
 
                 var cardData = [noteId, noteHeader, origImgSVG, quesImgSVG, noteFooter, noteRemarks, noteSources, noteExtra1, noteExtra2, ansImgSVG, origFile];
-
                 addCardToAnkiDroid(cardData);
-
             }
-
         }
     }
 
-    if (csvLine != "") {
-        var f = "output-note" + note_num + ".txt";
-        exportFile(csvLine, f);
-        note_num++;
-
-        // add to view note side bar
-        addCsvLineToViewNote(csvLine);
-        //document.getElementById("noteData").innerHTML = csvLine;
-    }
+//    if (csvLine != "") {
+//        var f = "output-note" + note_num + ".txt";
+//        exportFile(csvLine, f);
+//        note_num++;
+//
+//        // add to view note side bar
+//        addCsvLineToViewNote(csvLine);
+//        //document.getElementById("noteData").innerHTML = csvLine;
+//    }
 }
 
 function exportFile(csv, filename) {
@@ -407,6 +405,14 @@ function closeSettingsNav() {
     document.getElementById("settingsSideNav").style.height = "0";
 }
 
+function changeOcclusionMode() {
+    document.getElementById("changeModeSideNav").style.width = "100%";
+}
+
+function closeChangeModeNav() {
+    document.getElementById("changeModeSideNav").style.width = "0";
+}
+
 // assign to input
 var questionColor = "#F44336";
 var originalColor = "#fdd835";
@@ -515,10 +521,10 @@ function touchDraggable(el) {
 // save to app directory
 function saveFile (fileName, fileData) {
     window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (directoryEntry) {
-        console.log(directoryEntry); 
+        //console.log(directoryEntry);
         directoryEntry.getFile(fileName, { create: true, exclusive: false }, function (entry) {
             entry.createWriter(function (writer) {
-                console.log("Writing..." + fileName);
+                //console.log("Writing..." + fileName);
                 writer.write(fileData);
             }, function (error) {
                 console.log("Error " + error.code);
@@ -531,7 +537,7 @@ function success(result){
     alert("plugin result: " + result);
 };
 
-var added = true;
+var card_added_num = 1;
 function addCardToAnkiDroid(cardData) {
     //console.log(cardData);
     // noteId, noteHeader, origImgSVG, quesImgSVG, noteFooter, noteRemarks, noteSources, noteExtra1, noteExtra2, ansImgSVG, origFile
@@ -557,5 +563,18 @@ function addCardToAnkiDroid(cardData) {
 
     cordova.plugins.addCard(noteData, function (result) {
             console.log(result);
+            if (result == "Card added") {
+                document.getElementById("statusMsg").style.background = "#4caf50";
+                document.getElementById("statusMsg").innerHTML = card_added_num + " card added";
+
+                card_added_num++;
+
+            } else if (result == "Permission required"){
+                document.getElementById("statusMsg").style.background = "#f44336";
+                document.getElementById("statusMsg").innerHTML = "Storage and additional permission required.";
+            } else {
+                document.getElementById("statusMsg").style.background = "#f44336";
+                document.getElementById("statusMsg").innerHTML = "Card not added";
+            }
         });
 }
