@@ -19,6 +19,7 @@ For desktop there is already addon for creating image occlusion. This is impleme
 
 
 # Create deck using Android app [Anki Image Occlusion]
+The app made using [Apache Cordova](https://cordova.apache.org/) and [AnkiDroid API](https://github.com/ankidroid/Anki-Android/wiki/AnkiDroid-API).
 - Download from Github release page.
 https://github.com/infinyte7/image-occlusion-in-browser/releases
 
@@ -157,6 +158,10 @@ Copyright (c) 2012-2018 Wout Fierens
 
 ## Image in demo
 Wikipedia
+
+## Anki Image Occlusion [Android app]
+MIT License
+<br>Copyright (c) 2020 Mani
 
 ## image occlusion in browser
 MIT License
