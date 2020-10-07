@@ -159,7 +159,6 @@ function changeIcon() {
     }
 }
 
-
 function exportFile(csv, filename) {
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
@@ -175,10 +174,6 @@ function exportFile(csv, filename) {
     document.body.removeChild(element);
 }
 
-
-// assign to input
-var questionColor = "#F44336";
-var originalColor = "#fdd835";
 // change if value changed by user
 function settings() {
     questionColor = document.getElementById("QColor").value;
@@ -202,6 +197,9 @@ window.onbeforeunload = function () {
     return "Have you downloaded output-all-notes.txt?";
 };
 
+// assign to input
+var questionColor = "#F44336";
+var originalColor = "#fdd835";
 /* https://stackoverflow.com/questions/9334084/moveable-draggable-div */
 window.onload = function () {
     document.getElementById("QColor").value = questionColor;
@@ -376,3 +374,19 @@ function onSuccessCallback(entries) {
 function onFailCallback() {
     console.log("error file list count");
 }
+
+function get_html_file(path) {
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', path)
+  
+    xhr.onload = () => {
+      if (xhr.status == 200)
+        html = xhr.response;
+        document.getElementById("side-nav-container").innerHTML = html; 
+    }  
+    xhr.send()
+  }
+
+  setTimeout(function () { 
+    get_html_file("common.html");
+   }, 1000);

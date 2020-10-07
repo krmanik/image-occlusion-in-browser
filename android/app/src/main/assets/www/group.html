@@ -1,7 +1,7 @@
-<!DOCTYPE html>
 <!--
 Author: Infinyte7 (Mani)
 -->
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -28,26 +28,28 @@ Author: Infinyte7 (Mani)
 
   <header>
     <div style="width: -webkit-fill-available;">
-      <div class="toolbar-button" style="float: left;" onclick="sideNavMain();"><i id="menu-icon" class="material-icons">menu</i></div>
+      <div class="toolbar-button" style="float: left;" onclick="sideNavMain();"><i id="menu-icon"
+          class="material-icons">menu</i></div>
       <div id="page-title-id" class="toolbar-button" style="float: left; font-size: 24px;">Group Cloze</div>
-      <div id="done-btn" class="toolbar-button" style="float: right;" onclick="confirmCreate()"><i class="material-icons">done</i></div>
+      <div id="done-btn" class="toolbar-button" style="float: right;" onclick="confirmCreate()"><i
+          class="material-icons">done</i></div>
     </div>
   </header>
 
-    <!-- main side nav -->
-    <div id="mainSideNav" class="sidenav-main" style="right: 0;">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeMainNav()">&times;</a>
-  
-      <div style="padding-top: 60px; text-align: left;">
-        <a href="index.html">Normal Cloze</a>
-        <a href="group.html">Group Cloze</a>
-        <a href="#" onclick="changePage('move')">Move Images</a>
-        <a href="#"  onclick="changePage('settings')">Settings</a>
-        <a href="#" onclick="changePage('help')">Help</a>
-      </div>
-    
+  <!-- main side nav -->
+  <div id="mainSideNav" class="sidenav-main" style="right: 0;">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeMainNav()">&times;</a>
+
+    <div style="padding-top: 60px; text-align: left;">
+      <a href="index.html">Normal Cloze</a>
+      <a href="group.html">Group Cloze</a>
+      <a href="#" onclick="changePage('move')">Move Images</a>
+      <a href="#" onclick="changePage('settings')">Settings</a>
+      <a href="#" onclick="changePage('help')">Help</a>
     </div>
-    <!--main Side Nav -->
+
+  </div>
+  <!--main Side Nav -->
 
   <!-- bottom -->
   <nav class="nav">
@@ -65,25 +67,27 @@ Author: Infinyte7 (Mani)
     </a>
   </nav>
 
-<header-2>
-  <div style="display: inline; padding-left: 10px;">
-    <div class="button">
-      <label for="uploadImage"><i class="material-icons" style="color: #43a047;">add_photo_alternate</i></label>
-      <input id="uploadImage" type="file" name="myPhoto" onchange="addImage();"></input>
+  <header-2>
+    <div style="display: inline; padding-left: 10px;">
+      <div class="button">
+        <label for="uploadImage"><i class="material-icons" style="color: #43a047;">add_photo_alternate</i></label>
+        <input id="uploadImage" type="file" name="myPhoto" onchange="addImage();"></input>
+      </div>
     </div>
-  </div>
 
-  <div style="float: right; margin: -4px;">
-    <label for="addState"><i id="iconGroup" class="material-icons" style="color: #607d8b; margin: 10px;">collections</i></label>
-    <input id="addState" type="checkbox" style="display: none;" value="false">
-  </div>
+    <div style="float: right; margin: -4px;">
+      <label for="addState"><i id="iconGroup" class="material-icons"
+          style="color: #607d8b; margin: 10px;">collections</i></label>
+      <input id="addState" type="checkbox" style="display: none;" value="false">
+    </div>
 
-  <div style="float: right; padding-right: 10px;">
-    <div onclick="zoomIn();" class="button"><i class="material-icons" style="color: #455A64;">zoom_in</i></div>
-    <div onclick="zoomOut();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out</i></div>
-    <div onclick="resetZoom();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out_map</i></div>
-  </div>
-</header-2>
+    <div style="float: right; padding-right: 10px;">
+      <div onclick="zoomIn();" class="button"><i class="material-icons" style="color: #455A64;">zoom_in</i></div>
+      <div onclick="zoomOut();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out</i></div>
+      <div onclick="resetZoom();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out_map</i>
+      </div>
+    </div>
+  </header-2>
 
   <div id="drawing" class="container-editor"></div>
 
@@ -91,202 +95,27 @@ Author: Infinyte7 (Mani)
 
   <div id="snackbar"></div>
 
-  
+
   <div class="card-added-msg-box">
     <div id="card-added" class="card-added-msg"></div>
   </div>
 
-  <!-- Note Form -->
-  <!-- Header, Footer, Remarks, Sources, Extra 1, Extra 2-->
-  <div id="add-note" class="sidenav">
-    <div class="input-note" style="padding-top: 60px;">
-      <textarea id="noteHeader" class="input-add-note" type="text" placeholder="Header..." required></textarea>
-    </div>
+  <div id="side-nav-container"></div>
 
-    <div class="input-note">
-      <textarea id="noteFooter" class="input-add-note" type="text" placeholder="Footer..." required></textarea>
-    </div>
-
-    <div class="input-note">
-      <textarea id="noteRemarks" class="input-add-note" type="text" placeholder="Remarks..." required></textarea>
-    </div>
-
-    <div class="input-note">
-      <textarea id="noteSources" class="input-add-note" type="text" placeholder="Sources..." required></textarea>
-    </div>
-
-    <div class="input-note">
-      <textarea id="noteExtra1" class="input-add-note" type="text" placeholder="Extra..." required></textarea>
-    </div>
-
-    <div class="input-note" style="padding-bottom: 60px;">
-      <textarea id="noteExtra2" class="input-add-note" type="text" placeholder="Extra..." required></textarea>
-    </div>
-
-  </div>
-  <!-- Note Form -->
-
-
-  <!-- View Added Notes -->
-  <!--/*
-        header, image, question mask, footer, remarks, sources, extra1, extra2, answer mask, origin mask
-        */-->
-  <div id="viewNoteSideNav" class="sidenav-right" style="right: 0; text-align: -webkit-center;">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeViewNoteNav()">&times;</a>
-
-    <div onclick="downloadAllNotes()" class="button"><i class="material-icons" style="color: #1e88e5;">get_app</i></div>
-
-    <div id="noteData"></div>
-
-  </div>
-  <!-- View Note -->
-
-  <!--Help Side Nav -->
-  <!--Help Side Nav -->
-  <div id="viewHelpSideNav" class="sidenav-help" style="right: 0;">
-    <!-- buttons only for showing (no function) -->
-    <table class="help-sidebar">
-      <tbody>
-        <tr>
-          <td>
-            <div class="button"><i class="material-icons" style="color: #43a047;">add_photo_alternate</i></div>
-          </td>
-          <td>Import image file for creating question mask and answer mask</td>
-        </tr>
-        <tr>
-          <td>
-            <div class="button"><i class="material-icons" style="color: #5c6bc0;">post_add</i></div>
-          </td>
-          <td>Add note for the imported image.</td>
-        </tr>
-        <!--<tr>
-          <td>
-            <div class="button"><i class="material-icons" style="color: #FF6F00;">view_list</i></div>
-          </td>
-          <td>After downloading svg files and output-note.txt, the details get add this view note sidebar. Click this to
-            view all added notes.</td>
-        </tr>-->
-        <tr>
-          <td>
-            <div class="button"><i class="material-icons" style="color: #1e88e5;">get_app</i></div>
-          </td>
-          <td>Click this to download generated SVG files and add card to AnkiDroid. Note: Wait till 'card added' showing on screen.
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="button"><i class="material-icons" style="color: #607D8B;">live_help</i></div>
-          </td>
-          <td>View help window</td>
-        </tr>
-        <tr>
-          <td>
-            <div class="button"><i class="material-icons" style="color: #1e88e5;">add_box</i></div>
-          </td>
-          <td>Add rectangle to editor after importing image to window.</td>
-        </tr>
-        <tr>
-          <td>
-            <div class="button"><i class="material-icons" style="color: #009688;">dashboard</i></div>
-          </td>
-          <td>Use this button to create rectangle to any part of screen inside editor area. First click this, then tap
-            on two points (top left corner, bottom right corner) to create rectangle of that width and height. Reset
-            zoom then use this.</td>
-        </tr>
-        <tr>
-          <td><div class="button"><i class="material-icons" style="color: #607d8b;">collections</i></div></td>
-          <td>Create group cloze. First click on this then select rectangles, the rectangles with changed color will be added to list. Then again click this to generate image files.</td>
-        </tr>
-        <tr>
-          <td>
-            <div class="button"><i class="material-icons" style="color: #f44336;">delete_forever</i></div>
-          </td>
-          <td>Select a rectangle on editor window and delete that rectangle</td>
-        </tr>
-        <tr>
-          <td>
-            <div class="button"><i class="material-icons" style="color: #455A64;">zoom_in</i></div>
-          </td>
-          <td>Layout style is set to fixed. So click this to zoom in.</td>
-        </tr>
-        <tr>
-          <td>
-            <div class="button"><i class="material-icons" style="color: #455A64;">zoom_out</i></div>
-          </td>
-          <td>Layout style is set to fixed. So click this to zoom out.</td>
-        </tr>
-        <tr>
-          <td>
-            <div class="button"><i class="material-icons" style="color: #455A64;">zoom_out_map</i></div>
-          </td>
-          <td>Reset zoom value. Use it create rectangle at right coordinates.</td>
-        </tr>
-        <tr>
-          <td>
-            <div class="button"><i class="material-icons" style="color: #1e88e5;">drag_handle</i></div>
-          </td>
-          <td>
-            Drag tools
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div style="text-align: left; padding: 20px;">
-      <div><b>Note:</b></div>
-      <div>All SVG files are in <b>Internal Storage/ Android/ data/ io.infinyte7.ankiimageocclusion/ files/</b> folder.</div>
-      <div>Copy all svg files and original images to AnkiDroid<b>collection.media</b> folder.</div>
+    <!-- settings side nav -->
+    <div id="settingsSideNav" class="sidenav-help" style="right: 0;">
+      <div style="margin-top: 60px; padding: 2px;"><b>Note:</b> If input color is invalid then default color will be used.
+        So check the color format in hex. (eg.
+        #F44336)</div>
+      <div>View this for colors hex values: <a href="https://www.materialpalette.com/colors">materialpalette</a></div>
       <br>
-      <div>
-        View Source : <a target="_blank"
-                         href="https://github.com/infinyte7/image-occlusion-in-browser"><b>image-occlusion-in-browser</b></a>
-      </div>
-
-      <br>
-      <div><b>Report bugs and issues</b></div>
-      <div>
-        <a target="_blank"
-           href="https://github.com/infinyte7/image-occlusion-in-browser/issues"><b>Issues</b></a>
-      </div>
-      <br>
-      <div><b>License:</b></div>
-      <div>
-        MIT License
-      </div>
-      <div>
-        Copyright (c) 2020 Mani
-      </div>
-
-      <br><br>
-    </div>
-
-  </div>
-  <!--Help Side Nav -->
-
-<!-- settings side nav -->
-  <div id="settingsSideNav" class="sidenav-help" style="right: 0;">
-    <div style="margin-top: 60px; padding: 2px;"><b>Note:</b> If input color is invalid then default color will be used. So check the color format in hex. (eg.
-      #F44336)</div>
-    <div>View this for colors hex values: <a href="https://www.materialpalette.com/colors">materialpalette</a></div>
-    <br>
-    <label for="OColor">Original Mask Color</label><br>
-    <input type="text" id="OColor" name="OColor"><br><br>
-    <label for="QColor">Question Mask Color</label><br>
-    <input type="text" id="QColor" name="QColor">
-
-  </div>
-  <!--settings Side Nav -->
-
-    <!-- move image to AnkiDroid side nav -->
-    <div id="moveImgSideNav" class="sidenav-help" style="right: 0;">
-      <div style="margin-top: 60px; padding: 2px;">
+      <label for="OColor">Original Mask Color</label><br>
+      <input type="text" id="OColor" name="OColor"><br><br>
+      <label for="QColor">Question Mask Color</label><br>
+      <input type="text" id="QColor" name="QColor">
   
-        <div style="padding: 8px; margin-bottom: 20px;">Move image to AnkiDroid/collection.media/ folder</div>
-        <div id="num_images_move" style="padding: 8px; margin-bottom: 20px;"></div>
-        <div class="button-move" onclick="moveImagesToAnkiDroid();">Move</div>
-  
-      </div>
-    <!--move image to AnkiDroid Side Nav -->
+    </div>
+    <!--settings Side Nav -->
 
 </body>
 
