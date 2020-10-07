@@ -12,9 +12,9 @@ body {
 }
 
 .material-icons {
-  border: solid;
+  /* border: solid;
   border-radius: 8px;
-  background: white;
+  background: white; */
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -36,6 +36,9 @@ body {
   height: 100%;
   position: absolute;;
 
+  padding-top: 120px;
+  padding-bottom: 60px;
+
   cursor: auto;
   overflow: auto;
 }
@@ -53,11 +56,11 @@ svg {
  }
 
  .sidenav {
-  height: 100%;
-  width: 0;
+  height: 0;
+  width: 100%;
   position: fixed;
-  z-index: 20;
-  top: 0;
+  z-index: 100;
+  bottom: 0;
   left: 0;
   overflow-x: hidden;
   transition: 0.5s;
@@ -128,6 +131,7 @@ svg {
   transition: 0.5s;
   text-align:center;
   background: white;
+  z-index: 999;
 }
 
 .sidenav-help .closebtn {
@@ -143,34 +147,6 @@ svg {
   transition: 0.3s;
   color: #f44336;
 }
-
-.sidenav-change-mode {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 20;
-  top: 0;
-  right: 0;
-  overflow-x: hidden;
-  transition: 0.5s;
-  text-align:center;
-  background: white;
-}
-
-.sidenav-change-mode .closebtn {
-  position: absolute;
-  top: 0;
-  left: 25px;
-  font-size: 36px;
-  user-select: none;
-}
-
-.sidenav-change-mode a {
-  text-decoration: none;
-  transition: 0.3s;
-  color: #f44336;
-}
-
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
@@ -203,6 +179,24 @@ svg {
   opacity: 0.5;
 }
 
+
+.button-move {
+  display:inline; 
+  cursor: default;
+  user-select: none;
+  width: 36px;
+  height: 36px;
+  background: #4CAF50;
+  border-radius: 10px;
+  padding: 6px;
+  color: white;
+  font-size: 24px;
+}
+
+.button-move:active{
+  opacity: 0.5;
+}
+
 input[type="file"] {
     display: none;
 }
@@ -227,8 +221,8 @@ input[type="file"] {
 }
 
 .help-sidebar {
-  margin-top: 60px;
   padding: 10px;
+  padding-top: 30px;
   width:100%; 
   margin-top:20px;
 }

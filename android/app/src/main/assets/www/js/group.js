@@ -49,12 +49,15 @@ document.addEventListener('click', function (e) {
 
             if (svgGroup != "") {
                 createQuesSvg();
-                createGroup(addedList)
+                //createGroup(addedList)
             }
         }
     }
 
     if (document.getElementById("addState").value == "true") {
+
+        document.getElementById("done-btn").style.display = "none";
+
         if (document.getElementById(selectedElement).tagName == "rect") {
             svgGroup = "added";
 
@@ -78,9 +81,15 @@ document.addEventListener('click', function (e) {
                 }
             }
         }
+    } else {
+        document.getElementById("done-btn").style.display = "block";
     }
 
 }, false);
+
+function confirmCreate() {
+    createGroup(addedList);
+}
 
 /* https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb */
 function hexToRgb(hex) {
@@ -129,7 +138,7 @@ function drawRect() {
 
     } catch (e) {
         console.log(e);
-        document.getElementById("statusMsg").innerHTML = "Add image first";
+        showSnackbar("Add image first");
         document.getElementById("drawRectId").style.color = "#009688";
     }
 }
@@ -143,10 +152,9 @@ function addRect() {
                     .selectize()
                     .resize()
             })
-        document.getElementById("statusMsg").innerHTML = "";
     } catch (e) {
         console.log(e);
-        document.getElementById("statusMsg").innerHTML = "Add image first";
+        showSnackbar("Add image first");
     }
 
 }
@@ -166,12 +174,10 @@ function removeRect() {
             }
 
             svgEle.remove();
-            document.getElementById("statusMsg").innerHTML = "";
-
         }
     } catch (e) {
         console.log(e);
-        document.getElementById("statusMsg").innerHTML = "Select a rectangle";
+        showSnackbar("Select a rectangle");
     }
 }
 
@@ -181,8 +187,6 @@ function addImage() {
     scaleVar = 1.0;
     try {
         document.getElementById("drawing").innerHTML = "<img id='uploadPreview'/>";
-        document.getElementById("tools-bar").style.position = "absolute";
-        document.getElementById("tools-bar").style.padding = "10px";
 
         var selectedFile = event.target.files[0];
         var reader = new FileReader();
@@ -207,16 +211,13 @@ function addImage() {
                     .height(imgHeight)
                     .width(imgWidth)
                     .id("SVG101")
-
-                document.getElementById("statusMsg").innerHTML = "";
-
             };
         };
 
         reader.readAsDataURL(selectedFile);
     } catch (e) {
         console.log(e);
-        document.getElementById("statusMsg").innerHTML = "Image import error";
+        showSnackbar("Image import error");
     }
 
 };
@@ -391,7 +392,7 @@ var xmlns = "http://www.w3.org/2000/svg";
 
 async function saveSVG(name, rect, height, width) {
 
-    await pause(600);
+    await pause(50);
 
     var svg = document.createElementNS(svgNS, "svg");
 
@@ -459,13 +460,12 @@ function downloadAllNotes() {
 }
 
 function addNote() {
-    document.getElementById("mySidenav").style.width = "100%";
+    if (document.getElementById("add-note").style.height == "100%") {
+        document.getElementById("add-note").style.height = "0";
+    } else {
+        document.getElementById("add-note").style.height = "100%";
+    }
 }
-
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-}
-
 
 function viewNote() {
     document.getElementById("viewNoteSideNav").style.width = "100%";
@@ -473,6 +473,56 @@ function viewNote() {
 
 function closeViewNoteNav() {
     document.getElementById("viewNoteSideNav").style.width = "0";
+}
+
+function sideNavMain() {
+    
+    if (document.getElementById("page-title-id").innerHTML == "Settings" || document.getElementById("page-title-id").innerHTML == "Help") {
+        hideAll();
+        resetTitle();
+        settings();
+    } else {
+        document.getElementById("mainSideNav").style.width = "80%";
+    }
+}
+
+function closeMainNav() {
+    document.getElementById("mainSideNav").style.width = "0";
+}
+
+function changePage(page) {
+
+    hideAll();
+
+    if (page == "settings") {
+        document.getElementById("settingsSideNav").style.height = "100%";
+        document.getElementById("page-title-id").innerHTML = "Settings";
+        document.getElementById("done-btn").style.display = "none";
+    } else if (page == "help") {
+        document.getElementById("viewHelpSideNav").style.height = "100%";
+        document.getElementById("page-title-id").innerHTML = "Help";
+        document.getElementById("done-btn").style.display = "none";
+    } 
+    changeIcon();
+}
+
+function hideAll() {
+    document.getElementById("settingsSideNav").style.height = "0";
+    document.getElementById("viewHelpSideNav").style.height = "0";
+    document.getElementById("viewNoteSideNav").style.height = "0";
+    document.getElementById("mainSideNav").style.width = "0";
+}
+
+function changeIcon() {
+    if (document.getElementById("page-title-id").innerHTML == "Settings" || document.getElementById("page-title-id").innerHTML == "Help") {
+        document.getElementById('menu-icon').innerHTML = "arrow_back";
+    }
+}
+
+function resetTitle() {
+    document.getElementById('menu-icon').innerHTML = "menu";
+    document.getElementById("page-title-id").innerHTML = "Group Cloze";
+    document.getElementById("done-btn").style.display = "block";
 }
 
 var scaleVar = 1.0;
@@ -495,45 +545,6 @@ function resetZoom() {
     scaleVar = 1.0;
 }
 
-function viewHelp() {
-    document.getElementById("viewHelpSideNav").style.height = "100%";
-}
-
-function closeViewHelpNav() {
-    document.getElementById("viewHelpSideNav").style.height = "0";
-}
-
-function viewSettings() {
-    document.getElementById("settingsSideNav").style.height = "100%";
-}
-
-function changeOcclusionMode() {
-    document.getElementById("changeModeSideNav").style.width = "100%";
-}
-
-function closeChangeModeNav() {
-    document.getElementById("changeModeSideNav").style.width = "0%";
-}
-
-function closeSettingsNav() {
-    document.getElementById("settingsSideNav").style.height = "0";
-    document.getElementById("statusMsg").innerHTML = "";
-
-    settings();
-    // check if valid hex value, set to default if not valid
-    if (!/^#[0-9A-F]{6}$/i.test(questionColor)) {
-        questionColor = "#F44336";
-        document.getElementById("settingsSideNav").style.height = "100%";
-        document.getElementById("statusMsg").innerHTML = "Not a valid color";
-    }
-
-    if (!/^#[0-9A-F]{6}$/i.test(originalColor)) {
-        originalColor = "#fdd835";
-        document.getElementById("settingsSideNav").style.height = "100%";
-        document.getElementById("statusMsg").innerHTML = "Not a valid color";
-    }
-}
-
 // assign to input
 var questionColor = "#F44336";
 var originalColor = "#fdd835";
@@ -541,6 +552,18 @@ var originalColor = "#fdd835";
 function settings() {
     questionColor = document.getElementById("QColor").value;
     originalColor = document.getElementById("OColor").value;
+
+    if (!/^#[0-9A-F]{6}$/i.test(questionColor)) {
+        questionColor = "#F44336";
+        document.getElementById("settingsSideNav").style.height = "100%";
+        showSnackbar("Not a valid color");
+    }
+
+    if (!/^#[0-9A-F]{6}$/i.test(originalColor)) {
+        originalColor = "#fdd835";
+        document.getElementById("settingsSideNav").style.height = "100%";
+        showSnackbar("Not a valid color");
+    }
 }
 
 
@@ -550,11 +573,6 @@ window.onbeforeunload = function () {
 
 /* https://stackoverflow.com/questions/9334084/moveable-draggable-div */
 window.onload = function () {
-    var e = document.getElementById('tools-bar')
-    draggable(e);
-
-    touchDraggable(e);
-
     document.getElementById("QColor").value = questionColor;
     document.getElementById("OColor").value = originalColor;
 
@@ -677,17 +695,23 @@ function addCardToAnkiDroid(cardData) {
     cordova.plugins.addCard(noteData, function (result) {
             console.log(result);
             if (result == "Card added") {
-                document.getElementById("statusMsg").style.background = "#4caf50";
-                document.getElementById("statusMsg").innerHTML = card_added_num + " card added";
+                document.getElementById("card-added").innerHTML = card_added_num + " card added";
 
                 card_added_num++;
 
             } else if (result == "Permission required"){
-                document.getElementById("statusMsg").style.background = "#f44336";
-                document.getElementById("statusMsg").innerHTML = "Storage and additional permission required.";
+                showSnackbar("Storage and additional permission required.");
             } else {
-                document.getElementById("statusMsg").style.background = "#f44336";
-                document.getElementById("statusMsg").innerHTML = "Card not added";
+                showSnackbar("Card not added");
             }
         });
 }
+
+function showSnackbar(msg) {
+    var x = document.getElementById("snackbar");
+  
+    x.innerHTML = msg;
+    x.className = "show";
+  
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2000);
+  }

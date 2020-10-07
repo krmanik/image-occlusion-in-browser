@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
 Author: Infinyte7 (Mani)
 -->
@@ -11,10 +12,13 @@ Author: Infinyte7 (Mani)
   <script src="js/svg.select.min.js"></script>
   <script src="js/svg.draw.min.js"></script>
   <script src="js/index.js"></script>
+  <script src="js/common.js"></script>
   <script src="cordova.js"></script>
 
   <link href="css/index.css" rel=stylesheet type=text/css>
   <link href="css/svg.select.min.css" rel=stylesheet type=text/css>
+  <link href="css/design.css" rel=stylesheet type=text/css>
+
   <title>
     Anki Image Occlusion [Normal]
   </title>
@@ -22,47 +26,78 @@ Author: Infinyte7 (Mani)
 
 <body>
 
-  <div class="page-title">Anki Image Occlusion [Normal]</div>
-  <div style="font-size: 24px; color:gray; margin-top: 14px;">Options</div>
-  <div>
-    <div class="button">
-      <label for="uploadImage"><i class="material-icons" style="color: #43a047;">add_photo_alternate</i></label>
-      <input id="uploadImage" type="file" name="myPhoto" onchange="addImage();"></input>
+  <header>
+    <div style="width: -webkit-fill-available;">
+      <div class="toolbar-button" style="float: left;" onclick="sideNavMain();"><i id="menu-icon"
+          class="material-icons">menu</i></div>
+      <div id="page-title-id" class="toolbar-button" style="float: left;font-size: 24px;">Normal Cloze</div>
+      <div id="done-btn" class="toolbar-button" style="float: right;" onclick="downloadNote()"><i
+          class="material-icons">done</i></div>
+    </div>
+  </header>
+
+
+  <!-- main side nav -->
+  <div id="mainSideNav" class="sidenav-main" style="right: 0;">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeMainNav()">&times;</a>
+
+    <div style="padding-top: 60px; text-align: left;">
+      <a href="index.html">Normal Cloze</a>
+      <a href="group.html">Group Cloze</a>
+      <a href="#" onclick="changePage('move')">Move Images</a>
+      <a href="#" onclick="changePage('settings')">Settings</a>
+      <a href="#" onclick="changePage('help')">Help</a>
     </div>
 
-    <div onclick="addNote();" class="button"><i class="material-icons" style="color: #5c6bc0;">post_add</i></div>
-    <!--<div onclick="viewNote();" class="button"><i class="material-icons" style="color: #FF6F00;">view_list</i></div>-->
-
-    <div onclick="downloadNote()" class="button"><i class="material-icons" style="color: #1e88e5;">get_app</i></div>
-    <div onclick="viewSettings()" class="button"><i class="material-icons" style="color: #455A64;">settings</i></div>
-    <div onclick="viewHelp()" class="button"><i class="material-icons" style="color: #03a9f4;">live_help</i></div>
-    <div onclick="changeOcclusionMode()" class="button"><i class="material-icons" style="color: #455A64;">more_vert</i></div>
   </div>
+  <!--main Side Nav -->
 
-  <div style="font-size: 24px; color:gray; margin-top: 14px;">Tools</div>
-  <div id="tools-bar" style="padding-bottom: 14px; z-index: 2;">
-    <div onclick="addRect();" class="button"><i class="material-icons" style="color: #1e88e5;">add_box</i></div>
-    <div onclick="drawRect();" class="button"><i class="material-icons" style="color: #009688;"
-        id="drawRectId">dashboard</i></div>
-    <div onclick="removeRect();" class="button"><i class="material-icons" style="color: #f44336;">delete_forever</i>
+  <!-- bottom -->
+  <nav class="nav">
+    <a href="#" class="nav__link" onclick="drawRect();">
+      <i id="drawRectId" class="material-icons nav__icon" style="color: #009688;">crop</i>
+      <span class="nav__text">Draw</span>
+    </a>
+    <a href="#" class="nav__link" onclick="removeRect();">
+      <i class="material-icons nav__icon" style="color: #f44336;">delete</i>
+      <span class="nav__text">Delete</span>
+    </a>
+    <a href="#" class="nav__link" onclick="addNote();">
+      <i class="material-icons nav__icon" style="color: #5c6bc0;">post_add</i>
+      <span class="nav__text">Note</span>
+    </a>
+  </nav>
+
+  <header-2>
+    <div style="display: inline; padding-left: 10px;">
+      <div class="button">
+        <label for="uploadImage"><i class="material-icons" style="color: #43a047;">add_photo_alternate</i></label>
+        <input id="uploadImage" type="file" name="myPhoto" onchange="addImage();"></input>
+      </div>
     </div>
 
-    <div onclick="zoomIn();" class="button"><i class="material-icons" style="color: #455A64;">zoom_in</i></div>
-    <div onclick="zoomOut();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out</i></div>
-    <div onclick="resetZoom();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out_map</i></div>
-    <div class="button"><i class="material-icons" style="color: #1e88e5;">drag_handle</i></div>
-  </div>
+    <div style="float: right; padding-right: 10px;">
+      <div onclick="zoomIn();" class="button"><i class="material-icons" style="color: #455A64;">zoom_in</i></div>
+      <div onclick="zoomOut();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out</i></div>
+      <div onclick="resetZoom();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out_map</i>
+      </div>
+    </div>
+  </header-2>
 
   <div id="drawing" class="container-editor"></div>
 
   <div id="statusMsg" class="status-message"></div>
 
+  <div id="snackbar"></div>
+
+  <div class="card-added-msg-box">
+    <div id="card-added" class="card-added-msg"></div>
+  </div>
+
   <!-- Note Form -->
   <!-- Header, Footer, Remarks, Sources, Extra 1, Extra 2-->
-  <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-
-    <div class="input-note">
+  <div id="add-note" class="sidenav">
+    <div class="input-note" style="padding-top: 60px;">
       <textarea id="noteHeader" class="input-add-note" type="text" placeholder="Header..." required></textarea>
     </div>
 
@@ -82,7 +117,7 @@ Author: Infinyte7 (Mani)
       <textarea id="noteExtra1" class="input-add-note" type="text" placeholder="Extra..." required></textarea>
     </div>
 
-    <div class="input-note">
+    <div class="input-note" style="padding-bottom: 60px;">
       <textarea id="noteExtra2" class="input-add-note" type="text" placeholder="Extra..." required></textarea>
     </div>
 
@@ -103,13 +138,8 @@ Author: Infinyte7 (Mani)
 
   </div>
   <!-- View Note -->
-
   <!--Help Side Nav -->
   <div id="viewHelpSideNav" class="sidenav-help" style="right: 0;">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeViewHelpNav()">&times;</a>
-
-    <div class="page-title">Help</div>
-
     <!-- buttons only for showing (no function) -->
     <table class="help-sidebar">
       <tbody>
@@ -125,18 +155,21 @@ Author: Infinyte7 (Mani)
           </td>
           <td>Add note for the imported image.</td>
         </tr>
-        <!--<tr>
+        <tr>
           <td>
             <div class="button"><i class="material-icons" style="color: #FF6F00;">view_list</i></div>
           </td>
           <td>After downloading svg files and output-note.txt, the details get add this view note sidebar. Click this to
             view all added notes.</td>
-        </tr>-->
+        </tr>
         <tr>
           <td>
             <div class="button"><i class="material-icons" style="color: #1e88e5;">get_app</i></div>
           </td>
-          <td>Click this to download generated SVG files and add card to AnkiDroid. Note: Wait till 'card added' showing on screen.
+          <td>On editor window, this button will create questions mask, answers mask and output-note.txt and will
+            download. On View note window, this button will download output-all-notes.txt file combining all previous
+            notes. <div><br>Note: Wait for all files to be downloaded. For example, if there are 10 rectangles on screen
+              then total files will be 22 (10 question SVG, 10 Answer SVG, 1 Original SVG, 1 txt file). </div>
           </td>
         </tr>
         <tr>
@@ -196,26 +229,46 @@ Author: Infinyte7 (Mani)
 
     <div style="text-align: left; padding: 20px;">
       <div><b>Note:</b></div>
-      <div>All SVG files are in <b>Internal Storage/ Android/ data/ io.infinyte7.ankiimageocclusion/ files/</b> folder.</div>
-      <div>Copy all svg files and original images to AnkiDroid<b>collection.media</b> folder.</div>
+      <div>Copy all svg files and original images to <b>collection.media</b> folder.</div>
+
       <br>
+      <div><b>Desktop</b></div>
+      <div> On Desktop, import <b>output-all-notes.txt</b> with allow html selected.</div>
+      <br>
+
+      <div><b>Android</b></div>
+      <div>On Android, use <a target="_blank"
+          href="https://github.com/infinyte7/image-occlusion-in-browser/blob/master/image-occ-deck-export.py"><b>image-occ-deck-export.py</b></a>
+        in Pydroid 3 to create anki decks. Download script from GitHub <a target="_blank"
+          href="https://github.com/infinyte7/image-occlusion-in-browser/releases">Release page</a>
+        <br> <br>View demo: <a target="_blank"
+          href="https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_pydroid_3.gif">Generate
+          deck using Pydroid 3</a>
+      </div>
+
+      <br>
+
+      <div><b>Browser</b></div>
+      <div>
+        Create anki deck using Google colab
+        View <a href="https://github.com/infinyte7/image-occlusion-in-browser#step-3-b">Create deck in Google colab</a>
+      </div>
+      <br><br>
+      <div><b>License</b></div>
       <div>
         View Source : <a target="_blank"
           href="https://github.com/infinyte7/image-occlusion-in-browser"><b>image-occlusion-in-browser</b></a>
       </div>
 
-      <br>
+      <br><br>
       <div><b>Report bugs and issues</b></div>
       <div>
-        <a target="_blank"
-          href="https://github.com/infinyte7/image-occlusion-in-browser/issues"><b>Issues</b></a>
+        <a target="_blank" href="https://github.com/infinyte7/image-occlusion-in-browser/issues"><b>Issues</b></a>
       </div>
-    <br>
-      <div><b>License:</b></div>
+
       <div>
-        MIT License
-      </div>
-      <div>
+        License: MIT License
+
         Copyright (c) 2020 Mani
       </div>
 
@@ -227,10 +280,8 @@ Author: Infinyte7 (Mani)
 
   <!-- settings side nav -->
   <div id="settingsSideNav" class="sidenav-help" style="right: 0;">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeSettingsNav()">&times;</a>
-
-    <div class="page-title">Settings</div>
-    <div><b>Note:</b> If input color is invalid then default color will be used. So check the color format in hex. (eg.
+    <div style="margin-top: 60px; padding: 2px;"><b>Note:</b> If input color is invalid then default color will be used.
+      So check the color format in hex. (eg.
       #F44336)</div>
     <div>View this for colors hex values: <a href="https://www.materialpalette.com/colors">materialpalette</a></div>
     <br>
@@ -242,18 +293,16 @@ Author: Infinyte7 (Mani)
   </div>
   <!--settings Side Nav -->
 
+  <!-- move image to AnkiDroid side nav -->
+  <div id="moveImgSideNav" class="sidenav-help" style="right: 0;">
+    <div style="margin-top: 60px; padding: 2px;">
 
-  <!-- change occlusion create mode side nav -->
-  <div id="changeModeSideNav" class="sidenav-change-mode" style="right: 0;">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeChangeModeNav()">&times;</a>
-    <div class="page-title">Create Mode</div>
-      <br>
-      <div><a href="index.html">Create Normal Image Occlusion</a></div>
-      <br>
-      <div><a href="group.html">Create Group Image Occlusion</a></div>
-  </div>
-  <!--change occlusion  Side Nav -->
+      <div style="padding: 8px; margin-bottom: 20px;">Move image to AnkiDroid/collection.media/ folder</div>
+      <div id="num_images_move" style="padding: 8px; margin-bottom: 20px;"></div>
+      <div class="button-move" onclick="moveImagesToAnkiDroid();">Move</div>
 
+    </div>
+  <!--move image to AnkiDroid Side Nav -->
 
 </body>
 

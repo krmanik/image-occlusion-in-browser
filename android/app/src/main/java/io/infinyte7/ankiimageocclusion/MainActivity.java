@@ -19,12 +19,10 @@
 
 package io.infinyte7.ankiimageocclusion;
 
-import android.app.AppComponentFactory;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.webkit.PermissionRequest;
 import android.widget.Toast;
 
 import org.apache.cordova.*;
@@ -35,6 +33,7 @@ public class MainActivity extends CordovaActivity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        super.init();
 
         // enable Cordova apps to be started in the background
         Bundle extras = getIntent().getExtras();
@@ -63,6 +62,8 @@ public class MainActivity extends CordovaActivity
         catch ( PackageManager.NameNotFoundException e ) {
             Toast.makeText(context, "AnkiDroid not installed.", Toast.LENGTH_LONG).show();
         }
+
+        super.appView.getView().setHorizontalScrollBarEnabled(false);
 
         if (permissionAllowed) {
             // Set by <content src="index.html" /> in config.xml

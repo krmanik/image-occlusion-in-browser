@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
 Author: Infinyte7 (Mani)
 -->
@@ -11,10 +12,13 @@ Author: Infinyte7 (Mani)
   <script src="js/svg.select.min.js"></script>
   <script src="js/svg.draw.min.js"></script>
   <script src="js/group.js"></script>
+  <script src="js/common.js"></script>
   <script src="cordova.js"></script>
 
   <link href="css/index.css" rel=stylesheet type=text/css>
   <link href="css/svg.select.min.css" rel=stylesheet type=text/css>
+  <link href="css/design.css" rel=stylesheet type=text/css>
+
   <title>
     Anki Image Occlusion [Group]
   </title>
@@ -22,54 +26,80 @@ Author: Infinyte7 (Mani)
 
 <body>
 
-  <div class="page-title">Anki Image Occlusion [Group]</div>
+  <header>
+    <div style="width: -webkit-fill-available;">
+      <div class="toolbar-button" style="float: left;" onclick="sideNavMain();"><i id="menu-icon" class="material-icons">menu</i></div>
+      <div id="page-title-id" class="toolbar-button" style="float: left; font-size: 24px;">Group Cloze</div>
+      <div id="done-btn" class="toolbar-button" style="float: right;" onclick="confirmCreate()"><i class="material-icons">done</i></div>
+    </div>
+  </header>
 
-  <div style="font-size: 24px; color:gray; margin-top: 14px;">Options</div>
-  <div>
+    <!-- main side nav -->
+    <div id="mainSideNav" class="sidenav-main" style="right: 0;">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeMainNav()">&times;</a>
+  
+      <div style="padding-top: 60px; text-align: left;">
+        <a href="index.html">Normal Cloze</a>
+        <a href="group.html">Group Cloze</a>
+        <a href="#" onclick="changePage('move')">Move Images</a>
+        <a href="#"  onclick="changePage('settings')">Settings</a>
+        <a href="#" onclick="changePage('help')">Help</a>
+      </div>
+    
+    </div>
+    <!--main Side Nav -->
+
+  <!-- bottom -->
+  <nav class="nav">
+    <a href="#" class="nav__link" onclick="drawRect();">
+      <i id="drawRectId" class="material-icons nav__icon" style="color: #009688;">crop</i>
+      <span class="nav__text">Draw</span>
+    </a>
+    <a href="#" class="nav__link" onclick="removeRect();">
+      <i class="material-icons nav__icon" style="color: #f44336;">delete</i>
+      <span class="nav__text">Delete</span>
+    </a>
+    <a href="#" class="nav__link" onclick="addNote();">
+      <i class="material-icons nav__icon" style="color: #5c6bc0;">post_add</i>
+      <span class="nav__text">Note</span>
+    </a>
+  </nav>
+
+<header-2>
+  <div style="display: inline; padding-left: 10px;">
     <div class="button">
       <label for="uploadImage"><i class="material-icons" style="color: #43a047;">add_photo_alternate</i></label>
       <input id="uploadImage" type="file" name="myPhoto" onchange="addImage();"></input>
     </div>
-
-    <div onclick="addNote();" class="button"><i class="material-icons" style="color: #5c6bc0;">post_add</i></div>
-
-    <!--<div onclick="viewNote();" class="button"><i class="material-icons" style="color: #FF6F00;">view_list</i></div>-->
-
-    <div class="button">
-      <label for="addState"><i id="iconGroup" class="material-icons" style="color: #607d8b;">collections</i></label>
-      <input id="addState" type="checkbox" style="display: none;" value="false"></input>
-    </div>
-
-    <div onclick="viewSettings()" class="button"><i class="material-icons" style="color: #455A64;">settings</i></div>
-    <div onclick="viewHelp()" class="button"><i class="material-icons" style="color: #03a9f4;">live_help</i></div>
-    <div onclick="changeOcclusionMode()" class="button"><i class="material-icons" style="color: #455A64;">more_vert</i></div>
   </div>
 
-  <div style="font-size: 24px; color:gray; margin-top: 14px;">Tools</div>
-  <div id="tools-bar" style="padding-bottom: 14px; z-index: 2;">
-    <div onclick="addRect();" class="button"><i class="material-icons" style="color: #1e88e5;">add_box</i></div>
-    <div onclick="drawRect();" class="button"><i class="material-icons" style="color: #009688;"
-        id="drawRectId">dashboard</i></div>
+  <div style="float: right; margin: -4px;">
+    <label for="addState"><i id="iconGroup" class="material-icons" style="color: #607d8b; margin: 10px;">collections</i></label>
+    <input id="addState" type="checkbox" style="display: none;" value="false">
+  </div>
 
-    <div onclick="removeRect();" class="button"><i class="material-icons" style="color: #f44336;">delete_forever</i>
-    </div>
-
+  <div style="float: right; padding-right: 10px;">
     <div onclick="zoomIn();" class="button"><i class="material-icons" style="color: #455A64;">zoom_in</i></div>
     <div onclick="zoomOut();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out</i></div>
     <div onclick="resetZoom();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out_map</i></div>
-    <div class="button"><i class="material-icons" style="color: #1e88e5;">drag_handle</i></div>
   </div>
+</header-2>
 
   <div id="drawing" class="container-editor"></div>
 
   <div id="statusMsg" class="status-message"></div>
 
+  <div id="snackbar"></div>
+
+  
+  <div class="card-added-msg-box">
+    <div id="card-added" class="card-added-msg"></div>
+  </div>
+
   <!-- Note Form -->
   <!-- Header, Footer, Remarks, Sources, Extra 1, Extra 2-->
-  <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-
-    <div class="input-note">
+  <div id="add-note" class="sidenav">
+    <div class="input-note" style="padding-top: 60px;">
       <textarea id="noteHeader" class="input-add-note" type="text" placeholder="Header..." required></textarea>
     </div>
 
@@ -89,7 +119,7 @@ Author: Infinyte7 (Mani)
       <textarea id="noteExtra1" class="input-add-note" type="text" placeholder="Extra..." required></textarea>
     </div>
 
-    <div class="input-note">
+    <div class="input-note" style="padding-bottom: 60px;">
       <textarea id="noteExtra2" class="input-add-note" type="text" placeholder="Extra..." required></textarea>
     </div>
 
@@ -112,11 +142,8 @@ Author: Infinyte7 (Mani)
   <!-- View Note -->
 
   <!--Help Side Nav -->
+  <!--Help Side Nav -->
   <div id="viewHelpSideNav" class="sidenav-help" style="right: 0;">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeViewHelpNav()">&times;</a>
-
-    <div class="page-title">Help</div>
-
     <!-- buttons only for showing (no function) -->
     <table class="help-sidebar">
       <tbody>
@@ -236,12 +263,9 @@ Author: Infinyte7 (Mani)
   </div>
   <!--Help Side Nav -->
 
-  <!-- settings side nav -->
+<!-- settings side nav -->
   <div id="settingsSideNav" class="sidenav-help" style="right: 0;">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeSettingsNav()">&times;</a>
-
-    <div class="page-title">Settings</div>
-    <div><b>Note:</b> If input color is invalid then default color will be used. So check the color format in hex. (eg.
+    <div style="margin-top: 60px; padding: 2px;"><b>Note:</b> If input color is invalid then default color will be used. So check the color format in hex. (eg.
       #F44336)</div>
     <div>View this for colors hex values: <a href="https://www.materialpalette.com/colors">materialpalette</a></div>
     <br>
@@ -253,16 +277,16 @@ Author: Infinyte7 (Mani)
   </div>
   <!--settings Side Nav -->
 
-  <!-- change occlusion create mode side nav -->
-  <div id="changeModeSideNav" class="sidenav-change-mode" style="right: 0;">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeChangeModeNav()">&times;</a>
-    <div class="page-title">Create Mode</div>
-    <br>
-    <div><a href="index.html">Create Normal Image Occlusion</a></div>
-    <br>
-    <div><a href="group.html">Create Group Image Occlusion</a></div>
-  </div>
-  <!--change occlusion  Side Nav -->
+    <!-- move image to AnkiDroid side nav -->
+    <div id="moveImgSideNav" class="sidenav-help" style="right: 0;">
+      <div style="margin-top: 60px; padding: 2px;">
+  
+        <div style="padding: 8px; margin-bottom: 20px;">Move image to AnkiDroid/collection.media/ folder</div>
+        <div id="num_images_move" style="padding: 8px; margin-bottom: 20px;"></div>
+        <div class="button-move" onclick="moveImagesToAnkiDroid();">Move</div>
+  
+      </div>
+    <!--move image to AnkiDroid Side Nav -->
 
 </body>
 

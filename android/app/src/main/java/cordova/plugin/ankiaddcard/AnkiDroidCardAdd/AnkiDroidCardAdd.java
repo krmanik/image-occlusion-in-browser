@@ -3,14 +3,27 @@ package cordova.plugin.ankiaddcard.AnkiDroidCardAdd;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 
+import org.apache.cordova.file.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.ichi2.anki.api.AddContentApi;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -22,6 +35,12 @@ public class AnkiDroidCardAdd extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        if (action.equals("moveImagesToAnkiDroid")) {
+            String appPath = args.getString(0);
+            this.moveImagesToAnkiDroid(appPath, callbackContext);
+            return true;
+        }
+
         if (action.equals("addCard")) {
             // noteId, noteHeader, origImgSVG, quesImgSVG, noteFooter, noteRemarks, noteSources, noteExtra1, noteExtra2, ansImgSVG, origFile
             String noteData = args.getString(0);
@@ -30,6 +49,140 @@ public class AnkiDroidCardAdd extends CordovaPlugin {
         }
         return false;
     }
+
+    private void moveImagesToAnkiDroid(String appPath, CallbackContext callbackContext) {
+        Log.i("app path: ", appPath);
+
+        context = this.cordova.getActivity().getApplicationContext();
+
+        String srcPath = context.getExternalFilesDir(null) + File.separator;
+        String dstPath = Environment.getExternalStorageDirectory() + File.separator + "AnkiDroid"
+                + File.separator + "collection.media" + File.separator;
+
+        File dst = new File(dstPath);
+        File src = new File(srcPath);
+
+        if (dst.exists() && src.exists()) {
+            copyFileFromDirectory(src, dst);
+
+            deleteAllImages(src);
+
+        } else {
+            Toast.makeText(context, "Moving images failed!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void deleteAllImages(File dir) {
+        try {
+            if (dir.isDirectory())
+            {
+                String[] children = dir.list();
+                for (String child : children) {
+                    new File(dir, child).delete();
+                }
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    private void copyFileFromDirectory(File sourceLocation, File targetLocation)
+    {
+        if (sourceLocation.isDirectory())
+        {
+            if (!targetLocation.exists() && !targetLocation.mkdirs())
+            {
+                try
+                {
+                    throw new IOException("Directory not creating " + targetLocation.getAbsolutePath());
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            String[] children = sourceLocation.list();
+            for (int i = 0; i < children.length; i++)
+            {
+//                try {
+//                    copy(new File(sourceLocation, children[i]), new File(targetLocation, children[i]));
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+
+                copyFileFromDirectory(new File(sourceLocation, children[i]),
+                        new File(targetLocation, children[i]));
+
+            }
+        }
+        else
+        {
+            File directory = targetLocation.getParentFile();
+            // Check Directory is exist or not.
+            if (directory != null && !directory.exists() && !directory.mkdirs())
+            {
+                try
+                {
+                    throw new IOException("Directory not creating " + directory.getAbsolutePath());
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+            InputStream in = null;
+            OutputStream out = null;
+            try
+            {
+                in = new FileInputStream(sourceLocation);
+                out = new FileOutputStream(targetLocation);
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+
+            byte[] buf = new byte[1024];
+            int len;
+            try
+            {
+                while ((len = in.read(buf)) > 0)
+                {
+                    out.write(buf, 0, len);
+                }
+                in.close();
+                out.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public static void copy(File src, File dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        try {
+            OutputStream out = new FileOutputStream(dst);
+            try {
+                // Transfer bytes from in to out
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+            } finally {
+                out.close();
+            }
+        } finally {
+            in.close();
+        }
+    }
+
 
     private void addCard(String noteData, CallbackContext callbackContext) {
         // noteId, noteHeader, origImgSVG, quesImgSVG, noteFooter, noteRemarks, noteSources, noteExtra1, noteExtra2, ansImgSVG, origFile
@@ -71,7 +224,7 @@ public class AnkiDroidCardAdd extends CordovaPlugin {
                 String[] cardData = {noteId, header, origImgSvg, quesImgSvg, footer, remarks, sources, extra1, extra2, ansImgSvg, origImg};
 
                 api.addNote(modelId, deckId, cardData, null);
-                Toast.makeText(context, "Card Added", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Card Added", Toast.LENGTH_SHORT).show();
                 callbackContext.success("Card added");
             }
         } catch (JSONException e) {

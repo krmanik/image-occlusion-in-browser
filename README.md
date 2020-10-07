@@ -29,7 +29,7 @@ https://github.com/infinyte7/image-occlusion-in-browser/releases
 - Copy svg image from ```Internal Storage/ Android/ data/ io.infinyte7.ankiimageocclusion/ files/``` and original image file to AnkiDroid ```collection.media``` folder.
 
 ### Demo
-<img src="demo/ankidroid_img_occlusion.gif" height="450"></img>
+<img src="demo/demo_app.gif" height="450"></img>
 
 
 # Create image occlusion Anki decks in three steps using only browser
