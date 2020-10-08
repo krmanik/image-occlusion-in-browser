@@ -1,11 +1,11 @@
 # image-occlusion-in-browser
 
-Create image occlusion in browser. 
+Create image occlusion in browser.
 
 For desktop there is already addon for creating image occlusion. This is implementation for using mobile and creating deck with image occlusion.
 
 ### Demo [App]
-<img src="demo/demo_app.gif" height="450"></img>
+<img src="demo/new_design_demo.gif" height="450"></img>
 
 # Create deck using Android app [Anki Image Occlusion]
 
@@ -14,7 +14,8 @@ The app made using [Apache Cordova](https://cordova.apache.org/) and [AnkiDroid 
 ## Version 1.2.0
 In Anki Image Occlusion [App] Version 1.2.0:
    - New design
-   - Group cloze card generate simplified
+   - Cards auto added to AnkiDroid
+   - Group cloze card generation simplified
    - **Selected image and generated SVG copied to ```AnkiDroid/collection.media/``` folder.**
    
 ## Version 1.1.1
