@@ -4,8 +4,32 @@ Create image occlusion in browser.
 
 For desktop there is already addon for creating image occlusion. This is implementation for using mobile and creating deck with image occlusion.
 
+### Demo [App]
+<img src="demo/demo_app.gif" height="450"></img>
 
-# Demo
+# Create deck using Android app [Anki Image Occlusion]
+
+The app made using [Apache Cordova](https://cordova.apache.org/) and [AnkiDroid API](https://github.com/ankidroid/Anki-Android/wiki/AnkiDroid-API) with ```HTML/CSS/JS```.
+
+## Version 1.2.0
+In Anki Image Occlusion [App] Version 1.2.0:
+   - New design
+   - Group cloze card generate simplified
+   - **Selected image and generated SVG copied to ```AnkiDroid/collection.media/``` folder.**
+   
+## Version 1.1.1
+If not using latest version then following steps to be followed.
+
+- Download from Github release page.
+https://github.com/infinyte7/image-occlusion-in-browser/releases
+
+- First, make sure to give storage and additional permissions
+- Create card click on download icon.
+- Card will be added one by one. But wait till ```card added``` toast showing on screen.
+- Copy svg image from ```Internal Storage/ Android/ data/ io.infinyte7.ankiimageocclusion/ files/``` and original image file to AnkiDroid ```collection.media``` folder.
+
+
+# Demo [Web Browser]
 <img src="demo/demo_create.gif" height="380"></img> | <img src="demo/demo_draw_anywhere.gif" height="380"></img> | <img src="demo/demo_change_color.gif" height="380"></img>
 
 # Tutorials / Features
@@ -16,21 +40,6 @@ For desktop there is already addon for creating image occlusion. This is impleme
 - [Export deck on mobile using browser](demo/demo_create_deck.gif)
 - [Export deck on mobile using Pydroid 3](demo/demo_pydroid_3.gif)
 - [Using offline](demo/demo_img_occ.gif)
-
-
-# Create deck using Android app [Anki Image Occlusion]
-The app made using [Apache Cordova](https://cordova.apache.org/) and [AnkiDroid API](https://github.com/ankidroid/Anki-Android/wiki/AnkiDroid-API).
-- Download from Github release page.
-https://github.com/infinyte7/image-occlusion-in-browser/releases
-
-- First, make sure to give storage and additional permissions
-- Create card click on download icon.
-- Card will be added one by one. But wait till ```card added``` toast showing on screen.
-- Copy svg image from ```Internal Storage/ Android/ data/ io.infinyte7.ankiimageocclusion/ files/``` and original image file to AnkiDroid ```collection.media``` folder.
-
-### Demo
-<img src="demo/demo_app.gif" height="450"></img>
-
 
 # Create image occlusion Anki decks in three steps using only browser
 
