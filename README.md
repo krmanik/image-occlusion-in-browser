@@ -31,6 +31,7 @@ The app made using [Apache Cordova](https://cordova.apache.org/) and [AnkiDroid 
 https://github.com/infinyte7/image-occlusion-in-browser/releases
 - First, make sure to give storage and additional permissions
 - Selected image and generated SVG copied to ```AnkiDroid/collection.media/``` folder.
+- First select ```draw``` button then tap inside image at ```two point```, top left and bottom right, for creating box of that width and height.
 
 ### Version 1.1.1
 If not using latest version then following steps to be followed.
