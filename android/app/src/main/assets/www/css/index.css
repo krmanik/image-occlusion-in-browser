@@ -37,7 +37,7 @@ body {
   position: absolute;;
 
   padding-top: 120px;
-  padding-bottom: 60px;
+  padding-bottom: 80px;
 
   cursor: auto;
   overflow: auto;
@@ -161,7 +161,11 @@ svg {
 .input-add-note {
   padding: 8px;
   width: 90vw;
-  height: 10vh;
+  height: 20vh;
+}
+
+textarea:focus {
+  outline: #ff5722 auto 1px;
 }
 
 .anki-buttons {}

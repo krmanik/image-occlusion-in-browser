@@ -82,7 +82,12 @@ document.addEventListener('click', function (e) {
             }
         }
     } else {
-        document.getElementById("done-btn").style.display = "block";
+        if (document.getElementById("add-note").style.height == "100%" || document.getElementById("settingsSideNav").style.height == "100%"
+            || document.getElementById("viewHelpSideNav").style.height == "100%") {
+            document.getElementById("done-btn").style.display = "none";
+        } else {
+            document.getElementById("done-btn").style.display = "block";
+        }
     }
 
 }, false);
@@ -193,6 +198,7 @@ function addImage() {
 
         var imgtag = document.getElementById("uploadPreview");
         imgtag.title = selectedFile.name;
+        imgtag.type = selectedFile.type;
 
         originalImageName = imgtag.title;
 
@@ -206,6 +212,8 @@ function addImage() {
 
                 imgHeight = this.height;
                 imgWidth = this.width;
+
+                saveSelectedImageToAnkiDroid();
 
                 draw = SVG('drawing')
                     .height(imgHeight)

@@ -33,20 +33,26 @@ Author: Infinyte7 (Mani)
       <div id="page-title-id" class="toolbar-button" style="float: left; font-size: 24px;">Group Cloze</div>
       <div id="done-btn" class="toolbar-button" style="float: right;" onclick="confirmCreate()"><i
           class="material-icons">done</i></div>
+
+      <div id="close-add-note-btn" class="toolbar-button" style="float: right; display: none;" onclick="closeAddNoteNav()"><i
+          class="material-icons">close</i></div>
     </div>
   </header>
 
   <!-- main side nav -->
   <div id="mainSideNav" class="sidenav-main" style="right: 0;">
     <a href="javascript:void(0)" class="closebtn" onclick="closeMainNav()">&times;</a>
+    <div class="sidenav-header">Anki Image Occlusion</div>
 
-    <div style="padding-top: 60px; text-align: left;">
+    <div style="padding-top: 20px; text-align: left;">
       <a href="index.html">Normal Cloze</a>
       <a href="group.html">Group Cloze</a>
-      <a href="#" onclick="changePage('move')">Move Images</a>
+      <!-- <a href="#" onclick="changePage('move')">Move Images</a> -->
       <a href="#" onclick="changePage('settings')">Settings</a>
       <a href="#" onclick="changePage('help')">Help</a>
     </div>
+
+    <div class="sidenav-version">Version 1.2.0</div>
 
   </div>
   <!--main Side Nav -->
@@ -102,20 +108,20 @@ Author: Infinyte7 (Mani)
 
   <div id="side-nav-container"></div>
 
-    <!-- settings side nav -->
-    <div id="settingsSideNav" class="sidenav-help" style="right: 0;">
-      <div style="margin-top: 60px; padding: 2px;"><b>Note:</b> If input color is invalid then default color will be used.
-        So check the color format in hex. (eg.
-        #F44336)</div>
-      <div>View this for colors hex values: <a href="https://www.materialpalette.com/colors">materialpalette</a></div>
-      <br>
-      <label for="OColor">Original Mask Color</label><br>
-      <input type="text" id="OColor" name="OColor"><br><br>
-      <label for="QColor">Question Mask Color</label><br>
-      <input type="text" id="QColor" name="QColor">
-  
-    </div>
-    <!--settings Side Nav -->
+  <!-- settings side nav -->
+  <div id="settingsSideNav" class="sidenav-help" style="right: 0;">
+    <div style="margin-top: 60px; padding: 2px;"><b>Note:</b> If input color is invalid then default color will be used.
+      So check the color format in hex. (eg.
+      #F44336)</div>
+    <div>View this for colors hex values: <a href="https://www.materialpalette.com/colors">materialpalette</a></div>
+    <br>
+    <label for="OColor">Original Mask Color</label><br>
+    <input type="text" id="OColor" name="OColor"><br><br>
+    <label for="QColor">Question Mask Color</label><br>
+    <input type="text" id="QColor" name="QColor">
+
+  </div>
+  <!--settings Side Nav -->
 
 </body>
 

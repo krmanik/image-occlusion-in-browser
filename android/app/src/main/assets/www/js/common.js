@@ -65,10 +65,21 @@ function downloadAllNotes() {
 
 function addNote() {
     if (document.getElementById("add-note").style.height == "100%") {
-        document.getElementById("add-note").style.height = "0";
+        closeAddNoteNav();
     } else {
         document.getElementById("add-note").style.height = "100%";
+        document.getElementById("page-title-id").innerHTML = "Add Note";
+        document.getElementById("done-btn").style.display = "none";
+
+        document.getElementById("close-add-note-btn").style.display = "block";
+
     }
+}
+
+function closeAddNoteNav() {
+    document.getElementById("add-note").style.height = "0";
+    document.getElementById("close-add-note-btn").style.display = "none";
+    resetTitle();
 }
 
 function closeNav() {
@@ -91,6 +102,7 @@ function sideNavMain() {
         hideAll();
         resetTitle();
         settings();
+        closeAddNoteNav();
     } else {
         document.getElementById("mainSideNav").style.width = "80%";
     }
@@ -99,8 +111,6 @@ function sideNavMain() {
 function closeMainNav() {
     document.getElementById("mainSideNav").style.width = "0";
 }
-
-
 
 var scaleVar = 1.0;
 function zoomOut() {
@@ -125,6 +135,7 @@ function resetZoom() {
 function changePage(page) {
 
     hideAll();
+    closeAddNoteNav();
 
     if (page == "settings") {
         document.getElementById("settingsSideNav").style.height = "100%";
@@ -202,6 +213,8 @@ var questionColor = "#F44336";
 var originalColor = "#fdd835";
 /* https://stackoverflow.com/questions/9334084/moveable-draggable-div */
 window.onload = function () {
+    get_html_file("common.html");
+
     document.getElementById("QColor").value = questionColor;
     document.getElementById("OColor").value = originalColor;
 }
@@ -278,8 +291,8 @@ function touchDraggable(el) {
 
 // save to app directory
 function saveFile(fileName, fileData) {
-    var dir = cordova.file.externalDataDirectory;
-    //var dir = cordova.file.externalRootDirectory + "AnkiDroid/collection.media/";
+    //var dir = cordova.file.externalDataDirectory;
+    var dir = cordova.file.externalRootDirectory + "AnkiDroid/collection.media/";
     window.resolveLocalFileSystemURL(dir, function (directoryEntry) {
         //console.log(directoryEntry);
         directoryEntry.getFile(fileName, { create: true, exclusive: false }, function (entry) {
@@ -291,6 +304,27 @@ function saveFile(fileName, fileData) {
             });
         });
     });
+}
+
+function base64toBlob(base64Data, contentType) {
+    contentType = contentType || '';
+    var sliceSize = 1024;
+    var byteCharacters = atob(base64Data);
+    var bytesLength = byteCharacters.length;
+    var slicesCount = Math.ceil(bytesLength / sliceSize);
+    var byteArrays = new Array(slicesCount);
+
+    for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+        var begin = sliceIndex * sliceSize;
+        var end = Math.min(begin + sliceSize, bytesLength);
+
+        var bytes = new Array(end - begin);
+        for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+            bytes[i] = byteCharacters[offset].charCodeAt(0);
+        }
+        byteArrays[sliceIndex] = new Uint8Array(bytes);
+    }
+    return new Blob(byteArrays, { type: contentType });
 }
 
 function success(result) {
@@ -380,13 +414,29 @@ function get_html_file(path) {
     xhr.open('GET', path)
   
     xhr.onload = () => {
-      if (xhr.status == 200)
+      if (xhr.status == 200) {
         html = xhr.response;
         document.getElementById("side-nav-container").innerHTML = html; 
-    }  
-    xhr.send()
+      } else {
+          showSnackbar("Failed to load side navigation data.");
+      }
+    } 
+    xhr.send();
   }
 
-  setTimeout(function () { 
-    get_html_file("common.html");
-   }, 1000);
+function saveSelectedImageToAnkiDroid() {
+
+    var image = document.getElementById("uploadPreview"); 
+
+    fname = image.title;
+    var data = image.src;
+    var type = image.type;
+
+    var base64 = data.split(",")[1];
+
+    var blob = base64toBlob(base64, type);
+
+    saveFile(fname, blob);
+
+    showSnackbar("Image copied to AnkiDroid folder");
+}

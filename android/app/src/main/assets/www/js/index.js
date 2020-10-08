@@ -111,6 +111,7 @@ function addImage() {
 
         var imgtag = document.getElementById("uploadPreview");
         imgtag.title = selectedFile.name;
+        imgtag.type = selectedFile.type;
 
         originalImageName = imgtag.title;
         //console.log("Img Name "+ originalImageName );
@@ -125,6 +126,8 @@ function addImage() {
 
                 imgHeight = this.height;
                 imgWidth = this.width;
+
+                saveSelectedImageToAnkiDroid();
 
                 draw = SVG('drawing')
                     .height(imgHeight)
