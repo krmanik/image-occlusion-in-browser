@@ -8,7 +8,7 @@ For desktop there is already addon for creating image occlusion. This is impleme
    - New design
    - Cards auto added to AnkiDroid
    - Group cloze card generation simplified
-   - **Selected image and generated SVG copied to ```AnkiDroid/collection.media/``` folder.**
+   - **Selected image and generated SVG auto copy to ```AnkiDroid/collection.media/``` folder.**
 
 # Tutorials / Features
 - [Create question and answer mask](demo/demo_create.gif)
@@ -53,22 +53,4 @@ View [Create image occlusion Offline](Create-Offline.md)
 This is implemented using javascript. It has bugs and issues. Any contributions to improvement of codes and features will be appreciated.
 
 # License
-## Deck Template
-AGPL-3.0 License
-<br>Copyright (c) glutanimate
-<br>https://github.com/glutanimate/image-occlusion-enhanced
-
-## svg.js and its plugins
-Copyright (c) 2012-2018 Wout Fierens
-<br>https://svgdotjs.github.io/
-
-## Image in demo
-Wikipedia
-
-## Anki Image Occlusion [Android app]
-MIT License
-<br>Copyright (c) 2020 Mani
-
-## image occlusion in browser
-MIT License
-<br>Copyright (c) 2020 Mani
+View [License](License.md)
