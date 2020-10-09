@@ -1,3 +1,4 @@
+
 /* Do not remove
 MIT License
 
@@ -22,16 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-var selectedElement = "";
-document.addEventListener('click', function (e) {
-    //console.log(e.target.id);
-    selectedElement = e.target.id;
-}, false);
-
-var note_num = 1;
-var originalImageName;
-var draw;
-var rect;
 /*SVG.on(document, 'DOMContentLoaded', function () {
     draw = SVG('drawing')
             .height(600)
@@ -48,6 +39,85 @@ var rect;
         })
 })*/
 
+var clozeMode = "normal";
+var selectedElement = "";
+var svgGroup = "";
+var addedList = [];
+
+document.addEventListener('click', function (e) {
+    //console.log(e.target.id);
+    selectedElement = e.target.id;
+
+    if (clozeMode == "group") {
+        document.getElementById("addState").onclick = function () {
+            if (document.getElementById("addState").value == "false") {
+                document.getElementById("addState").value = true;
+                document.getElementById("iconGroup").style.color = "#FF6F00";
+
+                createOrigSvg();
+
+            } else {
+                document.getElementById("addState").value = false;
+                document.getElementById("iconGroup").style.color = "#607d8b";
+
+                if (svgGroup != "") {
+                    createQuesSvg();
+                    //createGroup(addedList)
+                } else {
+                    showSnackbar("Add rectangles to a group first");
+                }
+            }
+        }
+
+        if (document.getElementById("addState").value == "true") {
+
+            document.getElementById("group-done-btn").style.display = "none";
+
+            try {
+                if (document.getElementById(selectedElement).tagName == "rect") {
+                    svgGroup = "added";
+
+                    var c = hexToRgb(originalColor);
+                    var color = "rgb(" + c.r + ", " + c.g + ", " + c.b + ")";
+                    if (document.getElementById(selectedElement).style.fill == "" || document.getElementById(selectedElement).style.fill == color) {
+                        document.getElementById(selectedElement).style.fill = questionColor;
+                        addedList.push(selectedElement);
+                    } else {
+
+                        // if again tap then remove from list
+                        for (i = 0; i < addedList.length; i++) {
+                            if (selectedElement == addedList[i]) {
+                                document.getElementById(selectedElement).style.fill = originalColor;
+                                addedList.splice(i, 1);
+                                break;
+                            }
+                        }
+                        if (addedList.length == 0) {
+                            svgGroup = "";
+                        }
+                    }
+                }
+
+            } catch (e) {
+                console.log(e);
+            }
+        } else {
+            if (document.getElementById("add-note").style.height == "100%" || document.getElementById("settingsSideNav").style.height == "100%"
+                || document.getElementById("viewHelpSideNav").style.height == "100%") {
+                document.getElementById("done-btn").style.display = "none";
+                document.getElementById("group-done-btn").style.display = "none";
+            } else {
+                document.getElementById("group-done-btn").style.display = "block";
+            }
+        }
+    } // group cloze
+
+}, false);
+
+var note_num = 1;
+var originalImageName;
+var draw;
+var rect;
 function drawRect() {
     try {
         document.getElementById("drawRectId").style.color = "#fdd835";
@@ -70,6 +140,7 @@ function drawRect() {
     }
 }
 
+
 function addRect() {
     try {
         draw.rect(200, 50).move(100, 50).fill(originalColor)
@@ -88,8 +159,19 @@ function addRect() {
 function removeRect() {
     try {
         if (document.getElementById(selectedElement).tagName == "rect") {
-            var svgEle = SVG.adopt(document.getElementById(selectedElement))
+            var svgEle = SVG.adopt(document.getElementById(selectedElement));
             svgEle.selectize(false);
+
+            if (clozeMode == "group") {
+                // remove from list also
+                for (i = 0; i < addedList.length; i++) {
+                    if (selectedElement == addedList[i]) {
+                        addedList.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+
             svgEle.remove();
         }
     } catch (e) {
@@ -97,6 +179,7 @@ function removeRect() {
         showSnackbar("Select a rectangle");
     }
 }
+
 
 var imgHeight;
 var imgWidth;
@@ -144,112 +227,6 @@ function addImage() {
 
 };
 
-/* Download */
-async function downloadNote() {
-
-    var child = document.getElementById("SVG101").childNodes;
-
-    var oneTime = true;
-    var csvLine = "";
-
-
-
-    for (i = 0; i < child.length; i++) {
-
-        var origSVG = "";
-        var svgQues = "";
-        var svgAns = "";
-        // don't add svg with 0 width and 0 height
-        if (child[i].getBBox().height != 0 && child[i].getBBox().width != 0) {
-
-            for (j = 0; j < child.length; j++) {
-
-                if (child[j].tagName == "rect") {
-
-                    child[j].style.fill = originalColor;
-
-                    origSVG += child[j].outerHTML;
-
-                    if (i == j) {
-
-                        child[j].style.fill = questionColor;
-
-                        svgQues += child[j].outerHTML;
-
-                        child[j].style.fill = originalColor;
-
-                    } else {
-
-                        svgQues += child[j].outerHTML;
-                        svgAns += child[j].outerHTML;
-                    }
-                }
-            }
-
-            // add time stamp
-            var timeStamp = new Date().getTime();
-
-            if (child[i].tagName == "rect") {
-
-                if (oneTime) {
-                    // origin mask
-                    //console.log("orig " + origSVG);
-                    var origFileName = "cordova-img-occ-orig-" + timeStamp;
-                    saveSVG(origFileName, origSVG, imgHeight, imgWidth);
-                    oneTime = false;
-                }
-
-                // Question Mask
-                var quesFileName = "cordova-img-occ-ques-" + timeStamp;
-                //console.log("Ques " + svgQues);
-
-                await saveSVG(quesFileName, svgQues, imgHeight, imgWidth);
-
-                // Answer mask
-                var ansFileName = "cordova-img-occ-ans-" + timeStamp;
-                //console.log("ans " + svgAns);
-
-                await saveSVG(ansFileName, svgAns, imgHeight, imgWidth);
-
-                // get all input note from form
-                getNoteFromForm();
-
-                var noteId = "cordova-img-occ-note-" + timeStamp;
-
-                //                csvLine += noteId +
-                //                    "\t" + noteHeader +
-                //                    "\t" + "<img src='" + originalImageName + "'></img>" +
-                //                    "\t" + "<img src='" + quesFileName + ".svg'></img>" +
-                //                    "\t" + noteFooter +
-                //                    "\t" + noteRemarks +
-                //                    "\t" + noteSources +
-                //                    "\t" + noteExtra1 +
-                //                    "\t" + noteExtra2 +
-                //                    "\t" + "<img src='" + ansFileName + ".svg'></img>" +
-                //                    "\t" + "<img src='" + origFileName + ".svg'></img>" + "\n";
-
-
-                var origImgSVG = "<img src='" + originalImageName + "'></img>";
-                var quesImgSVG = "<img src='" + quesFileName + ".svg'></img>";
-                var ansImgSVG = "<img src='" + ansFileName + ".svg'></img>";
-                var origFile = "<img src='" + origFileName + ".svg'></img>";
-
-                var cardData = [noteId, noteHeader, origImgSVG, quesImgSVG, noteFooter, noteRemarks, noteSources, noteExtra1, noteExtra2, ansImgSVG, origFile];
-                addCardToAnkiDroid(cardData);
-            }
-        }
-    }
-
-    //    if (csvLine != "") {
-    //        var f = "output-note" + note_num + ".txt";
-    //        exportFile(csvLine, f);
-    //        note_num++;
-    //
-    //        // add to view note side bar
-    //        addCsvLineToViewNote(csvLine);
-    //        //document.getElementById("noteData").innerHTML = csvLine;
-    //    }
-}
 
 /* https://stackoverflow.com/questions/53560991/automatic-file-downloads-limited-to-10-files-on-chrome-browser */
 function pause(msec) {
@@ -292,8 +269,485 @@ async function saveSVG(name, rect, height, width) {
 
 }
 
+/* https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb */
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+
+var noteHeader;
+var noteFooter;
+var noteRemarks;
+var noteSources;
+var noteExtra1;
+var noteExtra2;
+
+function getNoteFromForm() {
+    noteHeader = document.getElementById("noteHeader").value;
+    noteFooter = document.getElementById("noteFooter").value;
+    noteRemarks = document.getElementById("noteRemarks").value;
+    noteSources = document.getElementById("noteSources").value;
+    noteExtra1 = document.getElementById("noteExtra1").value;
+    noteExtra2 = document.getElementById("noteExtra2").value;
+}
+
+
+var textare_id = 0;
+function addCsvLineToViewNote(csv) {
+    var container = document.getElementById("noteData");
+    var textarea = document.createElement("textarea");
+    textarea.id = "note-text-area-" + textare_id;
+    textarea.setAttribute("style", "display: block; width:90%; height:10vh; margin-top:6px;");
+    textarea.value = csv;
+    container.appendChild(textarea);
+    document.getElementById(textarea.id).readOnly = true;
+    textare_id += 1;
+}
+
+function downloadAllNotes() {
+    var container = document.getElementById("noteData");
+
+    var textToExport = "";
+    for (i = 0; i < container.childElementCount; i++) {
+        textToExport += container.children[i].value;
+    }
+
+    exportFile(textToExport, "output-all-notes.txt");
+}
+
+function addNote() {
+    if (document.getElementById("add-note").style.height == "100%") {
+        closeAddNoteNav();
+    } else {
+        document.getElementById("add-note").style.height = "100%";
+        document.getElementById("page-title-id").innerHTML = "Add Note";
+        document.getElementById("done-btn").style.display = "none";
+
+        document.getElementById("close-add-note-btn").style.display = "block";
+
+    }
+}
+
+function closeAddNoteNav() {
+    document.getElementById("add-note").style.height = "0";
+    document.getElementById("close-add-note-btn").style.display = "none";
+    resetTitle();
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+
 function resetTitle() {
     document.getElementById('menu-icon').innerHTML = "menu";
-    document.getElementById("page-title-id").innerHTML = "Normal Cloze";
-    document.getElementById("done-btn").style.display = "block";
+    if (clozeMode == "normal") {
+        document.getElementById("page-title-id").innerHTML = "Normal Cloze";
+        document.getElementById("done-btn").style.display = "block";
+    } else if (clozeMode == "group") {
+        document.getElementById("page-title-id").innerHTML = "Group Cloze";
+    }
+}
+
+function viewNote() {
+    document.getElementById("viewNoteSideNav").style.width = "100%";
+}
+
+function closeViewNoteNav() {
+    document.getElementById("viewNoteSideNav").style.width = "0";
+}
+
+
+function sideNavMain() {
+
+    if (document.getElementById("page-title-id").innerHTML == "Settings" || document.getElementById("page-title-id").innerHTML == "Help" || document.getElementById("page-title-id").innerHTML == "Move Images") {
+        hideAll();
+        resetTitle();
+        settings();
+        closeAddNoteNav();
+    } else {
+        document.getElementById("mainSideNav").style.width = "80%";
+    }
+}
+
+function closeMainNav() {
+    document.getElementById("mainSideNav").style.width = "0";
+}
+
+var scaleVar = 1.0;
+function zoomOut() {
+    scaleVar -= 0.1;
+    document.getElementById("SVG101").style.transform = "scale(" + scaleVar + ")";
+    document.getElementById("uploadPreview").style.transform = "scale(" + scaleVar + ")";
+}
+
+function zoomIn() {
+    scaleVar += 0.1;
+    document.getElementById("SVG101").style.transform = "scale(" + scaleVar + ")";
+    document.getElementById("uploadPreview").style.transform = "scale(" + scaleVar + ")";
+}
+
+
+function resetZoom() {
+    document.getElementById("SVG101").style.transform = "scale(1.0)";
+    document.getElementById("uploadPreview").style.transform = "scale(1.0)";
+    scaleVar = 1.0;
+}
+
+function changePage(page) {
+
+    hideAll();
+    closeAddNoteNav();
+
+    if (page == "settings") {
+        document.getElementById("settingsSideNav").style.height = "100%";
+        document.getElementById("page-title-id").innerHTML = "Settings";
+        document.getElementById("done-btn").style.display = "none";
+    } else if (page == "help") {
+        document.getElementById("viewHelpSideNav").style.height = "100%";
+        document.getElementById("page-title-id").innerHTML = "Help";
+        document.getElementById("done-btn").style.display = "none";
+    } else if (page == "move") {
+        document.getElementById("moveImgSideNav").style.height = "100%";
+        document.getElementById("page-title-id").innerHTML = "Move Images";
+        document.getElementById("done-btn").style.display = "none";
+
+        countNumberOfImage();
+    }
+
+    changeIcon();
+}
+
+function hideAll() {
+    document.getElementById("settingsSideNav").style.height = "0";
+    document.getElementById("viewHelpSideNav").style.height = "0";
+    document.getElementById("viewNoteSideNav").style.height = "0";
+    document.getElementById("mainSideNav").style.width = "0";
+    document.getElementById("moveImgSideNav").style.height = "0";
+    document.getElementById("add-note").style.height = "0";
+}
+
+function changeIcon() {
+    if (document.getElementById("page-title-id").innerHTML == "Settings" || document.getElementById("page-title-id").innerHTML == "Help" || document.getElementById("page-title-id").innerHTML == "Move Images") {
+        document.getElementById('menu-icon').innerHTML = "arrow_back";
+    }
+}
+
+function exportFile(csv, filename) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
+
+    //var filename = "output.txt";
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}
+
+// change if value changed by user
+function settings() {
+    questionColor = document.getElementById("QColor").value;
+    originalColor = document.getElementById("OColor").value;
+
+    // check if valid hex value, set to default if not valid
+    if (!/^#[0-9A-F]{6}$/i.test(questionColor)) {
+        questionColor = "#F44336";
+        document.getElementById("settingsSideNav").style.height = "100%";
+        showSnackbar("Not a valid color");
+    }
+
+    if (!/^#[0-9A-F]{6}$/i.test(originalColor)) {
+        originalColor = "#FDD835";
+        document.getElementById("settingsSideNav").style.height = "100%";
+        showSnackbar("Not a valid color");
+    }
+}
+
+window.onbeforeunload = function () {
+    return "Have you downloaded output-all-notes.txt?";
+};
+
+// assign to input
+var questionColor = "#F44336";
+var originalColor = "#FDD835";
+/* https://stackoverflow.com/questions/9334084/moveable-draggable-div */
+window.onload = function () {
+    get_html_file("common.html");
+
+    document.getElementById("QColor").value = questionColor;
+    document.getElementById("OColor").value = originalColor;
+
+    document.addEventListener("backbutton", onBackKeyDown, false);
+}
+
+function draggable(el) {
+    el.addEventListener('mousedown', function (e) {
+        var offsetX = e.clientX - parseInt(window.getComputedStyle(this).left);
+        var offsetY = e.clientY - parseInt(window.getComputedStyle(this).top);
+
+        function mouseMoveHandler(e) {
+            el.style.top = (e.clientY - offsetY) + 'px';
+            el.style.left = (e.clientX - offsetX) + 'px';
+        }
+
+        function reset() {
+            window.removeEventListener('mousemove', mouseMoveHandler);
+            window.removeEventListener('mouseup', reset);
+        }
+
+        window.addEventListener('mousemove', mouseMoveHandler);
+        window.addEventListener('mouseup', reset);
+    });
+}
+
+/* https://www.kirupa.com/html5/drag.htm */
+function touchDraggable(el) {
+    var currentX;
+    var currentY;
+    var initialX;
+    var initialY;
+    var xOffset = 0;
+    var yOffset = 0;
+
+    el.addEventListener("touchstart", dragStart, false);
+    el.addEventListener("touchend", dragEnd, false);
+    el.addEventListener("touchmove", drag, false);
+
+    function dragStart(e) {
+        if (e.type === "touchstart") {
+            initialX = e.touches[0].clientX - xOffset;
+            initialY = e.touches[0].clientY - yOffset;
+        } else {
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+        }
+    }
+
+    function dragEnd(e) {
+        initialX = currentX;
+        initialY = currentY;
+    }
+
+    function drag(e) {
+        e.preventDefault();
+
+        if (e.type === "touchmove") {
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+        } else {
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+        }
+
+        xOffset = currentX;
+        yOffset = currentY;
+
+        setTranslate(currentX, currentY, el);
+    }
+
+    function setTranslate(xPos, yPos, el) {
+        el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+    }
+}
+
+// save to app directory
+function saveFile(fileName, fileData) {
+    //var dir = cordova.file.externalDataDirectory;
+    var dir = cordova.file.externalRootDirectory + "AnkiDroid/collection.media/";
+    window.resolveLocalFileSystemURL(dir, function (directoryEntry) {
+        //console.log(directoryEntry);
+        directoryEntry.getFile(fileName, { create: true, exclusive: false }, function (entry) {
+            entry.createWriter(function (writer) {
+                //console.log("Writing..." + fileName);
+                writer.write(fileData);
+            }, function (error) {
+                console.log("Error " + error.code);
+            });
+        });
+    });
+}
+
+function base64toBlob(base64Data, contentType) {
+    contentType = contentType || '';
+    var sliceSize = 1024;
+    var byteCharacters = atob(base64Data);
+    var bytesLength = byteCharacters.length;
+    var slicesCount = Math.ceil(bytesLength / sliceSize);
+    var byteArrays = new Array(slicesCount);
+
+    for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+        var begin = sliceIndex * sliceSize;
+        var end = Math.min(begin + sliceSize, bytesLength);
+
+        var bytes = new Array(end - begin);
+        for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+            bytes[i] = byteCharacters[offset].charCodeAt(0);
+        }
+        byteArrays[sliceIndex] = new Uint8Array(bytes);
+    }
+    return new Blob(byteArrays, { type: contentType });
+}
+
+function success(result) {
+    alert("plugin result: " + result);
+};
+
+var card_added_num = 1;
+function addCardToAnkiDroid(cardData) {
+    //console.log(cardData);
+    // noteId, noteHeader, origImgSVG, quesImgSVG, noteFooter, noteRemarks, noteSources, noteExtra1, noteExtra2, ansImgSVG, origFile
+    var note = {
+        "noteId": cardData[0],
+        "header": cardData[1],
+
+        "origImgSvg": cardData[2],
+        "quesImgSvg": cardData[3],
+
+        "footer": cardData[4],
+        "remarks": cardData[5],
+        "sources": cardData[6],
+
+        "extra1": cardData[7],
+        "extra2": cardData[8],
+
+        "ansImgSvg": cardData[9],
+        "origImg": cardData[10]
+    }
+
+    var noteData = JSON.stringify(note);
+
+    cordova.plugins.addCard(noteData, function (result) {
+        console.log(result);
+        if (result == "Card added") {
+            document.getElementById("card-added").innerHTML = card_added_num + " card added";
+
+            card_added_num++;
+
+        } else if (result == "Permission required") {
+            showSnackbar("Storage and additional permission required.");
+        } else {
+            showSnackbar("Card not added");
+        }
+    });
+}
+
+function showSnackbar(msg) {
+    var x = document.getElementById("snackbar");
+
+    x.innerHTML = msg;
+    x.className = "show";
+
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+}
+
+function moveImagesToAnkiDroid() {
+    cordova.plugins.moveImagesToAnkiDroid(appPath, function (result) {
+        console.log(result);
+    });
+
+
+    countNumberOfImage();
+
+}
+
+var appPath = "";
+function countNumberOfImage() {
+    appPath = cordova.file.externalDataDirectory;
+
+    window.resolveLocalFileSystemURL(appPath, function (dirEntry) {
+        var directoryReader = dirEntry.createReader();
+        directoryReader.readEntries(onSuccessCallback, onFailCallback);
+    });
+
+}
+
+function onSuccessCallback(entries) {
+    //console.log("number of files:" + entries.length);
+    document.getElementById("num_images_move").innerHTML = entries.length + " images to move";
+}
+
+function onFailCallback() {
+    console.log("error file list count");
+}
+
+function get_html_file(path) {
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', path)
+
+    xhr.onload = () => {
+        if (xhr.status == 200) {
+            html = xhr.response;
+            document.getElementById("side-nav-container").innerHTML = html;
+        } else {
+            showSnackbar("Failed to load side navigation data.");
+        }
+    }
+    xhr.send();
+}
+
+function saveSelectedImageToAnkiDroid() {
+
+    var image = document.getElementById("uploadPreview");
+
+    fname = image.title;
+    var data = image.src;
+    var type = image.type;
+
+    var base64 = data.split(",")[1];
+
+    var blob = base64toBlob(base64, type);
+
+    saveFile(fname, blob);
+
+    showSnackbar("Image copied to AnkiDroid folder");
+}
+
+function changeMode(mode) {
+    hideAll();
+
+    if (mode == 'normal') {
+        console.log('normal');
+        clozeMode = "normal";
+        document.getElementById('done-btn').style.display = "block";
+        document.getElementById('group-done-btn').style.display = "none";
+
+        document.getElementById('groupButton').style.display = "none";
+        document.getElementById("page-title-id").innerHTML = "Normal Cloze";
+
+        showSnackbar("Normal Cloze Mode");
+
+
+    } else if (mode == 'group') {
+        console.log('group');
+        clozeMode = "group";
+
+        document.getElementById('done-btn').style.display = "none";
+        document.getElementById('group-done-btn').style.display = "block";
+
+        document.getElementById('groupButton').style.display = "block";
+        document.getElementById("page-title-id").innerHTML = "Group Cloze";
+
+        showSnackbar("Group Cloze Mode");
+
+        origSVG = "";
+        svgQues = "";
+    }
+
+}
+
+function onBackKeyDown(e) {
+    console.log("back press");
+    var exit;
+    var exit = confirm("Are you sure you want to exit ?");
+    if (exit) {
+        navigator.app.exitApp();
+    }
 }

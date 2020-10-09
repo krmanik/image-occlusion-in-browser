@@ -11,17 +11,16 @@ Author: Infinyte7 (Mani)
   <script src="js/svg.resize.min.js"></script>
   <script src="js/svg.select.min.js"></script>
   <script src="js/svg.draw.min.js"></script>
+  <script src="js/normal.js"></script>
+  <script src="js/group.js"></script>
   <script src="js/index.js"></script>
-  <script src="js/common.js"></script>
-  <script src="js/swipe-event.js"></script>
   <script src="cordova.js"></script>
 
   <link href="css/index.css" rel=stylesheet type=text/css>
   <link href="css/svg.select.min.css" rel=stylesheet type=text/css>
-  <link href="css/design.css" rel=stylesheet type=text/css>
-
+  
   <title>
-    Anki Image Occlusion [Normal]
+    Anki Image Occlusion
   </title>
 </head>
 
@@ -32,14 +31,39 @@ Author: Infinyte7 (Mani)
       <div class="toolbar-button" style="float: left;" onclick="sideNavMain();"><i id="menu-icon"
           class="material-icons">menu</i></div>
       <div id="page-title-id" class="toolbar-button" style="float: left;font-size: 24px;">Normal Cloze</div>
-      <div id="done-btn" class="toolbar-button" style="float: right;" onclick="downloadNote()"><i
+
+      <div id="done-btn" class="toolbar-button" style="float: right;" onclick="createNormalCloze();"><i
           class="material-icons">done</i></div>
-          
-      <div id="close-add-note-btn" class="toolbar-button" style="float: right; display: none;" onclick="closeAddNoteNav()"><i
-        class="material-icons">close</i></div>
+
+      <div id="group-done-btn" class="toolbar-button" style="float: right; display: none;" onclick="createGroupCloze();"><i
+          class="material-icons">done_all</i></div>
+
+      <div id="close-add-note-btn" class="toolbar-button" style="float: right; display: none;"
+        onclick="closeAddNoteNav()"><i class="material-icons">close</i></div>
     </div>
   </header>
 
+  <header-2>
+    <div style="display: inline; padding-left: 10px;">
+      <div class="button">
+        <label for="uploadImage"><i class="material-icons" style="color: #43a047;">add_photo_alternate</i></label>
+        <input id="uploadImage" type="file" name="myPhoto" onchange="addImage();"></input>
+      </div>
+    </div>
+
+    <div id="groupButton" style="float: right; margin: -4px; display: none;">
+      <label for="addState"><i id="iconGroup" class="material-icons"
+          style="color: #607d8b; margin: 10px;">collections</i></label>
+      <input id="addState" type="checkbox" style="display: none;" value="false">
+    </div>
+
+    <div style="float: right; padding-right: 10px;">
+      <div onclick="zoomIn();" class="button"><i class="material-icons" style="color: #455A64;">zoom_in</i></div>
+      <div onclick="zoomOut();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out</i></div>
+      <div onclick="resetZoom();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out_map</i>
+      </div>
+    </div>
+  </header-2>
 
   <!-- main side nav -->
   <div id="mainSideNav" class="sidenav-main" style="right: 0;">
@@ -48,8 +72,8 @@ Author: Infinyte7 (Mani)
     <div class="sidenav-header">Anki Image Occlusion</div>
 
     <div style="padding-top: 20px; text-align: left;">
-      <a href="index.html">Normal Cloze</a>
-      <a href="group.html">Group Cloze</a>
+      <a href="#" onclick="changeMode('normal');">Normal Cloze</a>
+      <a href="#" onclick="changeMode('group')">Group Cloze</a>
       <!--<a href="#" onclick="changePage('move')">Move Images</a>-->
       <a href="#" onclick="changePage('settings')">Settings</a>
       <a href="#" onclick="changePage('help')">Help</a>
@@ -76,22 +100,6 @@ Author: Infinyte7 (Mani)
     </a>
   </nav>
 
-  <header-2>
-    <div style="display: inline; padding-left: 10px;">
-      <div class="button">
-        <label for="uploadImage"><i class="material-icons" style="color: #43a047;">add_photo_alternate</i></label>
-        <input id="uploadImage" type="file" name="myPhoto" onchange="addImage();"></input>
-      </div>
-    </div>
-
-    <div style="float: right; padding-right: 10px;">
-      <div onclick="zoomIn();" class="button"><i class="material-icons" style="color: #455A64;">zoom_in</i></div>
-      <div onclick="zoomOut();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out</i></div>
-      <div onclick="resetZoom();" class="button"><i class="material-icons" style="color: #455A64;">zoom_out_map</i>
-      </div>
-    </div>
-  </header-2>
-
   <div id="drawing" class="container-editor"></div>
 
   <div id="statusMsg" class="status-message"></div>
@@ -106,15 +114,30 @@ Author: Infinyte7 (Mani)
 
   <!-- settings side nav -->
   <div id="settingsSideNav" class="sidenav-help" style="right: 0;">
-    <div style="margin-top: 60px; padding: 2px;"><b>Note:</b> If input color is invalid then default color will be used.
-      So check the color format in hex. (eg.
-      #F44336)</div>
-    <div>View this for colors hex values: <a href="https://www.materialpalette.com/colors">materialpalette</a></div>
+    <div style="margin-top: 60px; padding: 2px;">
+      <b>Enter valid hex color</b>
+    </div>
+
     <br>
-    <label for="OColor">Original Mask Color</label><br>
-    <input type="text" id="OColor" name="OColor"><br><br>
-    <label for="QColor">Question Mask Color</label><br>
-    <input type="text" id="QColor" name="QColor">
+    <div class="settings-input-label">
+      <label for="OColor">Original Mask Color</label>
+    </div>
+    <div>
+      <input type="text" id="OColor" name="OColor" class="settings-input">
+    </div>
+
+    <div class="settings-input-label">
+      <label for="QColor">Question Mask Color</label>
+    </div>
+    <div>
+      <input type="text" id="QColor" name="QColor" class="settings-input">
+    </div>
+
+    <br>
+    <div>View this for color's hex values
+      <br>
+      <a href="https://www.materialpalette.com/colors">Material Palette</a>
+    </div>
 
   </div>
   <!--settings Side Nav -->
