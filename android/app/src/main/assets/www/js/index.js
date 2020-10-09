@@ -736,6 +736,7 @@ function saveSelectedImageToAnkiDroid() {
 
 function changeMode(mode) {
     hideAll();
+    document.getElementById("close-add-note-btn").style.display = "none";
 
     if (mode == 'normal') {
         console.log('normal');
