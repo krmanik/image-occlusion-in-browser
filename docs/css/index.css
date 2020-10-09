@@ -308,9 +308,9 @@ hr.thin {
 }
 .sidenav-view-note a {
   text-decoration: none;
-  font-size: 25px;
   display: block;
   transition: 0.3s;
+  color: #2196f3;
 }
 .sidenav-help {
   height: 0;
