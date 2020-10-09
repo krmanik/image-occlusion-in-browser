@@ -133,7 +133,7 @@ async function createGroup(list) {
 
     var noteId = "cordova-img-occ-note-" + timeStamp;
 
-    csvLine += noteId +
+    csvLine = noteId +
         "\t" + noteHeader +
         "\t" + "<img src='" + originalImageName + "'></img>" +
         "\t" + "<img src='" + quesFileName + ".svg'></img>" +
