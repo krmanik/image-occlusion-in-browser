@@ -148,7 +148,6 @@ textarea:focus {
   top: 0;
   font-size: 36px;
   user-select: none;
-  cursor: none;
   position: absolute;
   right: 0;
   color: #f44336;
