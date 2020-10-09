@@ -4,7 +4,7 @@ Create image occlusion in browser.
 
 For desktop there is already addon for creating image occlusion. This is implementation for using mobile and creating deck with image occlusion.
 
-# App Features [Version 1.2.0]
+# App Features
    - New design
    - Cards auto added to AnkiDroid
    - Group cloze card generation simplified
