@@ -103,7 +103,7 @@ document.addEventListener('click', function (e) {
             }
         } else {
             if (document.getElementById("add-note").style.height == "100%" || document.getElementById("settingsSideNav").style.height == "100%"
-                || document.getElementById("viewHelpSideNav").style.height == "100%") {
+                || document.getElementById("viewHelpSideNav").style.height == "100%" || document.getElementById("viewNoteSideNav").style.width == "100%") {
                 document.getElementById("done-btn").style.display = "none";
                 document.getElementById("group-done-btn").style.display = "none";
             } else {
@@ -364,7 +364,8 @@ function closeViewNoteNav() {
 
 function sideNavMain() {
 
-    if (document.getElementById("page-title-id").innerHTML == "Settings" || document.getElementById("page-title-id").innerHTML == "Help" || document.getElementById("page-title-id").innerHTML == "Move Images") {
+    if (document.getElementById("page-title-id").innerHTML == "Settings" || document.getElementById("page-title-id").innerHTML == "Help" 
+    || document.getElementById("page-title-id").innerHTML == "View Notes" || document.getElementById("page-title-id").innerHTML == "Move Images") {
         hideAll();
         resetTitle();
         settings();
@@ -417,7 +418,12 @@ function changePage(page) {
         document.getElementById("done-btn").style.display = "none";
 
         countNumberOfImage();
+    } else if (page == "view") {
+        document.getElementById("viewNoteSideNav").style.width = "100%";
+        document.getElementById("page-title-id").innerHTML = "View Notes";
+        document.getElementById("done-btn").style.display = "none";
     }
+
 
     changeIcon();
 }
@@ -425,14 +431,15 @@ function changePage(page) {
 function hideAll() {
     document.getElementById("settingsSideNav").style.height = "0";
     document.getElementById("viewHelpSideNav").style.height = "0";
-    document.getElementById("viewNoteSideNav").style.height = "0";
+    document.getElementById("viewNoteSideNav").style.width = "0";
     document.getElementById("mainSideNav").style.width = "0";
     document.getElementById("moveImgSideNav").style.height = "0";
     document.getElementById("add-note").style.height = "0";
 }
 
 function changeIcon() {
-    if (document.getElementById("page-title-id").innerHTML == "Settings" || document.getElementById("page-title-id").innerHTML == "Help" || document.getElementById("page-title-id").innerHTML == "Move Images") {
+    if (document.getElementById("page-title-id").innerHTML == "Settings" || document.getElementById("page-title-id").innerHTML == "Help" 
+    || document.getElementById("page-title-id").innerHTML == "View Notes" || document.getElementById("page-title-id").innerHTML == "Move Images") {
         document.getElementById('menu-icon').innerHTML = "arrow_back";
     }
 }

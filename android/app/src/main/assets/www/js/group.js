@@ -133,7 +133,7 @@ async function createGroup(list) {
 
     var noteId = "cordova-img-occ-note-" + timeStamp;
 
-    /*csvLine += noteId +
+    csvLine = noteId +
         "\t" + noteHeader +
         "\t" + "<img src='" + originalImageName + "'></img>" +
         "\t" + "<img src='" + quesFileName + ".svg'></img>" +
@@ -143,7 +143,9 @@ async function createGroup(list) {
         "\t" + noteExtra1 +
         "\t" + noteExtra2 +
         "\t" + "<img src='" + ansFileName + ".svg'></img>" +
-        "\t" + "<img src='" + origFileName + ".svg'></img>" + "\n";*/
+        "\t" + "<img src='" + origFileName + ".svg'></img>" + "\n";
+        
+    addCsvLineToViewNote(csvLine);
 
     var origImgSVG = "<img src='" + originalImageName + "'></img>";
     var quesImgSVG = "<img src='" + quesFileName + ".svg'></img>";

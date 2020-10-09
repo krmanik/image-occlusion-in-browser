@@ -92,18 +92,19 @@ async function createNormalCloze() {
 
                 var noteId = "cordova-img-occ-note-" + timeStamp;
 
-                //                csvLine += noteId +
-                //                    "\t" + noteHeader +
-                //                    "\t" + "<img src='" + originalImageName + "'></img>" +
-                //                    "\t" + "<img src='" + quesFileName + ".svg'></img>" +
-                //                    "\t" + noteFooter +
-                //                    "\t" + noteRemarks +
-                //                    "\t" + noteSources +
-                //                    "\t" + noteExtra1 +
-                //                    "\t" + noteExtra2 +
-                //                    "\t" + "<img src='" + ansFileName + ".svg'></img>" +
-                //                    "\t" + "<img src='" + origFileName + ".svg'></img>" + "\n";
-
+                csvLine = noteId +
+                    "\t" + noteHeader +
+                    "\t" + "<img src='" + originalImageName + "'></img>" +
+                    "\t" + "<img src='" + quesFileName + ".svg'></img>" +
+                    "\t" + noteFooter +
+                    "\t" + noteRemarks +
+                    "\t" + noteSources +
+                    "\t" + noteExtra1 +
+                    "\t" + noteExtra2 +
+                    "\t" + "<img src='" + ansFileName + ".svg'></img>" +
+                    "\t" + "<img src='" + origFileName + ".svg'></img>" + "\n";
+                
+                addCsvLineToViewNote(csvLine);
 
                 var origImgSVG = "<img src='" + originalImageName + "'></img>";
                 var quesImgSVG = "<img src='" + quesFileName + ".svg'></img>";

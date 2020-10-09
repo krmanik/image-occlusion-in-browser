@@ -148,7 +148,6 @@ textarea:focus {
   top: 0;
   font-size: 36px;
   user-select: none;
-  cursor: none;
   position: absolute;
   right: 0;
   color: #f44336;
@@ -287,11 +286,11 @@ hr.thin {
   margin-left: 50px;
   user-select: none;
 }
-.sidenav-right {
+.sidenav-view-note {
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 20;
+  z-index: 999;
   top: 0;
   right: 0;
   overflow-x: hidden;
@@ -300,18 +299,18 @@ hr.thin {
   text-align:center;
   background: white;
 }
-.sidenav-right .closebtn {
+.sidenav-view-note .closebtn {
   position: absolute;
   top: 0;
   left: 25px;
   font-size: 36px;
   user-select: none;
 }
-.sidenav-right a {
+.sidenav-view-note a {
   text-decoration: none;
-  font-size: 25px;
   display: block;
   transition: 0.3s;
+  color: #2196f3;
 }
 .sidenav-help {
   height: 0;
@@ -342,7 +341,7 @@ hr.thin {
   .sidenav-note {
      padding-top: 15px;
  }
-  .sidenav-right {
+ .sidenav-view-note {
      padding-top: 15px;
  }
   .sidenav-note a {
