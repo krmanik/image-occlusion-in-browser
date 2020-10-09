@@ -287,8 +287,8 @@ hr.thin {
   user-select: none;
 }
 .sidenav-view-note {
-  height: 100%;
-  width: 0;
+  height: 0;
+  width: 100%;
   position: fixed;
   z-index: 999;
   top: 0;

@@ -103,7 +103,7 @@ document.addEventListener('click', function (e) {
             }
         } else {
             if (document.getElementById("add-note").style.height == "100%" || document.getElementById("settingsSideNav").style.height == "100%"
-                || document.getElementById("viewHelpSideNav").style.height == "100%" || document.getElementById("viewNoteSideNav").style.width == "100%") {
+                || document.getElementById("viewHelpSideNav").style.height == "100%" || document.getElementById("viewNoteSideNav").style.height == "100%") {
                 document.getElementById("done-btn").style.display = "none";
                 document.getElementById("group-done-btn").style.display = "none";
             } else {
@@ -317,7 +317,24 @@ function downloadAllNotes() {
         textToExport += container.children[i].value;
     }
 
-    exportFile(textToExport, "output-all-notes.txt");
+    //exportFile(textToExport, "output-all-notes.txt");
+
+    fileName = "output-all-notes.txt";
+
+    var dir = cordova.file.externalRootDirectory + "Download";
+    window.resolveLocalFileSystemURL(dir, function (directoryEntry) {
+        //console.log(directoryEntry);
+        directoryEntry.getFile(fileName, { create: true, exclusive: false }, function (entry) {
+            entry.createWriter(function (writer) {
+                //console.log("Writing..." + fileName);
+                writer.write(textToExport);
+            }, function (error) {
+                console.log("Error " + error.code);
+            });
+        });
+    });
+
+    showSnackbar("View Download folder");
 }
 
 function addNote() {
@@ -354,11 +371,11 @@ function resetTitle() {
 }
 
 function viewNote() {
-    document.getElementById("viewNoteSideNav").style.width = "100%";
+    document.getElementById("viewNoteSideNav").style.height = "100%";
 }
 
 function closeViewNoteNav() {
-    document.getElementById("viewNoteSideNav").style.width = "0";
+    document.getElementById("viewNoteSideNav").style.height = "0";
 }
 
 
@@ -419,7 +436,7 @@ function changePage(page) {
 
         countNumberOfImage();
     } else if (page == "view") {
-        document.getElementById("viewNoteSideNav").style.width = "100%";
+        document.getElementById("viewNoteSideNav").style.height = "100%";
         document.getElementById("page-title-id").innerHTML = "View Notes";
         document.getElementById("done-btn").style.display = "none";
     }
@@ -431,7 +448,7 @@ function changePage(page) {
 function hideAll() {
     document.getElementById("settingsSideNav").style.height = "0";
     document.getElementById("viewHelpSideNav").style.height = "0";
-    document.getElementById("viewNoteSideNav").style.width = "0";
+    document.getElementById("viewNoteSideNav").style.height = "0";
     document.getElementById("mainSideNav").style.width = "0";
     document.getElementById("moveImgSideNav").style.height = "0";
     document.getElementById("add-note").style.height = "0";
