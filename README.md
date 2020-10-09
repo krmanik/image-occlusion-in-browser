@@ -27,13 +27,26 @@ For desktop there is already addon for creating image occlusion. This is impleme
 The app made using [Apache Cordova](https://cordova.apache.org/) and [AnkiDroid API](https://github.com/ankidroid/Anki-Android/wiki/AnkiDroid-API) with ```HTML/CSS/JS```.
 
 ## Usage
-- Download from Github release page.
-https://github.com/infinyte7/image-occlusion-in-browser/releases
-- First, make sure to give storage and additional permissions
-- Selected image and generated SVG copied to ```AnkiDroid/collection.media/``` folder.
-- First select ```draw``` button then tap inside image at ```two point```, top left and bottom right, for creating box of that width and height.
 
-### Version 1.1.1
+To test this app. (This app is like addon for AnkiDroid app)
+1. Install [AnkiDroid]() app.
+
+   - Enable AnkiDroid API <br>
+```AnkiDroid -> Settings -> Advanced -> Enable AnkiDroid API (Turn on)```
+
+      Because this app add data to AnkiDroid app folder.
+
+2. Download and install Anki Image Occlusion app from release page.
+https://github.com/infinyte7/image-occlusion-in-browser/releases
+3. Give ```storage``` and ```AnkiDroid database read and write permissions``` from app settings.
+4. Select image from storage (top left corner image button).
+5. Draw rectangles (bottom left draw button).
+   - First select ```draw``` button then tap inside image at ```two point```, top left and bottom right, for creating box of that width and height.
+6. Then click done button (top right corner button).
+
+This will copy selected image, generated svg and notes data to AnkiDroid app.
+
+### For Version <= Version 1.1.1
 If not using latest version then following steps to be followed.
 - Create card click on download icon.
 - Card will be added one by one. But wait till ```card added``` toast showing on screen.
