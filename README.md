@@ -69,6 +69,33 @@ View [Create image occlusion Offline](Create-Offline.md)
 2. Open ```android``` folder in Android Studio
 3. Build and generate apk
 
+# Faq ?
+### Why is card not added to AnkiDroid?
+1. Check app permission from app settings
+```
+Storage 
+AnkiDroid app database read and write
+```
+2. Check ```Enable AnkiDroid API```
+
+```AnkiDroid -> Settings -> Advanced -> Enable AnkiDroid API (Turn on)```
+
+### Why is images not synced to Anki Desktop? 
+In AnkiDroid, click ```check media``` then ```sync```. The images will be synced.
+
+### How to change question and answer rectangles mask color?
+Go to settings and put valid hex color.
+
+View hex color example https://www.materialpalette.com/colors
+
+### How to group cloze with different color?
+1. Draw rectangles
+2. Go to settings and change question mask color
+3. Click top right image button, then click rectangles. It will change rectangles color. The rectangles with new color will be added to list.
+4. Again click top right image button to stop adding rectangles to list. 
+5. Click done to add data to AnkiDroid.
+6. Repeat from step 2 to step 5 for creating group cloze with different color.
+
 # Contributions
 This is implemented using javascript. It has bugs and issues. Any contributions to improvement of codes and features will be appreciated.
 
