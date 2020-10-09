@@ -25,6 +25,8 @@ SOFTWARE.
 /* Download */
 async function createNormalCloze() {
 
+    showSnackbar("Also download notes from side menu.");
+
     var child = document.getElementById("SVG101").childNodes;
 
     var oneTime = true;
