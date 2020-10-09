@@ -28,7 +28,7 @@ The app made using [Apache Cordova](https://cordova.apache.org/) and [AnkiDroid 
 
 ## Usage
 
-To test this app. (This app is like addon for AnkiDroid app)
+To use this app. (This app is like addon for AnkiDroid app)
 ### 1. Install [AnkiDroid](https://github.com/ankidroid/Anki-Android)
 
    - Enable AnkiDroid API <br>
@@ -37,17 +37,18 @@ To test this app. (This app is like addon for AnkiDroid app)
       Because this app add data to AnkiDroid app folder.
 
 ### 2. Install Anki Image Occlusion
-Download and install Anki Image Occlusion app from release page.
-https://github.com/infinyte7/image-occlusion-in-browser/releases
+   Download and install Anki Image Occlusion app from release page.
+
+   https://github.com/infinyte7/image-occlusion-in-browser/releases
 ### 3. Give app permissions 
-Give ```storage``` and ```AnkiDroid database read and write permissions``` from app settings.
+   Give ```storage``` and ```AnkiDroid database read and write permissions``` from app settings.
 ### 4. Import image 
-Select image from storage (top left corner image button).
+   Select image from storage (top left corner image button).
 ### 5. Add rectangles
-Draw rectangles (bottom left draw button).
-   - First select ```draw``` button then tap inside image at ```two point```, top left and bottom right, for creating box of that width and height.
+   Draw rectangles (bottom left draw button).
+      - First select ```draw``` button then tap inside image at ```two point```, top left and bottom right, for creating box of that width and height.
 ### 6. Done
-Then click done button (top right corner button).
+   Then click done button (top right corner button).
 
 This will copy selected image, generated svg and notes data to AnkiDroid app.
 
