@@ -96,6 +96,15 @@ View hex color example https://www.materialpalette.com/colors
 5. Click done to add data to AnkiDroid.
 6. Repeat from step 2 to step 5 for creating group cloze with different color.
 
+### How to group cloze with different color in same cloze ?
+1. Draw rectangles
+2. Select group cloze button (top right) add rectangles to list.
+3. Change question mask color from settings
+4. Select more rectangles to list
+5. Finally click done button to add notes data to AnkiDroid
+
+View [demo](https://user-images.githubusercontent.com/12841290/95605099-0d038b00-0a8b-11eb-81ed-58a7e03c254e.gif)
+
 # Contributions
 This is implemented using javascript. It has bugs and issues. Any contributions to improvement of codes and features will be appreciated.
 
