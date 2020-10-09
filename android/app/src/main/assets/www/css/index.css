@@ -252,10 +252,10 @@ textarea:focus {
  }
 }
 hr.thin {
-  height: 3px;
+  height:  1px;
   border: 0;
-  color: #64b5f6;
-  background-color: #64b5f6;
+  color:#c0c0c0;
+  background-color:#c0c0c0;
   width: 97%;
 }
 .sidenav-note {
