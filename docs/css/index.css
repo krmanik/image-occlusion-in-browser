@@ -7,6 +7,7 @@
   --header-color:white;
   --header-bg-color: #2196f3;
   --header-2-bg-color: white;
+  --header-3-bg-color: white;
   --bottom-nav-bg-color: white;
   --bottom-nav-link-color: #444444;
   --side-nav-main-bg-color: white;
@@ -81,6 +82,21 @@ header-2 {
   background-color: var(--header-2-bg-color);
   z-index: 99;
 }
+header-3 {
+  position: fixed;
+  top: 110px;
+  right: 0px;
+  left: 0px;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+  background-color: var(--header-3-bg-color);
+  z-index: 99;
+  text-align: center;
+}
+.color-palette {
+  width: 20%;
+  display: inline;
+}
+
 .toolbar-button{
   display: inline;
   margin: 10px;

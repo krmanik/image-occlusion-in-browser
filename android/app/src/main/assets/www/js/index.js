@@ -158,7 +158,9 @@ function addRect() {
 
 function removeRect() {
     try {
-        if (document.getElementById(selectedElement).tagName == "rect") {
+        if (document.getElementById(selectedElement).tagName == "rect"
+            && document.getElementById(selectedElement).parentElement.tagName == "svg") {
+
             var svgEle = SVG.adopt(document.getElementById(selectedElement));
             svgEle.selectize(false);
 
@@ -173,6 +175,12 @@ function removeRect() {
             }
 
             svgEle.remove();
+        } else if (document.getElementById(selectedElement).tagName == "rect"
+            && document.getElementById(selectedElement).parentElement.tagName == "g") {
+            var g = document.getElementById(selectedElement).parentElement;
+            var gElem = SVG.adopt(document.getElementById(g.id));
+            gElem.selectize(false);
+            gElem.remove();
         }
     } catch (e) {
         console.log(e);
@@ -367,6 +375,9 @@ function resetTitle() {
         document.getElementById("done-btn").style.display = "block";
     } else if (clozeMode == "group") {
         document.getElementById("page-title-id").innerHTML = "Group Cloze";
+    } else if (clozeMode == "combine") {
+        document.getElementById("combine-done-btn").style.display = "block";
+        document.getElementById("page-title-id").innerHTML = "Combine Cloze";
     }
 }
 
@@ -381,8 +392,8 @@ function closeViewNoteNav() {
 
 function sideNavMain() {
 
-    if (document.getElementById("page-title-id").innerHTML == "Settings" || document.getElementById("page-title-id").innerHTML == "Help" 
-    || document.getElementById("page-title-id").innerHTML == "View Notes" || document.getElementById("page-title-id").innerHTML == "Move Images") {
+    if (document.getElementById("page-title-id").innerHTML == "Settings" || document.getElementById("page-title-id").innerHTML == "Help"
+        || document.getElementById("page-title-id").innerHTML == "View Notes" || document.getElementById("page-title-id").innerHTML == "Move Images") {
         hideAll();
         resetTitle();
         settings();
@@ -455,8 +466,8 @@ function hideAll() {
 }
 
 function changeIcon() {
-    if (document.getElementById("page-title-id").innerHTML == "Settings" || document.getElementById("page-title-id").innerHTML == "Help" 
-    || document.getElementById("page-title-id").innerHTML == "View Notes" || document.getElementById("page-title-id").innerHTML == "Move Images") {
+    if (document.getElementById("page-title-id").innerHTML == "Settings" || document.getElementById("page-title-id").innerHTML == "Help"
+        || document.getElementById("page-title-id").innerHTML == "View Notes" || document.getElementById("page-title-id").innerHTML == "Move Images") {
         document.getElementById('menu-icon').innerHTML = "arrow_back";
     }
 }
@@ -500,7 +511,7 @@ window.onbeforeunload = function () {
 };
 
 // assign to input
-var questionColor = "#F44336";
+var questionColor = "#EF9A9A";
 var originalColor = "#FDD835";
 /* https://stackoverflow.com/questions/9334084/moveable-draggable-div */
 window.onload = function () {
@@ -743,6 +754,8 @@ function changeMode(mode) {
         clozeMode = "normal";
         document.getElementById('done-btn').style.display = "block";
         document.getElementById('group-done-btn').style.display = "none";
+        document.getElementById("merge-rect-btn").style.display = "none";
+        document.getElementById('combine-done-btn').style.display = "none";
 
         document.getElementById('groupButton').style.display = "none";
         document.getElementById("page-title-id").innerHTML = "Normal Cloze";
@@ -756,6 +769,8 @@ function changeMode(mode) {
 
         document.getElementById('done-btn').style.display = "none";
         document.getElementById('group-done-btn').style.display = "block";
+        document.getElementById("merge-rect-btn").style.display = "none";
+        document.getElementById('combine-done-btn').style.display = "none";
 
         document.getElementById('groupButton').style.display = "block";
         document.getElementById("page-title-id").innerHTML = "Group Cloze";
@@ -764,6 +779,22 @@ function changeMode(mode) {
 
         origSVG = "";
         svgQues = "";
+    } else if (mode == 'combine') {
+
+        console.log('combine');
+        clozeMode = "combine";
+
+        document.getElementById('done-btn').style.display = "none";
+        document.getElementById('group-done-btn').style.display = "none";
+        document.getElementById('combine-done-btn').style.display = "block";
+        
+
+        document.getElementById('groupButton').style.display = "block";
+        document.getElementById("page-title-id").innerHTML = "Combine Cloze";
+
+        document.getElementById("merge-rect-btn").style.display = "block";
+
+        showSnackbar("Combine Cloze Mode");
     }
 
 }
