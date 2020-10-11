@@ -44,9 +44,24 @@ var selectedElement = "";
 var svgGroup = "";
 var addedList = [];
 
+var canDraw = false;
+
 document.addEventListener('click', function (e) {
     //console.log(e.target.id);
     selectedElement = e.target.id;
+
+    if (canDraw) {
+        drawRect();
+    }
+
+    if (document.getElementById("settings-draw-rect").checked) {
+        document.getElementById("enableDrawBtn").style.display = "flex";
+        document.getElementById("drawBtn").style.display = "none";
+    } else {
+        document.getElementById("enableDrawBtn").style.display = "none";
+        document.getElementById("drawBtn").style.display = "flex";
+    }
+
 
     if (clozeMode == "group") {
         document.getElementById("addState").onclick = function () {
@@ -114,17 +129,33 @@ document.addEventListener('click', function (e) {
 
 }, false);
 
+function enableDrawRect() {
+    canDraw = !canDraw;
+
+    if (canDraw) {
+        document.getElementById("enableDrawRectId").style.color = "#fdd835";
+    } else {
+        document.getElementById("enableDrawRectId").style.color = "#009688";
+    }
+}
+
+
 var note_num = 1;
 var originalImageName;
 var draw;
 var rect;
 function drawRect() {
     try {
-        document.getElementById("drawRectId").style.color = "#fdd835";
+        if (!document.getElementById("settings-draw-rect").checked) {
+            document.getElementById("drawRectId").style.color = "#fdd835";
+        }
+
 
         draw.rect().draw().fill(originalColor)
             .on('drawstop', function () {
-                document.getElementById("drawRectId").style.color = "#009688";
+                if (!document.getElementById("settings-draw-rect").checked) {
+                    document.getElementById("drawRectId").style.color = "#009688";
+                }
             })
             .on('click', function () {
                 this

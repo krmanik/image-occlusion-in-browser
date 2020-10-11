@@ -107,10 +107,6 @@ function changeRectFillInsideG(gChild) {
     for (l = 0; l < children.length; l++) {
         var c = children[l].getAttribute("fill");
 
-        console.log(c);
-        console.log(c);
-        console.log(gHTML);
-
         children[l].setAttribute("fill", questionColor);
 
         gHTML += children[l].outerHTML;
@@ -121,19 +117,9 @@ function changeRectFillInsideG(gChild) {
     return gHTML;
 }
 
-
-function createCombineCloze() {
-    createSingleRectCloze();
-    
-    setTimeout(function () { 
-        createGroupRectsSvg();
-    }, 2000);
-}
-
-
 // question & answer mask of <rect> tag 
 var origFileName = "";
-async function createSingleRectCloze() {
+async function createCombineCloze() {
 
     showSnackbar("Also download notes from side menu.");
 
@@ -150,11 +136,28 @@ async function createSingleRectCloze() {
         }
     }
 
+    // get all rect for creating ques
+    var rectOrigSvg = "";
+    for (i = 0; i < child.length; i++) {
+        // don't add svg with 0 width and 0 height
+        if (child[i].getBBox().height != 0 && child[i].getBBox().width != 0) {
+            if (child[i].tagName == "rect") {
+                rectOrigSvg += child[i].outerHTML;
+            }
+        }
+    }
+
+
+
     for (i = 0; i < child.length; i++) {
 
         var origSVG = "";
         var svgQues = "";
         var svgAns = "";
+
+        var groupSvgQues = "";
+        var groupSvgAns = "";
+
         // don't add svg with 0 width and 0 height
         if (child[i].getBBox().height != 0 && child[i].getBBox().width != 0) {
             for (j = 0; j < child.length; j++) {
@@ -181,13 +184,20 @@ async function createSingleRectCloze() {
                         svgQues += child[j].outerHTML;
                         svgAns += child[j].outerHTML;
                     }
+                } else if (child[j].tagName == "g" && child[j].getAttribute("data-type") == "combine") {
+                    if (i == j) {
+                        groupSvgQues += changeRectFillInsideG(child[j]);
+                    } else {
+                        groupSvgQues += child[j].outerHTML;
+                        groupSvgAns += child[j].outerHTML;
+                    }
                 }
             }
 
             // add time stamp
             var timeStamp = new Date().getTime();
 
-            if (child[i].tagName == "rect") {
+            if (child[i].tagName == "rect" || child[i].tagName == "g" && child[i].getAttribute("data-type") == "combine") {
 
                 if (oneTime) {
                     // origin mask
@@ -199,15 +209,21 @@ async function createSingleRectCloze() {
 
                 // Question Mask
                 var quesFileName = "cordova-img-occ-ques-" + timeStamp;
-                //console.log("Ques " + svgQues);
-
-                await saveSVG(quesFileName, svgQues, imgHeight, imgWidth);
 
                 // Answer mask
                 var ansFileName = "cordova-img-occ-ans-" + timeStamp;
-                //console.log("ans " + svgAns);
 
-                await saveSVG(ansFileName, svgAns, imgHeight, imgWidth);
+                if (child[i].tagName == "rect") {
+                    await saveSVG(quesFileName, svgQues, imgHeight, imgWidth);
+                    await saveSVG(ansFileName, svgAns, imgHeight, imgWidth);
+                } else if (child[i].tagName == "g" && child[i].getAttribute("data-type") == "combine") {
+                    groupSvgQues += rectOrigSvg;
+                    groupSvgAns += rectOrigSvg;
+
+                    await saveSVG(quesFileName, groupSvgQues, imgHeight, imgWidth);
+                    await saveSVG(ansFileName, groupSvgAns, imgHeight, imgWidth);
+                }
+
 
                 // get all input note from form
                 getNoteFromForm();
@@ -258,99 +274,6 @@ function htmlExcludingThisG(gChild) {
     }
     return html;
 }
-
-// question & answer mask of <g> tag 
-async function createGroupRectsSvg() {
-    showSnackbar("Also download notes from side menu.");
-
-    var child = document.getElementById("SVG101").childNodes;
-
-    var csvLine = "";
-
-    // get all rect for creating ques
-    var rectOrigSvg = "";
-    for (i = 0; i < child.length; i++) {
-        // don't add svg with 0 width and 0 height
-        if (child[i].getBBox().height != 0 && child[i].getBBox().width != 0) {
-            if (child[i].tagName == "rect") {
-                rectOrigSvg += child[i].outerHTML;
-            }
-        }
-    }
-
-    for (i = 0; i < child.length; i++) {
-        var svgQues = "";
-        var svgAns = "";
-
-        // don't add svg with 0 width and 0 height
-        if (child[i].getBBox().height != 0 && child[i].getBBox().width != 0) {
-            for (j = 0; j < child.length; j++) {
-                if (child[j].tagName == "g" && child[j].getAttribute("data-type") == "combine") {
-                    if (i == j) {
-                        svgQues += changeRectFillInsideG(child[j]);
-                    } else {
-                        svgQues += child[j].outerHTML;
-                        svgAns += child[j].outerHTML;
-                    }
-                }
-            }
-
-            // add time stamp
-            var timeStamp = new Date().getTime();
-
-            if (child[i].tagName == "g" && child[i].getAttribute("data-type") == "combine") {
-
-                svgQues += rectOrigSvg;
-                svgAns += rectOrigSvg;
-
-                // Question Mask
-                var quesFileName = "cordova-img-occ-ques-" + timeStamp;
-                //console.log("Ques " + svgQues);
-
-                await saveSVG(quesFileName, svgQues, imgHeight, imgWidth);
-
-                // Answer mask
-                var ansFileName = "cordova-img-occ-ans-" + timeStamp;
-                //console.log("ans " + svgAns);
-
-                await saveSVG(ansFileName, svgAns, imgHeight, imgWidth);
-
-                // get all input note from form
-                getNoteFromForm();
-
-                var noteId = "cordova-img-occ-note-" + timeStamp;
-
-                csvLine = noteId +
-                    "\t" + noteHeader +
-                    "\t" + "<img src='" + originalImageName + "'></img>" +
-                    "\t" + "<img src='" + quesFileName + ".svg'></img>" +
-                    "\t" + noteFooter +
-                    "\t" + noteRemarks +
-                    "\t" + noteSources +
-                    "\t" + noteExtra1 +
-                    "\t" + noteExtra2 +
-                    "\t" + "<img src='" + ansFileName + ".svg'></img>" +
-                    "\t" + "<img src='" + origFileName + ".svg'></img>" + "\n";
-
-
-                var origImgSVG = "<img src='" + originalImageName + "'></img>";
-                var quesImgSVG = "<img src='" + quesFileName + ".svg'></img>";
-                var ansImgSVG = "<img src='" + ansFileName + ".svg'></img>";
-                var origFile = "<img src='" + origFileName + ".svg'></img>";
-
-                var cardData = [noteId, noteHeader, origImgSVG, quesImgSVG, noteFooter, noteRemarks, noteSources, noteExtra1, noteExtra2, ansImgSVG, origFile];
-                addCardToAnkiDroid(cardData);
-
-                // var f = "output-note" + note_num + ".txt";
-                // exportFile(csvLine, f);
-                // note_num++;
-
-                addCsvLineToViewNote(csvLine);
-            }
-        }
-    }
-}
-
 
 function createGroupWithNewRects() {
 

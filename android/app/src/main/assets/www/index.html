@@ -136,8 +136,12 @@ Author: Infinyte7 (Mani)
 
   <!-- bottom -->
   <nav class="nav">
-    <a href="#" class="nav__link" onclick="drawRect();">
+    <a id="drawBtn" href="#" class="nav__link" onclick="drawRect();">
       <i id="drawRectId" class="material-icons nav__icon" style="color: #009688;">crop</i>
+      <span class="nav__text">Draw</span>
+    </a>
+    <a id="enableDrawBtn" href="#" class="nav__link" onclick="enableDrawRect();" style="display: none;">
+      <i id="enableDrawRectId" class="material-icons nav__icon" style="color: #009688;">dashboard</i>
       <span class="nav__text">Draw</span>
     </a>
     <a href="#" class="nav__link" onclick="removeRect();">
@@ -189,6 +193,19 @@ Author: Infinyte7 (Mani)
       <br>
       <a href="https://www.materialpalette.com/colors">Material Palette</a>
     </div>
+
+    <br>
+    <div class="settings-input-label">
+      <label for="QColor">Enable one click draw</label>
+    </div>
+    
+    <label class="switch">
+      <input id="settings-draw-rect" type="checkbox">
+      <span class="slider round"></span>
+    </label>
+
+    <div style="text-align: left; margin: 16px;">Draw rectangles without clicking again clicking draw button. (Not fully supported)</div>
+    
 
   </div>
   <!--settings Side Nav -->
