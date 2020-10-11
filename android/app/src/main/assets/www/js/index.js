@@ -136,6 +136,7 @@ function enableDrawRect() {
         document.getElementById("enableDrawRectId").style.color = "#fdd835";
     } else {
         document.getElementById("enableDrawRectId").style.color = "#009688";
+        showSnackbar("Draw one more rectangle");
     }
 }
 

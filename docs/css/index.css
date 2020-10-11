@@ -469,6 +469,7 @@ tr:nth-child(odd) {
   display: inline-block;
   width: 60px;
   height: 34px;
+  user-select: none;
 }
 
 .switch input { 
