@@ -54,15 +54,8 @@ document.addEventListener('click', function (e) {
         drawRect();
     }
 
-    if (document.getElementById("settings-draw-rect").checked) {
-        document.getElementById("enableDrawBtn").style.display = "flex";
-        document.getElementById("drawBtn").style.display = "none";
-    } else {
-        document.getElementById("enableDrawBtn").style.display = "none";
-        document.getElementById("drawBtn").style.display = "flex";
-    }
-
     if (clozeMode == "group") {
+        questionColor = combineColor;
         document.getElementById("addState").onclick = function () {
             if (document.getElementById("addState").value == "false") {
                 document.getElementById("addState").value = true;
@@ -147,15 +140,12 @@ var rect;
 
 function drawRect() {
     try {
-        if (!document.getElementById("settings-draw-rect").checked) {
-            document.getElementById("drawRectId").style.color = "#fdd835";
-        }
+        
+        document.getElementById("drawRectId").style.color = "#fdd835";
 
         draw.rect().draw().fill(originalColor)
             .on('drawstop', function () {
-                if (!document.getElementById("settings-draw-rect").checked) {
-                    document.getElementById("drawRectId").style.color = "#009688";
-                }
+                document.getElementById("drawRectId").style.color = "#009688";
             })
             .on('click', function () {
                 this

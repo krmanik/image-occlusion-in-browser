@@ -23,6 +23,8 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import org.apache.cordova.*;
@@ -64,6 +66,13 @@ public class MainActivity extends CordovaActivity
         }
 
         super.appView.getView().setHorizontalScrollBarEnabled(false);
+
+        WebView webView = (WebView) appView.getEngine().getView();
+        WebSettings settings = webView.getSettings();
+        settings.setBuiltInZoomControls(true);
+        settings.setDisplayZoomControls(false);
+        settings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
+        settings.setSupportZoom(true);
 
         if (permissionAllowed) {
             // Set by <content src="index.html" /> in config.xml
