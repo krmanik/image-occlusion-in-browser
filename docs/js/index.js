@@ -49,8 +49,8 @@ var canDraw = false;
 document.addEventListener('click', function (e) {
     selectedElement = e.target.id;
 
-    if (canDraw && e.target.tagName != "rect") {
-        drawRect();
+    if (canDraw) {
+        drawRectWhenEnabled();
     }
 
     if (clozeMode == "group") {
@@ -126,9 +126,10 @@ function enableDrawRect() {
 
     if (canDraw) {
         document.getElementById("enableDrawRectId").style.color = "#fdd835";
+        document.getElementById("drawBtn").style.pointerEvents = "none";
     } else {
         document.getElementById("enableDrawRectId").style.color = "#009688";
-        showSnackbar("Draw one more rectangle");
+        document.getElementById("drawBtn").style.pointerEvents = "unset";
     }
 }
 
@@ -136,7 +137,6 @@ var note_num = 1;
 var originalImageName;
 var draw;
 var rect;
-
 function drawRect() {
     try {
         
@@ -145,6 +145,35 @@ function drawRect() {
         draw.rect().draw().fill(originalColor)
             .on('drawstop', function () {
                 document.getElementById("drawRectId").style.color = "#009688";
+            })
+            .on('click', function () {
+                this
+                    .draggable()
+                    .selectize()
+                    .resize()
+            });
+
+    } catch (e) {
+        console.log(e);
+        showSnackbar("Add image first");
+        document.getElementById("drawRectId").style.color = "#009688";
+    }
+}
+
+function drawRectWhenEnabled() {
+    try {
+
+        draw.rect().draw().fill(originalColor)
+            .on('drawstop', function () {
+                this
+                    .selectize()
+                    .draggable()
+                    .resize()
+            })            
+            .on('drawstart', function () {
+                if (!canDraw) {
+                    this.remove();
+                }
             })
             .on('click', function () {
                 this
