@@ -165,10 +165,12 @@ function drawRectWhenEnabled() {
 
         draw.rect().draw().fill(originalColor)
             .on('drawstop', function () {
+                if (this != null) {
                 this
-                    .selectize()
                     .draggable()
+                    .selectize()
                     .resize()
+                }
             })            
             .on('drawstart', function () {
                 if (!canDraw) {
