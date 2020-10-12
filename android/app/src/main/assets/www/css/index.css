@@ -29,6 +29,7 @@ body {
   padding-bottom: 80px;
   cursor: auto;
   overflow: auto;
+  user-select: none;
 }
 svg {
   cursor: crosshair;

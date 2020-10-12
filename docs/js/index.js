@@ -47,10 +47,9 @@ var addedList = [];
 var canDraw = false;
 
 document.addEventListener('click', function (e) {
-    //console.log(e.target.id);
     selectedElement = e.target.id;
 
-    if (canDraw) {
+    if (canDraw && e.target.tagName != "rect") {
         drawRect();
     }
 
