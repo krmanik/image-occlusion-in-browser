@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static',    filename='css/index.css') }}">
+    </head>
+    <body>
+
+        <header>
+            <div id="page-title-id" class="toolbar-button" style="float: left;font-size: 24px;">Download Deck</div>
+        </header>
+
+        <div style="padding-top: 100px; text-align: center;" class="label-design1"><b>Download Anki Image Occlusion generated deck.</b></div>
+        <div style="text-align: center; margin: 40px;"><a class="deck-download-link" href="{{ url_for('static', filename=url )}}">Download</a></div>
+    </body>
+</html>
