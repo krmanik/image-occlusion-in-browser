@@ -271,6 +271,8 @@ function addImage() {
                 imgWidth = this.width;
 
                 //saveSelectedImageToAnkiDroid();
+                // save image to Download folder
+                saveSelectedImage();
 
                 draw = SVG('drawing')
                     .height(imgHeight)
