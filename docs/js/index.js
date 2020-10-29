@@ -758,6 +758,27 @@ function get_html_file(path) {
     xhr.send();
 }
 
+function saveSelectedImage() {
+
+    var image = document.getElementById("uploadPreview");
+
+    fname = image.title;
+    var data = image.src;
+    var type = image.type;
+
+    var base64 = data.split(",")[1];
+
+    var blob = base64toBlob(base64, type);
+    var imgUrl = URL.createObjectURL(blob);
+    var downloadLink = document.createElement("a");
+    downloadLink.href = imgUrl;
+    downloadLink.download = fname;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+
+    showSnackbar("Image downloaded to Anki folder");
+}
+
 function saveSelectedImageToAnkiDroid() {
 
     var image = document.getElementById("uploadPreview");
