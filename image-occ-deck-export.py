@@ -396,7 +396,7 @@ if (mask === null || mask.complete) {
                         )
                         anki_notes.append(anki_note)
 
-                random.shuffle(anki_notes)
+                # random.shuffle(anki_notes)
 
                 anki_deck = genanki.Deck(model_id, anki_deck_title)
                 anki_package = genanki.Package(anki_deck)
