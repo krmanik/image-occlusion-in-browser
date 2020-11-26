@@ -40,7 +40,31 @@ async function createNormalCloze() {
 
             for (j = 0; j < child.length; j++) {
 
-                if (child[j].tagName == "rect") {
+                // text
+                if (child[j].tagName == "text") {
+                    
+                    // get bounding box of text, create and use rectangle as mask
+
+                    var bb = child[j].getBBox();
+                    var x = bb.x;
+                    var y = bb.y;
+                    var w = bb.width;
+                    var h = bb.height;
+
+                    origSVG += child[j].outerHTML;
+
+                    if (i == j) {
+                        svgQues += '<rect width="' + w + '" height="'+ h +'" fill="'+ questionColor +'" x="' + x + '" y="'+ y +'"></rect>';
+                        svgAns += child[j].outerHTML;
+                    } else {
+                        svgQues += '<rect width="' + w + '" height="'+ h +'" fill="'+ originalColor +'" x="' + x + '" y="'+ y +'"></rect>';
+                        svgAns += '<rect width="' + w + '" height="'+ h +'" fill="'+ originalColor +'" x="' + x + '" y="'+ y +'"></rect>';
+                    }
+                }
+
+                // rect, ellipse, polygon
+                if (child[j].tagName == "rect" || child[j].tagName == "polygon" 
+                    || child[j].tagName == "ellipse") {
 
                     child[j].style.fill = originalColor;
 
@@ -65,7 +89,8 @@ async function createNormalCloze() {
             // add time stamp
             var timeStamp = new Date().getTime();
 
-            if (child[i].tagName == "rect") {
+            if (child[i].tagName == "rect" || child[i].tagName == "polygon" 
+                || child[i].tagName == "ellipse" || child[i].tagName == "text") {
 
                 if (oneTime) {
                     // origin mask

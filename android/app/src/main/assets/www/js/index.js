@@ -51,7 +51,7 @@ document.addEventListener('click', function (e) {
     selectedElement = e.target.id;
 
     if (canDraw) {
-        drawRectWhenEnabled();
+        drawMultipleFigure();
     }
 
     if (clozeMode == "group") {
@@ -124,10 +124,10 @@ function enableDrawRect() {
     canDraw = !canDraw;
 
     if (canDraw) {
-        document.getElementById("enableDrawRectId").style.color = "#fdd835";
+        document.getElementById("enabledrawBtnIcon").style.color = "#fdd835";
         document.getElementById("drawBtn").style.pointerEvents = "none";
     } else {
-        document.getElementById("enableDrawRectId").style.color = "#009688";
+        document.getElementById("enabledrawBtnIcon").style.color = "#009688";
         document.getElementById("drawBtn").style.pointerEvents = "unset";
     }
 }
@@ -137,14 +137,29 @@ var note_num = 1;
 var originalImageName;
 var draw;
 var rect;
+
+
+function drawFigure() {
+    if (drawFigureName == "Rectangle") {
+        drawRect();
+    } else if (drawFigureName == "Ellipse") {
+        drawEllipse();
+    } else if (drawFigureName == "Polygon") {
+        drawPolygon();
+    } else if (drawFigureName == "Textbox") {
+        drawText();
+    }
+}
+
+
 function drawRect() {
     try {
 
-        document.getElementById("drawRectId").style.color = "#fdd835";
+        document.getElementById("drawBtnIcon").style.color = "#fdd835";
 
         draw.rect().draw().fill(originalColor)
             .on('drawstop', function () {
-                document.getElementById("drawRectId").style.color = "#009688";
+                document.getElementById("drawBtnIcon").style.color = "#009688";
             })
             .on('click', function () {
                 this
@@ -156,11 +171,138 @@ function drawRect() {
     } catch (e) {
         console.log(e);
         showSnackbar("Add image first");
-        document.getElementById("drawRectId").style.color = "#009688";
+        document.getElementById("drawBtnIcon").style.color = "#009688";
     }
 }
 
-function drawRectWhenEnabled() {
+function drawEllipse() {
+    try {
+
+        document.getElementById("drawBtnIcon").style.color = "#fdd835";
+
+        draw.ellipse().draw().fill(originalColor)
+            .on('drawstop', function () {
+                document.getElementById("drawBtnIcon").style.color = "#009688";
+            })
+            .on('click', function () {
+                this
+                    .draggable()
+                    .selectize()
+                    .resize()
+            });
+
+    } catch (e) {
+        console.log(e);
+        showSnackbar("Add image first");
+        document.getElementById("drawBtnIcon").style.color = "#009688";
+    }
+}
+
+
+function drawPolygon() {
+    try {
+
+        document.getElementById("drawBtnIcon").style.color = "#fdd835";
+
+        draw.polygon().draw().fill(originalColor)
+            .on('drawstop', function () {
+                document.getElementById("drawBtnIcon").style.color = "#009688";
+            })
+            .on('click', function () {
+                this
+                    .draggable()
+                    .selectize()
+                    .resize()
+            })
+            .on('drawstart', function () {
+                document.addEventListener('keydown', function (e) {
+                    if (e.keyCode == 13) {
+                        draw.polygon().draw('done');
+                        draw.polygon().off('drawstart');
+                        document.getElementById("drawBtnIcon").style.color = "#009688";
+                    }
+                });
+
+            });
+
+    } catch (e) {
+        console.log(e);
+        showSnackbar("Add image first");
+        document.getElementById("drawBtnIcon").style.color = "#009688";
+    }
+}
+
+function stopDrawPolygon() {
+    try {
+        draw.polygon().draw('stop', event);
+        document.getElementById("drawBtnIcon").style.color = "#009688";
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+function drawText() {
+    try {
+
+        document.getElementById("drawBtnIcon").style.color = "#fdd835";
+
+        var group = draw.group();
+
+        var rect = group.rect().draw().fill("#eceff100")
+            .on('drawstop', function () {
+                document.getElementById("drawBtnIcon").style.color = "#009688";
+
+                //popup get rect color, text, text color then put at the position
+
+                var textToInsert = addTextPopup();
+
+                var x = rect.x() + 0.5 * rect.width();
+                var y = rect.y() + 0.5 * rect.height();
+
+                var text = draw.text(textToInsert)
+                    .font({ size: 30, family: 'Helvetica' })
+                    .center(x, y);
+
+                text.draggable(true);
+                text.selectize(true);
+                text.resize(true);
+
+                this.remove();
+
+            })
+            .on('click', function () {
+                this
+                    .draggable()
+                    .selectize()
+                    .resize()
+            });
+
+    } catch (e) {
+        console.log(e);
+        showSnackbar("Add image first");
+        document.getElementById("drawBtnIcon").style.color = "#009688";
+    }
+}
+
+function addTextPopup() {
+    var text = prompt("Enter text", "");
+    if (name != null) {
+        return text;
+    }
+}
+
+function drawMultipleFigure() {
+    if (drawFigureName == "Rectangle") {
+        drawMultipleRect();
+    } else if (drawFigureName == "Ellipse") {
+        drawMultipleEllipse();
+    } else if (drawFigureName == "Textbox") {
+        drawMultipleText();
+    }
+}
+
+
+function drawMultipleRect() {
     try {
 
         draw.rect().draw().fill(originalColor)
@@ -185,10 +327,88 @@ function drawRectWhenEnabled() {
     } catch (e) {
         console.log(e);
         showSnackbar("Add image first");
-        document.getElementById("drawRectId").style.color = "#009688";
+        document.getElementById("enabledrawBtnIcon").style.color = "#009688";
     }
 }
 
+function drawMultipleEllipse() {
+    try {
+
+        draw.ellipse().draw().fill(originalColor)
+            .on('drawstop', function () {
+                this
+                    .selectize()
+                    .draggable()
+                    .resize()
+            })
+            .on('drawstart', function () {
+                if (!canDraw) {
+                    this.remove();
+                }
+            })
+            .on('click', function () {
+                this
+                    .draggable()
+                    .selectize()
+                    .resize()
+            });
+
+    } catch (e) {
+        console.log(e);
+        showSnackbar("Add image first");
+        document.getElementById("enabledrawBtnIcon").style.color = "#009688";
+    }
+}
+
+
+
+function drawMultipleText() {
+    try {
+
+        document.getElementById("drawBtnIcon").style.color = "#fdd835";
+
+        var group = draw.group();
+
+        var rect = group.rect().draw().fill("#eceff100")
+            .on('drawstop', function () {
+                document.getElementById("drawBtnIcon").style.color = "#009688";
+
+                //popup get rect color, text, text color then put at the position
+
+                var textToInsert = addTextPopup();
+
+                var x = rect.x() + 0.5 * rect.width();
+                var y = rect.y() + 0.5 * rect.height();
+
+                var text = draw.text(textToInsert)
+                    .font({ size: 30, family: 'Helvetica' })
+                    .center(x, y);
+
+                text.draggable(true);
+                text.selectize(true);
+                text.resize(true);
+
+                this.remove();
+
+            })
+            .on('drawstart', function () {
+                if (!canDraw) {
+                    this.remove();
+                }
+            })
+            .on('click', function () {
+                this
+                    .draggable()
+                    .selectize()
+                    .resize()
+            });
+
+    } catch (e) {
+        console.log(e);
+        showSnackbar("Add image first");
+        document.getElementById("drawBtnIcon").style.color = "#009688";
+    }
+}
 
 function addRect() {
     try {
@@ -205,9 +425,10 @@ function addRect() {
     }
 }
 
-function removeRect() {
+function removePolygon() {
     try {
-        if (document.getElementById(selectedElement).tagName == "rect"
+        if ((document.getElementById(selectedElement).tagName == "rect" || document.getElementById(selectedElement).tagName == "polygon"
+            || document.getElementById(selectedElement).tagName == "ellipse" || document.getElementById(selectedElement).tagName == "text")
             && document.getElementById(selectedElement).parentElement.tagName == "svg") {
 
             var svgEle = SVG.adopt(document.getElementById(selectedElement));
@@ -224,16 +445,26 @@ function removeRect() {
             }
 
             svgEle.remove();
-        } else if (document.getElementById(selectedElement).tagName == "rect"
+
+        } else if ((document.getElementById(selectedElement).tagName == "rect" || document.getElementById(selectedElement).tagName == "ellipse"
+            || document.getElementById(selectedElement).tagName == "polygon" || document.getElementById(selectedElement).tagName == "text")
             && document.getElementById(selectedElement).parentElement.tagName == "g") {
+
+            var g = document.getElementById(selectedElement).parentElement;
+            var gElem = SVG.adopt(document.getElementById(g.id));
+            gElem.selectize(false);
+            gElem.remove();
+
+        } else if (document.getElementById(selectedElement).tagName == "tspan") {
             var g = document.getElementById(selectedElement).parentElement;
             var gElem = SVG.adopt(document.getElementById(g.id));
             gElem.selectize(false);
             gElem.remove();
         }
+
     } catch (e) {
         console.log(e);
-        showSnackbar("Select a rectangle");
+        showSnackbar("Select a figure");
     }
 }
 
@@ -336,7 +567,6 @@ function hexToRgb(hex) {
     } : null;
 }
 
-
 var noteHeader;
 var noteFooter;
 var noteRemarks;
@@ -403,7 +633,6 @@ function addNote() {
         document.getElementById("done-btn").style.display = "none";
 
         document.getElementById("close-add-note-btn").style.display = "block";
-
     }
 }
 
@@ -501,7 +730,6 @@ function changePage(page) {
         document.getElementById("done-btn").style.display = "none";
     }
 
-
     changeIcon();
 }
 
@@ -570,6 +798,13 @@ window.onload = function () {
     document.getElementById("OColor").value = originalColor;
 
     document.addEventListener("backbutton", onBackKeyDown, false);
+
+    // for stopping draw of polygon
+    document.addEventListener("volumedownbutton", stopDrawPolygon, false);
+
+    if (drawFigureName == "Rectangle") {
+        document.getElementById("drawRectId").style.color = "#fdd835";
+    }
 }
 
 function draggable(el) {
@@ -837,7 +1072,6 @@ function changeMode(mode) {
         document.getElementById('group-done-btn').style.display = "none";
         document.getElementById('combine-done-btn').style.display = "block";
 
-
         document.getElementById('groupButton').style.display = "block";
         document.getElementById("page-title-id").innerHTML = "Combine Cloze";
 
@@ -854,5 +1088,61 @@ function onBackKeyDown(e) {
     var exit = confirm("Are you sure you want to exit ?");
     if (exit) {
         navigator.app.exitApp();
+    }
+}
+
+function moreTools() {
+    if (document.getElementById("more-tools").style.display == "none") {
+        document.getElementById("more-tools").style.display = "flex";
+    } else {
+        document.getElementById("more-tools").style.display = "none";
+    }
+}
+
+var drawFigureName = "Rectangle";
+
+function selectPolygon(e) {
+    if (e.id == "rectBtn") {
+        drawFigureName = "Rectangle";
+    } else if (e.id == "ellipseBtn") {
+        drawFigureName = "Ellipse";
+    } else if (e.id == "polygonBtn") {
+        drawFigureName = "Polygon";
+    } else if (e.id == "textBtn") {
+        drawFigureName = "Textbox";
+    }
+
+    document.getElementById("enableDrawBtn").style.pointerEvents = "unset";
+
+    if (drawFigureName == "Rectangle") {
+
+        document.getElementById("drawRectId").style.color = "#fdd835";
+        document.getElementById("drawEllipseId").style.color = "#2196f3";
+        document.getElementById("drawPolygonId").style.color = "#2196f3";
+        document.getElementById("drawTextBoxId").style.color = "#2196f3";
+
+    } else if (drawFigureName == "Ellipse") {
+
+        document.getElementById("drawRectId").style.color = "#2196f3";
+        document.getElementById("drawEllipseId").style.color = "#fdd835";
+        document.getElementById("drawPolygonId").style.color = "#2196f3";
+        document.getElementById("drawTextBoxId").style.color = "#2196f3";
+
+    } else if (drawFigureName == "Polygon") {
+
+        document.getElementById("drawRectId").style.color = "#2196f3";
+        document.getElementById("drawEllipseId").style.color = "#2196f3";
+        document.getElementById("drawPolygonId").style.color = "#fdd835";
+        document.getElementById("drawTextBoxId").style.color = "#2196f3";
+
+        document.getElementById("enableDrawBtn").style.pointerEvents = "none";
+        showSnackbar("Draw button disabled for Polygon.");
+
+    } else if (drawFigureName == "Textbox") {
+
+        document.getElementById("drawRectId").style.color = "#2196f3";
+        document.getElementById("drawEllipseId").style.color = "#2196f3";
+        document.getElementById("drawPolygonId").style.color = "#2196f3";
+        document.getElementById("drawTextBoxId").style.color = "#fdd835";
     }
 }
