@@ -129,22 +129,22 @@ Author: Infinyte7 (Mani)
       <a href="#" onclick="changePage('help')">Help</a>
     </div>
 
-    <div class="sidenav-version">Version 1.3.5</div>
+    <div class="sidenav-version">Version 1.3.6 Alpha</div>
 
   </div>
   <!--main Side Nav -->
 
   <!-- bottom -->
   <nav class="nav">
-    <a id="drawBtn" href="#" class="nav__link" onclick="drawRect();">
-      <i id="drawRectId" class="material-icons nav__icon" style="color: #009688;">crop</i>
+    <a id="drawBtn" href="#" class="nav__link" onclick="drawFigure();">
+      <i id="drawBtnIcon" class="material-icons nav__icon" style="color: #009688;">crop</i>
       <span class="nav__text">Create</span>
     </a>
     <a id="enableDrawBtn" href="#" class="nav__link" onclick="enableDrawRect();">
-      <i id="enableDrawRectId" class="material-icons nav__icon" style="color: #009688;">dashboard</i>
+      <i id="enabledrawBtnIcon" class="material-icons nav__icon" style="color: #009688;">dashboard</i>
       <span class="nav__text">Draw</span>
     </a>
-    <a href="#" class="nav__link" onclick="removeRect();">
+    <a href="#" class="nav__link" onclick="removePolygon();">
       <i class="material-icons nav__icon" style="color: #f44336;">delete</i>
       <span class="nav__text">Delete</span>
     </a>
@@ -152,7 +152,42 @@ Author: Infinyte7 (Mani)
       <i class="material-icons nav__icon" style="color: #5c6bc0;">post_add</i>
       <span class="nav__text">Note</span>
     </a>
+
+    <a href="#" class="nav__link" onclick="moreTools();">
+      <i class="material-icons nav__icon" style="color: #5c6bc0;">settings_applications</i>
+      <span class="nav__text">More</span>
+    </a>
+
+
   </nav>
+
+
+  <!--more tools -->
+  <more-tools-nav id="more-tools" class="more-tools-nav" style="display: none;">
+    
+    
+    <a id="rectBtn" href="#" class="more-tools-nav__link" onclick="selectPolygon(this);">
+      <i id="drawRectId" class="material-icons more-tools-nav__icon" style="color: #2196f3;">view_compact</i>
+      <span class="more-tools-nav__text">Rectangle</span>
+    </a>
+
+    <a id="ellipseBtn" href="#" class="more-tools-nav__link" onclick="selectPolygon(this);">
+      <i id="drawEllipseId" class="material-icons more-tools-nav__icon" style="color: #2196f3;">lens</i>
+      <span class="more-tools-nav__text">Ellipse</span>
+    </a>
+
+    <a id="polygonBtn" href="#" class="more-tools-nav__link" onclick="selectPolygon(this);">
+      <i id="drawPolygonId" class="material-icons more-tools-nav__icon" style="color: #2196f3;">navigation</i>
+      <span class="more-tools-nav__text">Polygon</span>
+    </a>
+
+    <a id="textBtn" href="#" class="more-tools-nav__link" onclick="selectPolygon(this);">
+      <i id="drawTextBoxId" class="material-icons more-tools-nav__icon" style="color: #2196f3;">format_shapes</i>
+      <span class="more-tools-nav__text">Textbox</span>
+    </a>
+
+  </more-tools-nav>
+
 
   <div id="drawing" class="container-editor"></div>
 

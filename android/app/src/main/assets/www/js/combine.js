@@ -53,7 +53,8 @@ document.addEventListener('click', function (e) {
             document.getElementById("merge-rect-btn").style.color = "#e0e0e0";
 
             try {
-                if (document.getElementById(selectedElement).tagName == "rect") {
+                if (document.getElementById(selectedElement).tagName == "rect" || document.getElementById(selectedElement).tagName == "ellipse"
+                    || document.getElementById(selectedElement).tagName == "polygon") {
                     svgGroup = "added";
 
                     var c = hexToRgb(originalColor);
@@ -141,7 +142,7 @@ async function createCombineCloze() {
     for (i = 0; i < child.length; i++) {
         // don't add svg with 0 width and 0 height
         if (child[i].getBBox().height != 0 && child[i].getBBox().width != 0) {
-            if (child[i].tagName == "rect") {
+            if (child[i].tagName == "rect" || child[i].tagName == "ellipse" || child[i].tagName == "polygon") {
                 rectOrigSvg += child[i].outerHTML;
             }
         }
@@ -162,7 +163,7 @@ async function createCombineCloze() {
         if (child[i].getBBox().height != 0 && child[i].getBBox().width != 0) {
             for (j = 0; j < child.length; j++) {
 
-                if (child[j].tagName == "rect") {
+                if (child[j].tagName == "rect" || child[j].tagName == "ellipse" || child[j].tagName == "polygon") {
 
                     child[j].style.fill = originalColor;
 
@@ -197,7 +198,8 @@ async function createCombineCloze() {
             // add time stamp
             var timeStamp = new Date().getTime();
 
-            if (child[i].tagName == "rect" || child[i].tagName == "g" && child[i].getAttribute("data-type") == "combine") {
+            if ((child[i].tagName == "rect" || child[i].tagName == "ellipse" || child[i].tagName == "polygon")
+                || child[i].tagName == "g" && child[i].getAttribute("data-type") == "combine") {
 
                 if (oneTime) {
                     // origin mask
@@ -278,25 +280,46 @@ function htmlExcludingThisG(gChild) {
 function createGroupWithNewRects() {
 
     if (combineList.length > 0) {
+
         var group = draw.group();
 
         for (i = 0; i < combineList.length; i++) {
             var svgEleRect = SVG.adopt(document.getElementById(combineList[i]));
             svgEleRect.selectize(false);
 
-            var elemRect = document.getElementById(combineList[i]);
+            var elemFigure = document.getElementById(combineList[i]);
 
-            var box = elemRect.getBBox();
+            if (elemFigure.tagName == "rect") {
 
-            var x = box.x;
-            var y = box.y;
-            var w = box.width;
-            var h = box.height;
-            var fColor = elemRect.style.fill;
+                var box = elemFigure.getBBox();
+                var x = box.x;
+                var y = box.y;
+                var w = box.width;
+                var h = box.height;
+                var fColor = elemFigure.style.fill;
+                group.add(draw.rect(w, h).move(x, y).fill(fColor));
+
+            } else if (elemFigure.tagName == "ellipse") {
+
+                var rx = parseInt(elemFigure.getAttribute("rx"));
+                var ry = parseInt(elemFigure.getAttribute("ry"));
+                var cx = Math.abs(rx - parseInt(elemFigure.getAttribute("cx")));
+                var cy = Math.abs(ry - parseInt(elemFigure.getAttribute("cy")));
+                rx = 2 * rx;
+                ry = 2 * ry;
+                var fColor = elemFigure.style.fill;
+                group.add(draw.ellipse(rx, ry).move(cx, cy).fill(fColor));
+
+            } else if (elemFigure.tagName == "polygon") {
+
+                var points = elemFigure.getAttribute("points");
+                var fColor = elemFigure.style.fill;
+                group.add(draw.polygon(points).fill(fColor));
+                
+            }
 
 
-            group.add(draw.rect(w, h).move(x, y).fill(fColor));
-            elemRect.outerHTML = "";
+            elemFigure.outerHTML = "";
         }
 
         group.selectize(true);

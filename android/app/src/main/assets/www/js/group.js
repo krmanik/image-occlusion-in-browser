@@ -32,7 +32,7 @@ function createOrigSvg() {
 
     for (j = 0; j < child.length; j++) {
 
-        if (child[j].tagName == "rect") {
+        if (child[j].tagName == "rect" || child[j].tagName == "polygon" || child[j].tagName == "ellipse") {
             origSVG += child[j].outerHTML;
         }
     }
@@ -43,7 +43,7 @@ function createQuesSvg() {
     var child = document.getElementById("SVG101").childNodes;
 
     for (j = 0; j < child.length; j++) {
-        if (child[j].tagName == "rect") {
+        if (child[j].tagName == "rect" || child[j].tagName == "polygon" || child[j].tagName == "ellipse") {
             svgQues += child[j].outerHTML;
         }
     }
@@ -60,7 +60,7 @@ async function createGroup(list) {
     // remove selection
     for (i = 0; i < child.length; i++) {
         try {
-            if (child[i].tagName == "rect") {
+            if (child[i].tagName == "rect" || child[i].tagName == "polygon" || child[i].tagName == "ellipse") {
                 var svgEle = SVG.adopt(document.getElementById(child[i].id))
                 svgEle.selectize(false);
             }
@@ -79,7 +79,7 @@ async function createGroup(list) {
 
     // add remaining to answer mask
     for (j = 0; j < child.length; j++) {
-        if (child[j].tagName == "rect") {
+        if (child[j].tagName == "rect" || child[j].tagName == "polygon" || child[j].tagName == "ellipse") {
             svgAns += child[j].outerHTML;
         }
     }
@@ -94,7 +94,7 @@ async function createGroup(list) {
     // again allow selection
     for (i = 0; i < child.length; i++) {
         try {
-            if (child[i].tagName == "rect") {
+            if (child[i].tagName == "rect" || child[i].tagName == "polygon" || child[i].tagName == "ellipse") {
                 var svgEle = SVG.adopt(document.getElementById(child[i].id))
                 svgEle.selectize(true);
                 svgEle.draggable(true);

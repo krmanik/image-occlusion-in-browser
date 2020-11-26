@@ -272,7 +272,7 @@ function addImage() {
 
                 //saveSelectedImageToAnkiDroid();
                 // save image to Download folder
-                saveSelectedImage();
+                //saveSelectedImage();
 
                 draw = SVG('drawing')
                     .height(imgHeight)
