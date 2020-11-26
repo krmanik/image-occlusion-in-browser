@@ -11,9 +11,9 @@ Copyright (c) 2012-2018 Wout Fierens
 Wikipedia
 
 ## Anki Image Occlusion [Android app]
-MIT License
+GPL 3.0
 <br>Copyright (c) 2020 Mani
 
 ## image occlusion in browser
-MIT License
+GPL 3.0
 <br>Copyright (c) 2020 Mani
