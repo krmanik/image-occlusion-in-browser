@@ -25,7 +25,7 @@ SOFTWARE.
 var combineList = [];
 var combineColor = "#2196F3";
 document.addEventListener('click', function (e) {
-    console.log(e.target.id);
+    //console.log(e.target.id);
     selectedElement = e.target.id;
 
     if (clozeMode == "combine") {
@@ -102,7 +102,7 @@ document.addEventListener('click', function (e) {
 
 function changeRectFillInsideG(gChild) {
     var gHTML = "";
-    console.log(gChild);
+    //console.log(gChild);
 
     var children = gChild.childNodes;
     for (l = 0; l < children.length; l++) {
