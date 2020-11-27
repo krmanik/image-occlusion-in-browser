@@ -157,9 +157,10 @@ function drawRect() {
 
         document.getElementById("drawBtnIcon").style.color = "#fdd835";
 
-        draw.rect().draw().fill(originalColor)
+        var rect = draw.rect().draw().fill(originalColor)
             .on('drawstop', function () {
-                document.getElementById("drawBtnIcon").style.color = "#009688";
+                document.getElementById("drawBtnIcon").style.color = "#009688";                
+                polygonStack.push(rect['node'].id);
             })
             .on('click', function () {
                 this
@@ -180,9 +181,10 @@ function drawEllipse() {
 
         document.getElementById("drawBtnIcon").style.color = "#fdd835";
 
-        draw.ellipse().draw().fill(originalColor)
+        var ellipse = draw.ellipse().draw().fill(originalColor)
             .on('drawstop', function () {
                 document.getElementById("drawBtnIcon").style.color = "#009688";
+                polygonStack.push(ellipse['node'].id);
             })
             .on('click', function () {
                 this
@@ -198,7 +200,7 @@ function drawEllipse() {
     }
 }
 
-
+var polygon;
 function drawPolygon() {
     try {
 
@@ -206,9 +208,11 @@ function drawPolygon() {
 
         document.getElementById("statusMsg").innerHTML = "Press volume down to stop drawing";
 
-        draw.polygon().draw().fill(originalColor)
+        polygon = draw.polygon().draw().fill(originalColor)
             .on('drawstop', function () {
                 document.getElementById("drawBtnIcon").style.color = "#009688";
+                // view stopDrawPolygon()
+                //polygonStack.push(polygon['node'].id);
             })
             .on('click', function () {
                 this
@@ -239,11 +243,13 @@ function stopDrawPolygon() {
         document.getElementById("statusMsg").innerHTML = "";
         document.getElementById("drawBtnIcon").style.color = "#009688";
         draw.polygon().draw('stop', event);
+        polygonStack.push(polygon['node'].id);
     } catch (e) {
         console.log(e);
     }
 }
 
+var polygonStack = [];
 function drawText() {
     try {
 
@@ -273,6 +279,8 @@ function drawText() {
                 var e = document.getElementById(group.id());
                 e.setAttribute("data-type", "text-box-g");
 
+                polygonStack.push(group.id());
+
             })
             .on('click', function () {
                 this
@@ -295,6 +303,31 @@ function addTextPopup() {
     }
 }
 
+var undoStack = [];
+function undoDraw() {
+
+    if (polygonStack.length > 0) {
+        var polygonId = polygonStack.pop();
+        
+        var gElem = SVG.adopt(document.getElementById(polygonId));
+        gElem.selectize(false);
+    
+        undoStack.push(gElem);
+        
+        gElem.remove();
+    }
+
+}
+
+function redoDraw() {
+    if (undoStack.length > 0) {
+        var gElem = undoStack.pop();
+        draw.add(gElem);
+
+        polygonStack.push(gElem);
+    }
+}
+
 function drawMultipleFigure() {
     if (drawFigureName == "Rectangle") {
         drawMultipleRect();
@@ -309,8 +342,9 @@ function drawMultipleFigure() {
 function drawMultipleRect() {
     try {
 
-        draw.rect().draw().fill(originalColor)
+        var rect = draw.rect().draw().fill(originalColor)
             .on('drawstop', function () {
+                polygonStack.push(rect['node'].id);
                 this
                     .selectize()
                     .draggable()
@@ -338,8 +372,9 @@ function drawMultipleRect() {
 function drawMultipleEllipse() {
     try {
 
-        draw.ellipse().draw().fill(originalColor)
+        var ellipse = draw.ellipse().draw().fill(originalColor)
             .on('drawstop', function () {
+                polygonStack.push(ellipse['node'].id);
                 this
                     .selectize()
                     .draggable()
@@ -395,6 +430,7 @@ function drawMultipleText() {
                 var e = document.getElementById(group.id());
                 e.setAttribute("data-type", "text-box-g");
 
+                polygonStack.push(group.id());
 
             })
             .on('drawstart', function () {

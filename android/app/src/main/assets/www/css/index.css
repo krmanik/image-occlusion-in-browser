@@ -13,7 +13,7 @@
   --side-nav-main-bg-color: white;
   --side-nav-main-a-color: #818181; 
   --side-nav-main-header-color: white;
-  --side-nav-main-header-bg: #1e88e5;
+  --side-nav-main-header-bg: #0099ff;
   --side-nav-note-bg: white;
   --side-nav-help-bg: white;
 }
@@ -218,7 +218,7 @@ textarea:focus {
   transition: 0.3s;
 }
 .sidenav-header {
-  height: 160px;
+  height: 120px;
   background: var(--side-nav-main-header-bg);
   vertical-align: middle;
   text-align: center;
@@ -234,8 +234,21 @@ textarea:focus {
   left: 0;
   right: 0;
   text-align: center;
-  bottom: 20px;
-  color: #818181;
+  bottom: 0px;
+  color: white;
+  width: 100%;
+  background: #0099ff;
+  height: 45px;
+  line-height: 7px;
+}
+.bottom-svg-div {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  bottom: 40px;
 }
 .card-added-msg-box {
   position: fixed;
