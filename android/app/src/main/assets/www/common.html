@@ -42,6 +42,10 @@
 <div id="viewNoteSideNav" class="sidenav-view-note" style="right: 0; text-align: -webkit-center;">
     <div onclick="downloadAllNotes()" class="button"><i class="material-icons" style="color: #1e88e5;">get_app</i>
         Download</div>
+    <br>
+    <div>Note: Note data added to AnkiDroid. Download this note data to create deck manually. Change svg download
+        location in settings.</div>
+    <br>
 
     <div id="noteData"></div>
 
@@ -82,24 +86,40 @@
     <div class="label-design1"><b>Create Combine Cloze</b></div>
 
     <div class="help-side-nav-text">
-        To create combine cloze, click <i class="material-icons" style="font-size: 22px; color: #607d8b;">collections</i>
+        To create combine cloze, click <i class="material-icons"
+            style="font-size: 22px; color: #607d8b;">collections</i>
         then select
         rectangles in editor window to make a group. Then again click
-        <i class="material-icons" style="font-size: 22px; color: #FF6F00;">collections</i> to stop adding to group. Then click 
-        <i class="material-icons" style="font-size: 22px; color: #607d8b;">crop_free</i> to make a group of those selected rectangles into one.
+        <i class="material-icons" style="font-size: 22px; color: #FF6F00;">collections</i> to stop adding to group. Then
+        click
+        <i class="material-icons" style="font-size: 22px; color: #607d8b;">crop_free</i> to make a group of those
+        selected rectangles into one.
         <br>Repeat above to make new group.
         Color can be changed by clicking <i class="material-icons" style="font-size: 22px; color: #607d8b;">palette</i>.
-        Finally, click <i class="material-icons" style="font-size: 22px; color: #1e88e5;">check_circle</i> to generate and
+        Finally, click <i class="material-icons" style="font-size: 22px; color: #1e88e5;">check_circle</i> to generate
+        and
         add notes to
         AnkiDroid.
+        <br><b>Repeat above process for even if individual image in editor window.</b>
     </div>
 
     <div class="label-design1"><b>Some Tips</b></div>
 
     <div class="help-side-nav-text">
         1. Last created rectangle can be dragged even if draw button enabled.
-        <br>2. When draw button enabled, and want to select other rectangles, then first disable draw button then select other rectangles.
+        <br>2. When draw button enabled, and want to select other rectangles, then first disable draw button then select
+        other rectangles.
         <br>3. Use pinch to zoom for resizing small rectangles.
+
+        <br><b>4. Press volume down button to stop drawing polygon</b>
+        <br>5. When selection do not work, then first select other figures then select previous figure.
+        <br>6. When changing from rectangle to ellipse or polygon, then may be one extra figure will be created. So, select
+        that figure and delete.
+        <br>7. After combining a figure, the combined figure can be dragged once.
+        <br>8. Some empty figure may not be deleted. It will not added to AnkiDroid deck.
+        <br><b>9. If delete button not work then select other figure then click previous figure then click delete. It may
+        works.</b>
+        <br>10. Currently addbox works only for normal cloze
     </div>
 
 
@@ -138,7 +158,8 @@
                     <div class="button"><i class="material-icons" style="color: #009688;">dashboard</i></div>
                 </td>
                 <td>
-                    Draw rectangles without clicking again draw button. Not fully supported, when draw button turn off, then create one more extra rectangle.
+                    Draw rectangles without clicking again draw button. Not fully supported, when draw button turn off,
+                    then create one more extra rectangle.
                 </td>
             </tr>
             <tr>
@@ -192,6 +213,46 @@
                     those rectangles.
                 </td>
             </tr>
+
+            <tr>
+                <td>
+                    <div class="button"><i class="material-icons" style="color: #2196f3;">view_compact</i></div>
+                </td>
+                <td>
+                    Turn on to create rectangles in editor window.
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="button"><i class="material-icons" style="color: #2196f3;">lens</i></div>
+                </td>
+                <td>
+                    Turn on to create ellipses in editor window.
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="button"><i class="material-icons" style="color: #2196f3;">navigation</i></div>
+                </td>
+                <td>
+                    Turn on to create polygon in editor window. But multiple polygon using <i>draw</i> button is not
+                    available.
+                    <b>Press volume down button to stop drawing polygon.</b>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="button"><i class="material-icons" style="color: #2196f3;">format_shapes</i></div>
+                </td>
+                <td>
+                    <b>Experimental feature.</b> Turn on to create text in editor window. Only normal cloze can be
+                    created.
+                </td>
+            </tr>
+
             <tr>
                 <td>
                     <div class="button"><i class="material-icons" style="color: #607d8b;">palette</i></div>
@@ -235,6 +296,8 @@
             </tr>
         </tbody>
     </table>
+
+
 
     <div style="text-align: left; padding: 20px;">
         <div>

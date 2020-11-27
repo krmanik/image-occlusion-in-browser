@@ -80,35 +80,35 @@ Author: Infinyte7 (Mani)
     <!-- color palette -->
     <header-3 id="color-palette-header" style="display: none;">
       <div onclick="changeColorPalette(this);" class="button" color="#f44336" style="font-size: 0px;">
-        <i class="material-icons" style="font-size: 20px; color: #f44336;">lense</i>
+        <i class="material-icons" style="font-size: 20px; color: #f44336; padding-top: 6px;">lense</i>
       </div>
   
       <div onclick="changeColorPalette(this);" class="button" color="#4caf50" style="font-size: 0px;">
-        <i class="material-icons" style="font-size: 20px; color: #4caf50;">lense</i>
+        <i class="material-icons" style="font-size: 20px; color: #4caf50; padding-top: 6px;">lense</i>
       </div>
   
       <div onclick="changeColorPalette(this);" class="button" color="#2196f3" style="font-size: 0px;">
-        <i class="material-icons" style="font-size: 20px; color: #2196f3;">lense</i>
+        <i class="material-icons" style="font-size: 20px; color: #2196f3; padding-top: 6px;">lense</i>
       </div>
       
       <div onclick="changeColorPalette(this);" class="button" color="#009688" style="font-size: 0px;">
-        <i class="material-icons" style="font-size: 20px; color: #009688;">lense</i>
+        <i class="material-icons" style="font-size: 20px; color: #009688; padding-top: 6px;">lense</i>
       </div>
   
       <div onclick="changeColorPalette(this);" class="button" color="#3f51b5" style="font-size: 0px;">
-        <i class="material-icons" style="font-size: 20px; color: #3f51b5;">lense</i>
+        <i class="material-icons" style="font-size: 20px; color: #3f51b5; padding-top: 6px;">lense</i>
       </div>
   
       <div onclick="changeColorPalette(this);" class="button" color="#9c27b0" style="font-size: 0px;">
-        <i class="material-icons" style="font-size: 20px; color: #9c27b0;">lense</i>
+        <i class="material-icons" style="font-size: 20px; color: #9c27b0; padding-top: 6px;">lense</i>
       </div>
   
       <div onclick="changeColorPalette(this);" class="button" color="#ff9800" style="font-size: 0px;">
-        <i class="material-icons" style="font-size: 20px; color: #ff9800;">lense</i>
+        <i class="material-icons" style="font-size: 20px; color: #ff9800; padding-top: 6px;">lense</i>
       </div>
   
       <div onclick="changeColorPalette(this);" class="button" color="#00bcd4" style="font-size: 0px;">
-        <i class="material-icons" style="font-size: 20px; color: #00bcd4;">lense</i>
+        <i class="material-icons" style="font-size: 20px; color: #00bcd4; padding-top: 6px;">lense</i>
       </div>
     </header-3>
   
@@ -121,7 +121,7 @@ Author: Infinyte7 (Mani)
 
     <div style="padding-top: 20px; text-align: left;">
       <a href="#" onclick="changeMode('normal');">Normal Cloze</a>
-      <a href="#" onclick="changeMode('group')">Group Cloze</a>
+      <!--<a href="#" onclick="changeMode('group')">Group Cloze</a>-->
       <a href="#" onclick="changeMode('combine')">Combine Cloze</a>
       <!--<a href="#" onclick="changePage('move')">Move Images</a>-->
       <a href="#" onclick="changePage('view')">View Notes</a>
@@ -164,7 +164,6 @@ Author: Infinyte7 (Mani)
 
   <!--more tools -->
   <more-tools-nav id="more-tools" class="more-tools-nav" style="display: none;">
-    
     
     <a id="rectBtn" href="#" class="more-tools-nav__link" onclick="selectPolygon(this);">
       <i id="drawRectId" class="material-icons more-tools-nav__icon" style="color: #2196f3;">view_compact</i>
@@ -228,6 +227,46 @@ Author: Infinyte7 (Mani)
       <br>
       <a href="https://www.materialpalette.com/colors">Material Palette</a>
     </div>
+
+    <hr>
+
+    <div style="padding: 2px;">
+      <b>Text Box Settings</b>
+    </div>
+    <div class="settings-input-label">
+      <label for="textColor">Text Color</label>
+    </div>
+    <div>
+      <input type="text" id="textColor" name="textColor" class="settings-input">
+    </div>
+
+    <div class="settings-input-label">
+      <label for="textSize">Text Size</label>
+    </div>
+    <div>
+      <input type="text" id="textSize" name="textSize" class="settings-input">
+    </div>
+
+    <hr>
+    <div style="padding: 2px;">
+      <b>SVG Downloads</b>
+    </div>
+    <div class="settings-input-label">
+      <label for="svgDownloadSt">Change SVG download location</label>
+    </div>
+    <div>
+      <input type="text" id="svgDownloadSt" name="svgDownloadSt" class="settings-input">
+    </div>
+    <br>
+    <div>Note: Changing directory will not add notes data to AnkiDroid. To create deck manually, download notes data from <i>View Notes</i> (Side menu), and download SVG
+      to different directory.
+    </div>
+    <br>
+    <hr>
+    <div style="padding: 2px;">
+      <b>Reset Settings</b>
+    </div>
+    <div onclick="resetSettings()" class="button-2">Reset</div>
 
   </div>
   <!--settings Side Nav -->

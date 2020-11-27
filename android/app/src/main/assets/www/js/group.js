@@ -1,5 +1,5 @@
 /* Do not remove
-MIT License
+GPL 3.0 License
 
 Copyright (c) 2020 Mani
 
@@ -154,7 +154,12 @@ async function createGroup(list) {
 
     var cardData = [noteId, noteHeader, origImgSVG, quesImgSVG, noteFooter, noteRemarks, noteSources, noteExtra1, noteExtra2, ansImgSVG, origFile];
 
-    addCardToAnkiDroid(cardData);
+    if (storageSvg == "AnkiDroid/collection.media/") {
+        addCardToAnkiDroid(cardData);
+        document.getElementById("more-tools").style.display = "none";
+    } else {
+        showSnackbar("Storage location is not set to AnkiDroid.")
+    }
 
     //reset all
     svgGroup = "";

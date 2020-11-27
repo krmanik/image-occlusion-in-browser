@@ -1,5 +1,5 @@
 /* Do not remove
-MIT License
+GPL 3.0 License
 
 Copyright (c) 2020 Mani
 
@@ -25,7 +25,7 @@ SOFTWARE.
 var combineList = [];
 var combineColor = "#2196F3";
 document.addEventListener('click', function (e) {
-    //console.log(e.target.id);
+    console.log(e.target.id);
     selectedElement = e.target.id;
 
     if (clozeMode == "combine") {
@@ -53,8 +53,8 @@ document.addEventListener('click', function (e) {
             document.getElementById("merge-rect-btn").style.color = "#e0e0e0";
 
             try {
-                if (document.getElementById(selectedElement).tagName == "rect" || document.getElementById(selectedElement).tagName == "ellipse"
-                    || document.getElementById(selectedElement).tagName == "polygon") {
+                if ((document.getElementById(selectedElement).tagName == "rect" && document.getElementById(selectedElement).parentElement.tagName == "svg")
+                    || document.getElementById(selectedElement).tagName == "ellipse" || document.getElementById(selectedElement).tagName == "polygon") {
                     svgGroup = "added";
 
                     var c = hexToRgb(originalColor);
@@ -122,7 +122,7 @@ function changeRectFillInsideG(gChild) {
 var origFileName = "";
 async function createCombineCloze() {
 
-    showSnackbar("Also download notes from side menu.");
+    //showSnackbar("Also download notes from side menu.");
 
     var child = document.getElementById("SVG101").childNodes;
 
@@ -147,8 +147,6 @@ async function createCombineCloze() {
             }
         }
     }
-
-
 
     for (i = 0; i < child.length; i++) {
 
@@ -251,7 +249,13 @@ async function createCombineCloze() {
                 var origFile = "<img src='" + origFileName + ".svg'></img>";
 
                 var cardData = [noteId, noteHeader, origImgSVG, quesImgSVG, noteFooter, noteRemarks, noteSources, noteExtra1, noteExtra2, ansImgSVG, origFile];
-                addCardToAnkiDroid(cardData);
+
+                if (storageSvg == "AnkiDroid/collection.media/") {
+                    addCardToAnkiDroid(cardData);
+                    document.getElementById("more-tools").style.display = "none";
+                } else {
+                    showSnackbar("Storage location is not set to AnkiDroid.")
+                }
 
                 // var f = "output-note" + note_num + ".txt";
                 // exportFile(csvLine, f);
@@ -315,7 +319,7 @@ function createGroupWithNewRects() {
                 var points = elemFigure.getAttribute("points");
                 var fColor = elemFigure.style.fill;
                 group.add(draw.polygon(points).fill(fColor));
-                
+
             }
 
 
