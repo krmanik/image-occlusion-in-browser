@@ -1,5 +1,5 @@
 /* Do not remove
-MIT License
+GPL 3.0 License
 
 Copyright (c) 2020 Mani
 
@@ -41,21 +41,23 @@ async function createNormalCloze() {
             for (j = 0; j < child.length; j++) {
 
                 // text
-                if (child[j].tagName == "text") {
+                if (child[j].tagName == "g" && child[j].getAttribute("data-type") == "text-box-g") {
                     
                     // get bounding box of text, create and use rectangle as mask
 
-                    var bb = child[j].getBBox();
+                    var textChild = child[j].getElementsByTagName("text")[0]
+
+                    var bb = textChild.getBBox();
                     var x = bb.x;
                     var y = bb.y;
                     var w = bb.width;
                     var h = bb.height;
 
-                    origSVG += child[j].outerHTML;
+                    origSVG += textChild.outerHTML;
 
                     if (i == j) {
                         svgQues += '<rect width="' + w + '" height="'+ h +'" fill="'+ questionColor +'" x="' + x + '" y="'+ y +'"></rect>';
-                        svgAns += child[j].outerHTML;
+                        svgAns += textChild.outerHTML;
                     } else {
                         svgQues += '<rect width="' + w + '" height="'+ h +'" fill="'+ originalColor +'" x="' + x + '" y="'+ y +'"></rect>';
                         svgAns += '<rect width="' + w + '" height="'+ h +'" fill="'+ originalColor +'" x="' + x + '" y="'+ y +'"></rect>';
@@ -90,7 +92,7 @@ async function createNormalCloze() {
             var timeStamp = new Date().getTime();
 
             if (child[i].tagName == "rect" || child[i].tagName == "polygon" 
-                || child[i].tagName == "ellipse" || child[i].tagName == "text") {
+                || child[i].tagName == "ellipse" || (child[i].tagName == "g" && child[i].getAttribute("data-type") == "text-box-g")) {
 
                 if (oneTime) {
                     // origin mask
@@ -137,7 +139,13 @@ async function createNormalCloze() {
                 var origFile = "<img src='" + origFileName + ".svg'></img>";
 
                 var cardData = [noteId, noteHeader, origImgSVG, quesImgSVG, noteFooter, noteRemarks, noteSources, noteExtra1, noteExtra2, ansImgSVG, origFile];
-                addCardToAnkiDroid(cardData);
+                
+                if (storageSvg == "AnkiDroid/collection.media/") {
+                    addCardToAnkiDroid(cardData);
+                    document.getElementById("more-tools").style.display = "none";
+                } else {
+                    showSnackbar("Storage location is not set to AnkiDroid. View Settings");
+                }
             }
         }
     }

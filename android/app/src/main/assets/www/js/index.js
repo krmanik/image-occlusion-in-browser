@@ -1,6 +1,6 @@
 
 /* Do not remove
-MIT License
+GPL 3.0 License
 
 Copyright (c) 2020 Mani
 
@@ -204,6 +204,8 @@ function drawPolygon() {
 
         document.getElementById("drawBtnIcon").style.color = "#fdd835";
 
+        document.getElementById("statusMsg").innerHTML = "Press volume down to stop drawing";
+
         draw.polygon().draw().fill(originalColor)
             .on('drawstop', function () {
                 document.getElementById("drawBtnIcon").style.color = "#009688";
@@ -234,8 +236,9 @@ function drawPolygon() {
 
 function stopDrawPolygon() {
     try {
-        draw.polygon().draw('stop', event);
+        document.getElementById("statusMsg").innerHTML = "";
         document.getElementById("drawBtnIcon").style.color = "#009688";
+        draw.polygon().draw('stop', event);
     } catch (e) {
         console.log(e);
     }
@@ -248,7 +251,7 @@ function drawText() {
 
         var group = draw.group();
 
-        var rect = group.rect().draw().fill("#eceff100")
+        var rect = group.rect().draw().fill(originalColor)
             .on('drawstop', function () {
                 document.getElementById("drawBtnIcon").style.color = "#009688";
 
@@ -259,15 +262,16 @@ function drawText() {
                 var x = rect.x() + 0.5 * rect.width();
                 var y = rect.y() + 0.5 * rect.height();
 
-                var text = draw.text(textToInsert)
-                    .font({ size: 30, family: 'Helvetica' })
+                var text = group.text(textToInsert)
+                    .font({ size: textSize, family: 'Helvetica', fill: textColor })
                     .center(x, y);
 
-                text.draggable(true);
-                text.selectize(true);
-                text.resize(true);
+                group.draggable(true);
+                group.selectize(true);
+                group.resize(false);
 
-                this.remove();
+                var e = document.getElementById(group.id());
+                e.setAttribute("data-type", "text-box-g");
 
             })
             .on('click', function () {
@@ -369,7 +373,7 @@ function drawMultipleText() {
 
         var group = draw.group();
 
-        var rect = group.rect().draw().fill("#eceff100")
+        var rect = group.rect().draw().fill(originalColor)
             .on('drawstop', function () {
                 document.getElementById("drawBtnIcon").style.color = "#009688";
 
@@ -380,15 +384,17 @@ function drawMultipleText() {
                 var x = rect.x() + 0.5 * rect.width();
                 var y = rect.y() + 0.5 * rect.height();
 
-                var text = draw.text(textToInsert)
+                var text = group.text(textToInsert)
                     .font({ size: 30, family: 'Helvetica' })
                     .center(x, y);
 
-                text.draggable(true);
-                text.selectize(true);
-                text.resize(true);
+                group.draggable(true);
+                group.selectize(true);
+                group.resize(false);
 
-                this.remove();
+                var e = document.getElementById(group.id());
+                e.setAttribute("data-type", "text-box-g");
+
 
             })
             .on('drawstart', function () {
@@ -427,6 +433,21 @@ function addRect() {
 
 function removePolygon() {
     try {
+
+        if (document.getElementById(selectedElement).tagName == "tspan" || document.getElementById(selectedElement).tagName == "circle") {
+            var g = document.getElementById(selectedElement).parentElement;
+            var gElem = SVG.adopt(document.getElementById(g.id));
+            gElem.selectize(false);
+            gElem.remove();
+        }
+
+        if (document.getElementById(selectedElement).parentElement == "g"
+            && (document.getElementById(selectedElement).parentElement.getAttribute("data-type") != "combine"
+                || document.getElementById(selectedElement).parentElement.getAttribute("data-type") != "text-box-g")) {
+            var svgEle = SVG.adopt(document.getElementById(selectedElement));
+            svgEle.remove();
+        }
+
         if ((document.getElementById(selectedElement).tagName == "rect" || document.getElementById(selectedElement).tagName == "polygon"
             || document.getElementById(selectedElement).tagName == "ellipse" || document.getElementById(selectedElement).tagName == "text")
             && document.getElementById(selectedElement).parentElement.tagName == "svg") {
@@ -455,19 +476,12 @@ function removePolygon() {
             gElem.selectize(false);
             gElem.remove();
 
-        } else if (document.getElementById(selectedElement).tagName == "tspan") {
-            var g = document.getElementById(selectedElement).parentElement;
-            var gElem = SVG.adopt(document.getElementById(g.id));
-            gElem.selectize(false);
-            gElem.remove();
         }
-
     } catch (e) {
         console.log(e);
         showSnackbar("Select a figure");
     }
 }
-
 
 var imgHeight;
 var imgWidth;
@@ -781,6 +795,41 @@ function settings() {
         document.getElementById("settingsSideNav").style.height = "100%";
         showSnackbar("Not a valid color");
     }
+
+    localStorage.setItem("originalColor", originalColor);
+    localStorage.setItem("questionColor", questionColor);
+
+    storageSvg = document.getElementById("svgDownloadSt").value;
+    localStorage.setItem("storage", storageSvg);
+
+    textSize = document.getElementById("textSize").value;
+    localStorage.setItem("textSize", textSize);
+
+    textColor = document.getElementById("textColor").value;
+    localStorage.setItem("textColor", textColor);
+}
+
+function resetSettings() {
+    questionColor = "#EF9A9A";
+    originalColor = "#FDD835";
+    textColor = "#303942";
+    textSize = 30;
+    storageSvg = "AnkiDroid/collection.media/";
+ 
+    document.getElementById("OColor").value = originalColor; 
+    localStorage.setItem("originalColor", originalColor);
+    
+    document.getElementById("QColor").value = questionColor;
+    localStorage.setItem("questionColor", questionColor);
+
+    document.getElementById("svgDownloadSt").value = storageSvg;
+    localStorage.setItem("storage", storageSvg);
+
+    document.getElementById("textSize").value = textSize;
+    localStorage.setItem("textSize", textSize);
+
+    document.getElementById("textColor").value = textColor;
+    localStorage.setItem("textColor", textColor);
 }
 
 window.onbeforeunload = function () {
@@ -790,12 +839,12 @@ window.onbeforeunload = function () {
 // assign to input
 var questionColor = "#EF9A9A";
 var originalColor = "#FDD835";
-/* https://stackoverflow.com/questions/9334084/moveable-draggable-div */
-window.onload = function () {
-    get_html_file("common.html");
+var textColor = "#303942";
+var textSize = 30;
+var storageSvg = "AnkiDroid/collection.media/";
 
-    document.getElementById("QColor").value = questionColor;
-    document.getElementById("OColor").value = originalColor;
+window.onload = function () {
+    get_local_file("common.html");
 
     document.addEventListener("backbutton", onBackKeyDown, false);
 
@@ -805,8 +854,36 @@ window.onload = function () {
     if (drawFigureName == "Rectangle") {
         document.getElementById("drawRectId").style.color = "#fdd835";
     }
+
+    if (localStorage.getItem("questionColor") != null) {
+        questionColor = localStorage.getItem("questionColor");
+    }
+
+    if (localStorage.getItem("originalColor") != null) {
+        originalColor = localStorage.getItem("originalColor");
+    }
+
+    if (localStorage.getItem("storage") != null) {
+        storageSvg = localStorage.getItem("storage");
+    }
+
+    if (localStorage.getItem("textColor") != null) {
+        textColor = localStorage.getItem("textColor");
+    }
+
+    if (localStorage.getItem("textSize") != null) {
+        textSize = localStorage.getItem("textSize");
+    }
+
+    document.getElementById("QColor").value = questionColor;
+    document.getElementById("OColor").value = originalColor;
+    document.getElementById("svgDownloadSt").value = storageSvg;
+    document.getElementById("textColor").value = textColor;
+    document.getElementById("textSize").value = textSize;
+
 }
 
+/* https://stackoverflow.com/questions/9334084/moveable-draggable-div */
 function draggable(el) {
     el.addEventListener('mousedown', function (e) {
         var offsetX = e.clientX - parseInt(window.getComputedStyle(this).left);
@@ -880,7 +957,8 @@ function touchDraggable(el) {
 // save to app directory
 function saveFile(fileName, fileData) {
     //var dir = cordova.file.externalDataDirectory;
-    var dir = cordova.file.externalRootDirectory + "AnkiDroid/collection.media/";
+    //var dir = cordova.file.externalRootDirectory + "AnkiDroid/collection.media/";
+    var dir = cordova.file.externalRootDirectory + storageSvg;
     window.resolveLocalFileSystemURL(dir, function (directoryEntry) {
         //console.log(directoryEntry);
         directoryEntry.getFile(fileName, { create: true, exclusive: false }, function (entry) {
@@ -997,7 +1075,8 @@ function onFailCallback() {
     console.log("error file list count");
 }
 
-function get_html_file(path) {
+var json_data;
+function get_local_file(path) {
     const xhr = new XMLHttpRequest()
     xhr.open('GET', path)
 
@@ -1110,6 +1189,8 @@ function selectPolygon(e) {
         drawFigureName = "Polygon";
     } else if (e.id == "textBtn") {
         drawFigureName = "Textbox";
+        changeMode('normal');
+        showSnackbar("Only normal cloze available.");
     }
 
     document.getElementById("enableDrawBtn").style.pointerEvents = "unset";

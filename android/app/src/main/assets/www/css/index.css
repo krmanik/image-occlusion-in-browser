@@ -455,12 +455,14 @@ input[type="file"] {
   font-weight: bold;
 }
 .status-message {
-  position: fixed;
-  z-index: 25;
-  bottom: 0;
+  position: absolute;
+  z-index: 10000;
   width: 100%;
   background: #F44336;
   color: white;
+  text-align: center;
+  font-size: 22px;
+  bottom: 110px;
 }
 .help-sidebar {
   padding: 10px;
@@ -483,7 +485,7 @@ tr:nth-child(odd) {
   font-size: 20px;
   margin: 16px 16px 6px;
   text-align: left;
-  color: #818181;
+  color: #444444;
 }
 .settings-input {
   width: 90%;
@@ -503,4 +505,12 @@ tr:nth-child(odd) {
 .note-add-box {
   font-size: 24px;
   padding-top: 30px;
+}
+.button-2{
+  color: white;
+  background: red;
+  padding: 2px;
+  margin: 8px;
+  border-radius: 10px;
+  font-size: 24px;
 }
