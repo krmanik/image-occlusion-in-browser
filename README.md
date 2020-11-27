@@ -11,14 +11,15 @@ Anki Image Occlusion app used to create normal, group and combine cloze anki car
    - **Selected image and generated SVG auto copy to ```AnkiDroid/collection.media/``` folder.**
 
 # Tutorials / Features
-- [Create question and answer mask](demo/demo_create.gif)
-- [Create rectangles by tapping two point anywhere inside editor window](demo/demo_draw_anywhere.gif)
-- [Create group question and answer mask](demo/demo_group_element.gif)
+- [Create rectangles](demo/demo_draw_anywhere.gif)
+- [Create ellipse](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_multiple_polygon.gif?raw=true)
+- [Create textbox](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_text_box.gif?raw=true)
+- [Create polygon](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_multiple_polygon.gif?raw=true)
+- [Create normal cloze](demo/demo_create.gif)
+- [Create group cloze](demo/demo_group_element.gif)
 - [Create combine cloze](demo/combine_cloze_demo_browser.gif)
 - [Change color of masks](demo/demo_change_color.gif)
-- [Export deck on mobile using browser](demo/demo_create_deck.gif)
-- [Export deck on mobile using Pydroid 3](demo/demo_pydroid_3.gif)
-- [Using offline](demo/demo_img_occ.gif)
+- [Undo / Redo feature](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_undo_redo.gif?raw=true)
 
 ### Demo
 <img src="demo/new_design_demo.gif" height="450"></img>
