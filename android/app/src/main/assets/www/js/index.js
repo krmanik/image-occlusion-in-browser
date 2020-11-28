@@ -38,6 +38,8 @@ SOFTWARE.
         })
 })*/
 
+var app_version = "1.3.7";
+
 var clozeMode = "normal";
 var selectedElement = "";
 var svgGroup = "";
@@ -91,7 +93,7 @@ function drawRect() {
 
         var rect = draw.rect().draw().fill(originalColor)
             .on('drawstop', function () {
-                document.getElementById("drawBtnIcon").style.color = "#009688";                
+                document.getElementById("drawBtnIcon").style.color = "#009688";
                 polygonStack.push(rect);
             })
             .on('click', function () {
@@ -413,7 +415,7 @@ function deletePolygon() {
                 }
             }
         }
-    } catch(e) {
+    } catch (e) {
         console.log(e);
     }
 }
@@ -753,10 +755,10 @@ function resetSettings() {
     textColor = "#303942";
     textSize = 30;
     storageSvg = "AnkiDroid/collection.media/";
- 
-    document.getElementById("OColor").value = originalColor; 
+
+    document.getElementById("OColor").value = originalColor;
     localStorage.setItem("originalColor", originalColor);
-    
+
     document.getElementById("QColor").value = questionColor;
     localStorage.setItem("questionColor", questionColor);
 
@@ -1164,4 +1166,23 @@ function selectPolygon(e) {
         document.getElementById("drawPolygonId").style.color = "#2196f3";
         document.getElementById("drawTextBoxId").style.color = "#fdd835";
     }
+}
+
+function alertAppUpdate() {
+    var req = new XMLHttpRequest(); 
+    
+    req.responseType = 'json';
+    req.open('GET', "https://raw.githubusercontent.com/infinyte7/image-occlusion-in-browser/master/app-version.json", true);
+    req.onload = function () {
+        var jsonResponse = req.response;
+
+        console.log(jsonResponse);
+
+        if (jsonResponse['android'] > app_version) {
+            showSnackbar("Update available. Version " + jsonResponse['android']);
+        } else {
+            showSnackbar("Update unavailable.");
+        }
+    };
+    req.send(null);
 }
