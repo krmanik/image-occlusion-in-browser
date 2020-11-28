@@ -789,9 +789,6 @@ function settings() {
     localStorage.setItem("originalColor", originalColor);
     localStorage.setItem("questionColor", questionColor);
 
-    storageSvg = document.getElementById("svgDownloadSt").value;
-    localStorage.setItem("storage", storageSvg);
-
     textSize = document.getElementById("textSize").value;
     localStorage.setItem("textSize", textSize);
 
@@ -811,9 +808,6 @@ function resetSettings() {
 
     document.getElementById("QColor").value = questionColor;
     localStorage.setItem("questionColor", questionColor);
-
-    document.getElementById("svgDownloadSt").value = storageSvg;
-    localStorage.setItem("storage", storageSvg);
 
     document.getElementById("textSize").value = textSize;
     localStorage.setItem("textSize", textSize);
@@ -869,7 +863,6 @@ window.onload = function () {
 
     document.getElementById("QColor").value = questionColor;
     document.getElementById("OColor").value = originalColor;
-    document.getElementById("svgDownloadSt").value = storageSvg;
     document.getElementById("textColor").value = textColor;
     document.getElementById("textSize").value = textSize;
 
