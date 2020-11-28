@@ -60,6 +60,23 @@ If not using latest version then following steps to be followed.
 - Card will be added one by one. But wait till ```card added``` toast showing on screen.
 - Copy svg image from ```Internal Storage/ Android/ data/ io.infinyte7.ankiimageocclusion/ files/``` and original image file to AnkiDroid ```collection.media``` folder.
 
+### Using web version of this app.
+
+### Version 1
+https://infinyte7.github.io/image-occlusion-in-browser
+
+Download ```output-all-notes.txt``` and generate deck using this [python script](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/image-occ-deck-export.py).
+
+[Read more](Create-In-Browser.md)<br>
+[View demo](demo/combine_cloze_demo_browser.gif)
+
+### Version 2 (For desktop only)
+https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html
+
+- Create image occlusion anki deck inside browser.
+- Download ready to import deck
+- Deck generated using ```genanki``` python module using ```pyodide```
+
 # Create image occlusion on Desktop
  View [Create image occlusion on desktop](desktop/Readme.md)
 
@@ -69,14 +86,6 @@ View [Create image occlusion in browser](Create-In-Browser.md)
 # Create image occlusion offline
 View [Create image occlusion Offline](Create-Offline.md)
 
-### Using web version of this app.
-
-https://infinyte7.github.io/image-occlusion-in-browser
-
-Download ```output-all-notes.txt``` and generate deck using this [python script](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/image-occ-deck-export.py).
-
-[Read more](Create-In-Browser.md)<br>
-[View demo](demo/combine_cloze_demo_browser.gif)
 
 # Build Anki Image Occlusion android app
 1. Download this repository
