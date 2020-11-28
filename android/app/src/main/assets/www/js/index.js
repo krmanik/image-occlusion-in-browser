@@ -38,7 +38,7 @@ SOFTWARE.
         })
 })*/
 
-var app_version = "1.3.7";
+var app_version = "1.3.8";
 
 var clozeMode = "normal";
 var selectedElement = "";
@@ -244,7 +244,7 @@ function undoDraw() {
         var polygon = polygonStack.pop();
 
         if (polygon != undefined) {
-            var gElem = SVG.adopt(document.getElementById(polygon['node'].id));
+            var gElem = SVG.adopt(document.getElementById(polygon));
             gElem.selectize(false);
 
             undoStack.push(polygon);
@@ -403,6 +403,7 @@ function addRect() {
     }
 }
 
+/*
 function deletePolygon() {
     try {
         for (i = 0; i < polygonStack.length; i++) {
@@ -418,6 +419,45 @@ function deletePolygon() {
     } catch (e) {
         console.log(e);
     }
+}
+*/
+
+function removePolygon() {	
+    try {	
+        var gElem;	
+        if (document.getElementById(selectedElement).tagName == "tspan" || document.getElementById(selectedElement).tagName == "circle") {	
+            var g = document.getElementById(selectedElement).parentElement;	
+            gElem = SVG.adopt(document.getElementById(g.id));	
+            selectedElement = g.id;	
+        }	
+        if (document.getElementById(selectedElement).parentElement == "g"	
+            && (document.getElementById(selectedElement).parentElement.getAttribute("data-type") != "combine"	
+                || document.getElementById(selectedElement).parentElement.getAttribute("data-type") != "text-box-g")) {	
+            gElem = SVG.adopt(document.getElementById(selectedElement));            	
+        }	
+        if ((document.getElementById(selectedElement).tagName == "rect" || document.getElementById(selectedElement).tagName == "polygon"	
+            || document.getElementById(selectedElement).tagName == "ellipse" || document.getElementById(selectedElement).tagName == "text")	
+            && document.getElementById(selectedElement).parentElement.tagName == "svg") {	
+            gElem = SVG.adopt(document.getElementById(selectedElement));	
+        } else if ((document.getElementById(selectedElement).tagName == "rect" || document.getElementById(selectedElement).tagName == "ellipse"	
+            || document.getElementById(selectedElement).tagName == "polygon" || document.getElementById(selectedElement).tagName == "text")	
+            && document.getElementById(selectedElement).parentElement.tagName == "g") {	
+            var g = document.getElementById(selectedElement).parentElement;	
+            gElem = SVG.adopt(document.getElementById(g.id));	
+            selectedElement = g.id;	
+        }	
+        undoStack.push(gElem);	
+        gElem.selectize(false);	
+        gElem.remove();	
+        for (l=0; l<polygonStack.length; l++) {	
+            if (selectedElement == polygonStack[l]['node'].id) {	
+                polygonStack.splice(l, 1);	
+            }	
+        }	
+    } catch (e) {	
+        console.log(e);	
+        showSnackbar("Select a figure");	
+    }	
 }
 
 var imgHeight;
