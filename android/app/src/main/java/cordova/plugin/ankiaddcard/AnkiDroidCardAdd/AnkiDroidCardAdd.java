@@ -21,8 +21,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -84,8 +82,6 @@ public class AnkiDroidCardAdd extends CordovaPlugin {
             e.printStackTrace();
         }
     }
-
-
 
     private void copyFileFromDirectory(File sourceLocation, File targetLocation)
     {
