@@ -1,4 +1,3 @@
-
 /* Do not remove
 GPL 3.0 License
 
@@ -54,70 +53,6 @@ document.addEventListener('click', function (e) {
         drawMultipleFigure();
     }
 
-    if (clozeMode == "group") {
-        document.getElementById("addState").onclick = function () {
-            if (document.getElementById("addState").value == "false") {
-                document.getElementById("addState").value = true;
-                document.getElementById("iconGroup").style.color = "#FF6F00";
-
-                createOrigSvg();
-
-            } else {
-                document.getElementById("addState").value = false;
-                document.getElementById("iconGroup").style.color = "#607d8b";
-
-                if (svgGroup != "") {
-                    createQuesSvg();
-                    //createGroup(addedList)
-                } else {
-                    showSnackbar("Add rectangles to a group first");
-                }
-            }
-        }
-
-        if (document.getElementById("addState").value == "true") {
-
-            document.getElementById("group-done-btn").style.display = "none";
-
-            try {
-                if (document.getElementById(selectedElement).tagName == "rect") {
-                    svgGroup = "added";
-
-                    var c = hexToRgb(originalColor);
-                    var color = "rgb(" + c.r + ", " + c.g + ", " + c.b + ")";
-                    if (document.getElementById(selectedElement).style.fill == "" || document.getElementById(selectedElement).style.fill == color) {
-                        document.getElementById(selectedElement).style.fill = questionColor;
-                        addedList.push(selectedElement);
-                    } else {
-
-                        // if again tap then remove from list
-                        for (i = 0; i < addedList.length; i++) {
-                            if (selectedElement == addedList[i]) {
-                                document.getElementById(selectedElement).style.fill = originalColor;
-                                addedList.splice(i, 1);
-                                break;
-                            }
-                        }
-                        if (addedList.length == 0) {
-                            svgGroup = "";
-                        }
-                    }
-                }
-
-            } catch (e) {
-                console.log(e);
-            }
-        } else {
-            if (document.getElementById("add-note").style.height == "100%" || document.getElementById("settingsSideNav").style.height == "100%"
-                || document.getElementById("viewHelpSideNav").style.height == "100%" || document.getElementById("viewNoteSideNav").style.height == "100%") {
-                document.getElementById("done-btn").style.display = "none";
-                document.getElementById("group-done-btn").style.display = "none";
-            } else {
-                document.getElementById("group-done-btn").style.display = "block";
-            }
-        }
-    } // group cloze
-
 }, false);
 
 function enableDrawRect() {
@@ -132,12 +67,10 @@ function enableDrawRect() {
     }
 }
 
-
 var note_num = 1;
 var originalImageName;
 var draw;
 var rect;
-
 
 function drawFigure() {
     if (drawFigureName == "Rectangle") {
@@ -151,7 +84,6 @@ function drawFigure() {
     }
 }
 
-
 function drawRect() {
     try {
 
@@ -160,7 +92,7 @@ function drawRect() {
         var rect = draw.rect().draw().fill(originalColor)
             .on('drawstop', function () {
                 document.getElementById("drawBtnIcon").style.color = "#009688";                
-                polygonStack.push(rect['node'].id);
+                polygonStack.push(rect);
             })
             .on('click', function () {
                 this
@@ -184,7 +116,7 @@ function drawEllipse() {
         var ellipse = draw.ellipse().draw().fill(originalColor)
             .on('drawstop', function () {
                 document.getElementById("drawBtnIcon").style.color = "#009688";
-                polygonStack.push(ellipse['node'].id);
+                polygonStack.push(ellipse);
             })
             .on('click', function () {
                 this
@@ -243,7 +175,7 @@ function stopDrawPolygon() {
         document.getElementById("statusMsg").innerHTML = "";
         document.getElementById("drawBtnIcon").style.color = "#009688";
         draw.polygon().draw('stop', event);
-        polygonStack.push(polygon['node'].id);
+        polygonStack.push(polygon);
     } catch (e) {
         console.log(e);
     }
@@ -279,7 +211,7 @@ function drawText() {
                 var e = document.getElementById(group.id());
                 e.setAttribute("data-type", "text-box-g");
 
-                polygonStack.push(group.id());
+                polygonStack.push(group);
 
             })
             .on('click', function () {
@@ -307,22 +239,24 @@ var undoStack = [];
 function undoDraw() {
 
     if (polygonStack.length > 0) {
-        var polygonId = polygonStack.pop();
-        
-        var gElem = SVG.adopt(document.getElementById(polygonId));
-        gElem.selectize(false);
-    
-        undoStack.push(gElem);
-        
-        gElem.remove();
-    }
+        var polygon = polygonStack.pop();
 
+        if (polygon != undefined) {
+            var gElem = SVG.adopt(document.getElementById(polygon['node'].id));
+            gElem.selectize(false);
+
+            undoStack.push(polygon);
+
+            gElem.remove();
+        }
+    }
 }
 
 function redoDraw() {
     if (undoStack.length > 0) {
         var gElem = undoStack.pop();
         draw.add(gElem);
+        gElem.selectize(true);
 
         polygonStack.push(gElem);
     }
@@ -344,7 +278,7 @@ function drawMultipleRect() {
 
         var rect = draw.rect().draw().fill(originalColor)
             .on('drawstop', function () {
-                polygonStack.push(rect['node'].id);
+                polygonStack.push(rect);
                 this
                     .selectize()
                     .draggable()
@@ -374,7 +308,7 @@ function drawMultipleEllipse() {
 
         var ellipse = draw.ellipse().draw().fill(originalColor)
             .on('drawstop', function () {
-                polygonStack.push(ellipse['node'].id);
+                polygonStack.push(ellipse);
                 this
                     .selectize()
                     .draggable()
@@ -430,7 +364,7 @@ function drawMultipleText() {
                 var e = document.getElementById(group.id());
                 e.setAttribute("data-type", "text-box-g");
 
-                polygonStack.push(group.id());
+                polygonStack.push(group);
 
             })
             .on('drawstart', function () {
@@ -467,55 +401,20 @@ function addRect() {
     }
 }
 
-function removePolygon() {
+function deletePolygon() {
     try {
-
-        if (document.getElementById(selectedElement).tagName == "tspan" || document.getElementById(selectedElement).tagName == "circle") {
-            var g = document.getElementById(selectedElement).parentElement;
-            var gElem = SVG.adopt(document.getElementById(g.id));
-            gElem.selectize(false);
-            gElem.remove();
-        }
-
-        if (document.getElementById(selectedElement).parentElement == "g"
-            && (document.getElementById(selectedElement).parentElement.getAttribute("data-type") != "combine"
-                || document.getElementById(selectedElement).parentElement.getAttribute("data-type") != "text-box-g")) {
-            var svgEle = SVG.adopt(document.getElementById(selectedElement));
-            svgEle.remove();
-        }
-
-        if ((document.getElementById(selectedElement).tagName == "rect" || document.getElementById(selectedElement).tagName == "polygon"
-            || document.getElementById(selectedElement).tagName == "ellipse" || document.getElementById(selectedElement).tagName == "text")
-            && document.getElementById(selectedElement).parentElement.tagName == "svg") {
-
-            var svgEle = SVG.adopt(document.getElementById(selectedElement));
-            svgEle.selectize(false);
-
-            if (clozeMode == "group") {
-                // remove from list also
-                for (i = 0; i < addedList.length; i++) {
-                    if (selectedElement == addedList[i]) {
-                        addedList.splice(i, 1);
-                        break;
-                    }
+        for (i = 0; i < polygonStack.length; i++) {
+            if (polygonStack[i] != undefined) {
+                if (selectedElement == polygonStack[i]['node'].id) {
+                    var gElem = SVG.adopt(document.getElementById(selectedElement));
+                    gElem.selectize(false);
+                    undoStack.push(gElem);
+                    gElem.remove();
                 }
             }
-
-            svgEle.remove();
-
-        } else if ((document.getElementById(selectedElement).tagName == "rect" || document.getElementById(selectedElement).tagName == "ellipse"
-            || document.getElementById(selectedElement).tagName == "polygon" || document.getElementById(selectedElement).tagName == "text")
-            && document.getElementById(selectedElement).parentElement.tagName == "g") {
-
-            var g = document.getElementById(selectedElement).parentElement;
-            var gElem = SVG.adopt(document.getElementById(g.id));
-            gElem.selectize(false);
-            gElem.remove();
-
         }
-    } catch (e) {
+    } catch(e) {
         console.log(e);
-        showSnackbar("Select a figure");
     }
 }
 
@@ -523,6 +422,9 @@ var imgHeight;
 var imgWidth;
 function addImage() {
     scaleVar = 1.0;
+
+    polygonStack = [];
+    undoStack = [];
 
     try {
         document.getElementById("drawing").innerHTML = "<img id='uploadPreview'/>";

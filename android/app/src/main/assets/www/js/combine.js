@@ -322,7 +322,6 @@ function createGroupWithNewRects() {
 
             }
 
-
             elemFigure.outerHTML = "";
         }
 
