@@ -468,7 +468,7 @@ input[type="file"] {
   font-weight: bold;
 }
 .status-message {
-  position: absolute;
+  position: fixed;
   z-index: 10000;
   width: 100%;
   background: #F44336;
