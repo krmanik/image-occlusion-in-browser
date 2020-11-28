@@ -63,7 +63,8 @@ Author: Infinyte7 (Mani)
       <input id="addState" type="checkbox" style="display: none;" value="false">
     </div>
 
-    <div id="color-palette-btn" onclick="colorPalette();" class="button" style="float: right; display: block; pointer-events: unset; color: rgb(96, 125, 139);">
+    <div id="color-palette-btn" onclick="colorPalette();" class="button"
+      style="float: right; display: block; pointer-events: unset; color: rgb(96, 125, 139);">
       <i class="material-icons">palette</i></div>
 
     <div style="float: right; padding-right: 10px;">
@@ -87,7 +88,7 @@ Author: Infinyte7 (Mani)
     <div onclick="changeColorPalette(this);" class="button" color="#2196f3" style="font-size: 0px;">
       <i class="material-icons" style="font-size: 20px; color: #2196f3;">lense</i>
     </div>
-    
+
     <div onclick="changeColorPalette(this);" class="button" color="#009688" style="font-size: 0px;">
       <i class="material-icons" style="font-size: 20px; color: #009688;">lense</i>
     </div>
@@ -157,6 +158,22 @@ Author: Infinyte7 (Mani)
   <div id="statusMsg" class="status-message"></div>
 
   <div id="snackbar"></div>
+
+  <div id="update-msg"
+    style="position: absolute; bottom: 100px; background: #2196f3; color: white; padding: 8px; font-size: 20px; width: 85%;">
+    <div onclick="closeUpdateMsg();"
+      style="float: right;width: 20px;height: 20px; padding: 4px; background: red; border-radius: 10px; text-align: center; line-height: 1;">
+      x</div>
+    <div>New version for desktop available. v2.0</div>
+    <div style="text-align: center; background: #4CAF50; padding: 6px; color: white; margin-top: 30px;"><a
+        href="https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html"
+        style="text-decoration: none; color: white;">View</a></div>
+  </div>
+  <script>
+    function closeUpdateMsg() {
+      document.getElementById("update-msg").style.display = "none";
+    }
+  </script>
 
   <div class="card-added-msg-box">
     <div id="card-added" class="card-added-msg"></div>
