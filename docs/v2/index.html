@@ -26,7 +26,7 @@ Author: Infinyte7 (Mani)
 
 
   <title>
-    Anki Image Occlusion
+    Image Occlusion in browser
   </title>
 </head>
 
@@ -126,14 +126,7 @@ Author: Infinyte7 (Mani)
     <div class="sidenav-header">Anki Image Occlusion</div>
     <!-- https://getwaves.io/ -->
     <!-- view svg in index.css -->
-    <div style="position: relative;top: -1px;">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="cursor: unset; border: unset">
-        <path fill="#0099ff" fill-opacity="1"
-          d="M0,320L60,288C120,256,240,192,360,149.3C480,107,600,85,720,90.7C840,96,960,128,1080,144C1200,160,1320,160,1380,160L1440,160L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z">
-        </path>
-      </svg>
-    </div>
-
+    
     <div style="padding-top: 20px; text-align: left;">
       <a href="#" onclick="changeMode('normal');">Normal Cloze</a>
       <!--<a href="#" onclick="changeMode('group')">Group Cloze</a>-->
@@ -152,7 +145,7 @@ Author: Infinyte7 (Mani)
       </svg>
     </div>
 
-    <div class="sidenav-version">Version 1.3.7</div>
+    <div class="sidenav-version">Version 2.0</div>
 
     <!-- github logo -->
     <div style="position: absolute; bottom: 8px; right: 10px;">
@@ -294,33 +287,12 @@ Author: Infinyte7 (Mani)
     <div>
       <input type="text" id="textSize" name="textSize" class="settings-input">
     </div>
-
-    <hr>
-    <div style="padding: 2px;">
-      <b>SVG Downloads</b>
-    </div>
-    <div class="settings-input-label">
-      <label for="svgDownloadSt">Change SVG download location</label>
-    </div>
-    <div>
-      <input type="text" id="svgDownloadSt" name="svgDownloadSt" class="settings-input">
-    </div>
-    <br>
-    <div>Note: Changing directory will not add notes data to AnkiDroid. To create deck manually, download notes data
-      from <i>View Notes</i> (Side menu), and download SVG
-      to different directory.
-    </div>
     <br>
     <hr>
     <div style="padding: 2px;">
       <b>Reset Settings</b>
     </div>
     <div onclick="resetSettings()" class="button-2">Reset</div>
-
-    <div style="padding: 2px;">
-      <b>Check for Updates</b>
-    </div>
-    <div onclick="alertAppUpdate()" class="button-2" style="background: #4caf50;">Check Updates</div>
   </div>
   <!--settings Side Nav -->
 
