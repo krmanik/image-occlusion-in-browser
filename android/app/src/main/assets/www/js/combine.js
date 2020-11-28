@@ -323,6 +323,12 @@ function createGroupWithNewRects() {
             }
 
             elemFigure.outerHTML = "";
+	
+            for (l=0; l<polygonStack.length; l++) {	
+                if (combineList[i] == polygonStack[l]['node'].id) {	
+                    polygonStack.splice(l, 1);	
+                }	
+            }
         }
 
         group.selectize(true);
@@ -330,6 +336,8 @@ function createGroupWithNewRects() {
 
         var e = document.getElementById(group.id());
         e.setAttribute("data-type", "combine");
+
+        polygonStack.push(group);
 
         // reset
         combineList = [];
