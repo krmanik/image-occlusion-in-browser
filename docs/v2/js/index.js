@@ -72,6 +72,7 @@ function enableDrawRect() {
 var note_num = 1;
 var originalImageName;
 var draw;
+var temp_draw;
 var rect;
 
 function drawFigure() {
@@ -512,6 +513,7 @@ function addImage() {
                     .height(imgHeight)
                     .width(imgWidth)
                     .id("SVG101")
+                temp_draw = draw['node'].innerHTML;
             };
         };
 
@@ -1189,4 +1191,18 @@ function alertAppUpdate() {
         }
     };
     req.send(null);
+}
+
+function refresh() {
+
+    pyodide.runPython(`
+import os
+import shutil
+if os.path.exists('images'):
+    shutil.rmtree('images')
+    os.mkdir('images')
+`)
+
+    document.getElementById('noteData').innerHTML = "";
+    document.getElementById('SVG101').innerHTML = temp_draw;
 }

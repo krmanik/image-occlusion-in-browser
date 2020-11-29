@@ -15,7 +15,7 @@ Author: Infinyte7 (Mani)
   <script src="js/group.js"></script>
   <script src="js/index.js"></script>
   <script src="js/combine.js"></script>
-  
+
   <link href="css/index.css" rel=stylesheet type=text/css>
   <link href="css/svg.select.min.css" rel=stylesheet type=text/css>
 
@@ -59,6 +59,10 @@ Author: Infinyte7 (Mani)
         <label for="uploadImage"><i class="material-icons" style="color: #43a047;">add_photo_alternate</i></label>
         <input id="uploadImage" type="file" name="myPhoto" onchange="addImage();"></input>
       </div>
+    </div>
+
+    <div style="display: inline; padding-left: 10px;" onclick="refresh();" class="button"><i class="material-icons"
+        style="color: #f44336;">refresh</i>
     </div>
 
     <div id="merge-rect-btn" onclick="createGroupWithNewRects();" class="button" style="float: right; display: none;">
@@ -126,7 +130,7 @@ Author: Infinyte7 (Mani)
     <div class="sidenav-header">Anki Image Occlusion</div>
     <!-- https://getwaves.io/ -->
     <!-- view svg in index.css -->
-    
+
     <div style="padding-top: 20px; text-align: left;">
       <a href="#" onclick="changeMode('normal');">Normal Cloze</a>
       <!--<a href="#" onclick="changeMode('group')">Group Cloze</a>-->
