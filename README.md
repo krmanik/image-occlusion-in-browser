@@ -77,6 +77,9 @@ https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html
 - Download ready to import deck
 - Deck generated using ```genanki``` python module using ```pyodide```
 
+### Demo
+![](demo/demo_v2.gif)
+
 # Create image occlusion on Desktop
  View [Create image occlusion on desktop](desktop/Readme.md)
 
