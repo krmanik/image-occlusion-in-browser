@@ -84,15 +84,6 @@ Download ```output-all-notes.txt``` and generate deck using this [python script]
 [Read more](Create-In-Browser.md)<br>
 [View demo](demo/combine_cloze_demo_browser.gif)
 
-# Create image occlusion on Desktop
- View [Create image occlusion on desktop](desktop/Readme.md)
-
-# Create image occlusion in browser
-View [Create image occlusion in browser](Create-In-Browser.md)
-
-# Create image occlusion offline
-View [Create image occlusion Offline](Create-Offline.md)
-
 
 # Build Anki Image Occlusion android app
 Fork this repo and remove demo folder from the forked repo. Then download the repo.
