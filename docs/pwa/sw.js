@@ -34,7 +34,7 @@ const staticAssets = [
   './pyodide/dev/full/pyodide.asm.data.js',
 
   './pyodide/dev/full/pyodide-interrupts.data',
-  './pyodide/dev/full/pyodide.asm.data',
+  './pyodide/dev/full/pyodide-interrupts.js',
   
   './pyodide/dev/full/micropip.js',
   './pyodide/dev/full/micropip.data',
@@ -42,7 +42,6 @@ const staticAssets = [
   './pyodide/dev/full/distlib.js',
   './pyodide/dev/full/distlib.data'
 
-  
 ];
 
 self.addEventListener('install', async e => {
