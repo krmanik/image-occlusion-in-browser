@@ -17,7 +17,12 @@ https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html
 - Deck generated using [genanki](https://github.com/kerrickstaley/genanki) python module using [pyodide](https://github.com/iodide-project/pyodide)
 
 
+### View updates
+[Changelog.md](Changelog.md)
+
+
 # Tutorials / Features
+- [Create multiple cards in same deck](demo/multiple_cards.gif)
 - [Create rectangles](demo/demo_draw_anywhere.gif)
 - [Create ellipse](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_multiple_polygon.gif)
 - [Create textbox](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_text_box.gif)
