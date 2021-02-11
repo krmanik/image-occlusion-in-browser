@@ -11,10 +11,14 @@ For desktop and iOS, web version of the app can be used. It create ready to impo
 # QuickStart
 https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html
 
+#### Note: Rename and remove .zip at end of exported deck if present .zip extension to import in AnkiMobile
+
 ## Update
 - Check PWA version of this project. It can be run offline.
 
     https://infinyte7.github.io/image-occlusion-in-browser/pwa/index.html
+
+- View [How to install PWA on desktop](demo/install_pwa.gif)
 
 ### Version 2 (For desktop and iOS 13 & 14)
 - Create image occlusion anki deck inside browser.
@@ -27,6 +31,7 @@ https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html
 
 
 # Tutorials / Features
+- [PWA version for offline use](demo/install_pwa.gif)
 - [Create multiple cards in same deck](demo/multiple_cards.gif)
 - [Create rectangles](demo/demo_draw_anywhere.gif)
 - [Create ellipse](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_multiple_polygon.gif)
