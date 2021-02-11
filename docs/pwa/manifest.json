@@ -1,0 +1,20 @@
+{
+    "short_name": "Anki Occlusion",
+    "name": "Image Occlusion In Browser",
+    "icons": [
+      {
+        "src": "images/icon-192.png",
+        "type": "image/icon.png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "images/icon-512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/index.html",
+    "background_color": "#000000",
+    "display": "standalone",
+    "theme_color": "#ff0000"
+  }
