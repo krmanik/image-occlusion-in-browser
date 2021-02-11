@@ -11,6 +11,10 @@ For desktop and iOS, web version of the app can be used. It create ready to impo
 # QuickStart
 https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html
 
+## Update
+- Check PWA version of this project. It can be run offline.
+https://infinyte7.github.io/image-occlusion-in-browser/pwa/index.html
+
 ### Version 2 (For desktop and iOS 13 & 14)
 - Create image occlusion anki deck inside browser.
 - Download ready to import deck

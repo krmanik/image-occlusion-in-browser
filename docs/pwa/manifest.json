@@ -13,7 +13,7 @@
         "sizes": "512x512"
       }
     ],
-    "start_url": "/index.html",
+    "start_url": "/image-occlusion-in-browser/pwa/index.html",
     "background_color": "#000000",
     "display": "standalone",
     "theme_color": "#ff0000"

@@ -1,4 +1,5 @@
 ## 11-02-2021
+- PWA version
 - Added option to change deck
 - Create multiple cards in same deck
 
