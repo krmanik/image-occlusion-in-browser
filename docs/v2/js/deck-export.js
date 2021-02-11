@@ -3,11 +3,17 @@ import random
 import csv
 
 import traceback
+import js
 
 from glob import glob
 from os.path import join
 
+new_title = js.deckName
+
 anki_deck_title = "Anki Image Occlusion"
+
+if new_title != None:
+   anki_deck_title = new_title
 
 anki_model_name = "image occlusion"
 
@@ -308,7 +314,7 @@ function saveSelectedImageToInternal() {
     pyodide.runPython("import js")
     pyodide.runPython("import base64")
 
-    pyodide.runPython("os.mkdir('images')")
+    pyodide.runPython("if not os.path.exists('images'): os.mkdir('images')")
 
     pyodide.runPython("blob = js.document.getElementById('uploadPreview').getAttribute('src')")
     pyodide.runPython("name = js.document.getElementById('uploadPreview').getAttribute('title')")

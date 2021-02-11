@@ -19,7 +19,7 @@ Author: Infinyte7 (Mani)
   <link href="css/index.css" rel=stylesheet type=text/css>
   <link href="css/svg.select.min.css" rel=stylesheet type=text/css>
 
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
   <script type="text/javascript">
     window.languagePluginUrl = 'https://pyodide-cdn2.iodide.io/dev/full/';
@@ -39,6 +39,9 @@ Author: Infinyte7 (Mani)
       <div class="toolbar-button" style="float: left;" onclick="sideNavMain();"><i id="menu-icon"
           class="material-icons">menu</i></div>
       <div id="page-title-id" class="toolbar-button" style="float: left;font-size: 24px;">Normal Cloze</div>
+
+      <div id="done-export-all" class="toolbar-button" style="float: right; display: block;" onclick="exportAll();"><i
+        class="material-icons">get_app</i></div>
 
       <div id="done-btn" class="toolbar-button" style="float: right;" onclick="createNormalCloze();"><i
           class="material-icons">done</i></div>
@@ -68,7 +71,8 @@ Author: Infinyte7 (Mani)
     </div>
 
     <div id="merge-rect-btn" onclick="createGroupWithNewRects();" class="button" style="float: right; display: none;">
-      <i class="material-icons">crop_free</i></div>
+      <i class="material-icons">crop_free</i>
+    </div>
 
     <div id="groupButton" style="float: right; margin: -4px; display: none;">
       <label for="addState"><i id="iconGroup" class="material-icons"
@@ -78,7 +82,8 @@ Author: Infinyte7 (Mani)
 
     <div id="color-palette-btn" onclick="colorPalette();" class="button"
       style="float: right; display: block; pointer-events: unset; color: rgb(96, 125, 139);">
-      <i class="material-icons">palette</i></div>
+      <i class="material-icons">palette</i>
+    </div>
 
     <div style="float: right; padding-right: 10px;">
       <div onclick="zoomIn();" class="button"><i class="material-icons" style="color: #455A64;">zoom_in</i></div>
@@ -127,7 +132,7 @@ Author: Infinyte7 (Mani)
 
   <!-- main side nav -->
   <div id="mainSideNav" class="sidenav-main" style="right: 0;">
-    <a class="closebtn" onclick="closeMainNav()">X</a>
+    <a class="closebtn" onclick="closeMainNav()">x</a>
 
     <div class="sidenav-header">Anki Image Occlusion</div>
     <!-- https://getwaves.io/ -->
@@ -151,7 +156,7 @@ Author: Infinyte7 (Mani)
       </svg>
     </div>
 
-    <div class="sidenav-version">Version 2.0</div>
+    <div class="sidenav-version">Version 2.1</div>
 
     <!-- github logo -->
     <div style="position: absolute; bottom: 8px; right: 10px;">
@@ -192,8 +197,6 @@ Author: Infinyte7 (Mani)
       <i class="material-icons nav__icon" style="color: #0099ff;">more_horiz</i>
       <span class="nav__text">More</span>
     </a>
-
-
   </nav>
 
 
@@ -235,7 +238,7 @@ Author: Infinyte7 (Mani)
 
   <div id="drawing" class="container-editor"></div>
 
-  <div id="statusMsg" class="status-message"></div>
+  <div id="statusMsg" class="status-message">Wait for loading...</div>
 
   <div id="snackbar"></div>
 
@@ -250,10 +253,19 @@ Author: Infinyte7 (Mani)
   <!-- settings side nav -->
   <div id="settingsSideNav" class="sidenav-help" style="right: 0;">
     <div style="margin-top: 60px; padding: 2px;">
-      <b>Enter valid hex color</b>
+      <b>Enter Deck Name</b>
+    </div>
+    <div class="settings-input-label">
+      <label for="deckName">Deck Name</label>
+    </div>
+    <div>
+      <input type="text" id="deckName" name="deckName" class="settings-input">
     </div>
 
     <br>
+    <div style="padding: 2px;">
+      <b>Enter valid hex color</b>
+    </div>
     <div class="settings-input-label">
       <label for="OColor">Original Mask Color</label>
     </div>

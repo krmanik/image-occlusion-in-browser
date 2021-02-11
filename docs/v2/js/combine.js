@@ -246,13 +246,6 @@ async function createCombineCloze() {
             }
         }
     }
-
-    document.getElementById('statusMsg').innerHTML = "Wait, deck generating...";
-    setTimeout(function () { document.getElementById('statusMsg').innerHTML=""; }, 3000);
-
-    downloadAllNotes();
-    exportDeck();
-    downloadDeck();
 }
 
 

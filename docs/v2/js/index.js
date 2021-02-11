@@ -605,6 +605,7 @@ function addCsvLineToViewNote(csv) {
     container.appendChild(textarea);
     document.getElementById(textarea.id).readOnly = true;
     textare_id += 1;
+    document.getElementById("card-added").innerHTML = textare_id + "  card added" ;
 }
 
 var textToExport = "";
@@ -654,6 +655,7 @@ function closeNav() {
 
 function resetTitle() {
     document.getElementById('menu-icon').innerHTML = "menu";
+    document.getElementById("done-export-all").style.display = "block";
     if (clozeMode == "normal") {
         document.getElementById("page-title-id").innerHTML = "Normal Cloze";
         document.getElementById("done-btn").style.display = "block";
@@ -720,20 +722,24 @@ function changePage(page) {
         document.getElementById("settingsSideNav").style.height = "100%";
         document.getElementById("page-title-id").innerHTML = "Settings";
         document.getElementById("done-btn").style.display = "none";
+        document.getElementById("done-export-all").style.display = "none";
     } else if (page == "help") {
         document.getElementById("viewHelpSideNav").style.height = "100%";
         document.getElementById("page-title-id").innerHTML = "Help";
         document.getElementById("done-btn").style.display = "none";
+        document.getElementById("done-export-all").style.display = "none";
     } else if (page == "move") {
         document.getElementById("moveImgSideNav").style.height = "100%";
         document.getElementById("page-title-id").innerHTML = "Move Images";
         document.getElementById("done-btn").style.display = "none";
+        document.getElementById("done-export-all").style.display = "none";
 
         countNumberOfImage();
     } else if (page == "view") {
         document.getElementById("viewNoteSideNav").style.height = "100%";
         document.getElementById("page-title-id").innerHTML = "View Notes";
         document.getElementById("done-btn").style.display = "none";
+        document.getElementById("done-export-all").style.display = "none";
     }
 
     changeIcon();
@@ -796,6 +802,9 @@ function settings() {
 
     textColor = document.getElementById("textColor").value;
     localStorage.setItem("textColor", textColor);
+
+    deckName = document.getElementById("deckName").value;
+    localStorage.setItem("deckName", deckName);
 }
 
 function resetSettings() {
@@ -804,6 +813,7 @@ function resetSettings() {
     textColor = "#303942";
     textSize = 30;
     storageSvg = "AnkiDroid/collection.media/";
+    deckName = "Anki Image Occlusion";
 
     document.getElementById("OColor").value = originalColor;
     localStorage.setItem("originalColor", originalColor);
@@ -816,6 +826,9 @@ function resetSettings() {
 
     document.getElementById("textColor").value = textColor;
     localStorage.setItem("textColor", textColor);
+
+    document.getElementById("deckName").value = deckName;
+    localStorage.setItem("deckName", deckName);
 }
 
 window.onbeforeunload = function () {
@@ -828,6 +841,7 @@ var originalColor = "#FDD835";
 var textColor = "#303942";
 var textSize = 30;
 var storageSvg = "AnkiDroid/collection.media/";
+var deckName = "Anki Image Occlusion";
 
 window.onload = function () {
     get_local_file("common.html");
@@ -863,10 +877,15 @@ window.onload = function () {
         textSize = localStorage.getItem("textSize");
     }
 
+    if (localStorage.getItem("deckName") != null) {
+        deckName = localStorage.getItem("deckName");
+    }
+
     document.getElementById("QColor").value = questionColor;
     document.getElementById("OColor").value = originalColor;
     document.getElementById("textColor").value = textColor;
     document.getElementById("textSize").value = textSize;
+    document.getElementById("deckName").value = deckName;
 
 }
 
@@ -1205,4 +1224,14 @@ if os.path.exists('images'):
 
     document.getElementById('noteData').innerHTML = "";
     document.getElementById('SVG101').innerHTML = temp_draw;
+}
+
+
+function exportAll() {
+    document.getElementById('statusMsg').innerHTML = "Wait, deck generating...";
+    setTimeout(function () { document.getElementById('statusMsg').innerHTML=""; }, 3000);
+
+    downloadAllNotes();
+    exportDeck();
+    downloadDeck();
 }

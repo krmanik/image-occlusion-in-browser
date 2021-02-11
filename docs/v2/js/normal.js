@@ -135,12 +135,4 @@ async function createNormalCloze() {
             }
         }
     }
-
-    
-    document.getElementById('statusMsg').innerHTML = "Wait, deck generating...";
-    setTimeout(function () { document.getElementById('statusMsg').innerHTML=""; }, 3000);
-
-    downloadAllNotes();
-    exportDeck();
-    downloadDeck();
 }
