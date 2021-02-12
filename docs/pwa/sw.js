@@ -9,6 +9,9 @@ const staticAssets = [
   './css/index.css',
   './css/svg.select.min.css',
 
+  './sw.js',
+  './manifest.json',
+
   './js/combine.js',
   './js/deck-export.js',
   './js/group.js',
