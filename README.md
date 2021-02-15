@@ -2,12 +2,12 @@
 
 Create image occlusion in browser for Desktop and iOS devices v13 and v14.
 
-Anki Image Occlusion app used to create normal, group and combine cloze anki cards for reviewing and studying cards in [Anki](https://apps.ankiweb.net) software (spaced repetition flashcard app). Deck created using [genanki](https://github.com/kerrickstaley/genanki) python module using [pyodide](https://github.com/iodide-project/pyodide) and [svg.js](https://svgdotjs.github.io/). It create ready to import decks for Anki and AnkiMobile.
+Anki Image Occlusion app used to create normal, group and combine cloze anki cards for reviewing and studying cards in [Anki](https://apps.ankiweb.net) software (spaced repetition flashcard app). Anki decks created using [genanki](https://github.com/kerrickstaley/genanki) Python module using [pyodide](https://github.com/iodide-project/pyodide) to run inside browser and JavaScript library [svg.js](https://svgdotjs.github.io/). It create ready to import decks for Anki and AnkiMobile.
 
 #### Anki Occlusion for AnkiDroid source code and apk moved here https://github.com/infinyte7/Anki-Occlusion
 
 # QuickStart
-Wait for loading the page. It downloads approx. 30 mb files inside browser.
+Open following websites in browser and start creating image occlusion decks. Wait for loading the page. It downloads approx. 30 mb files inside browser.
 
 ### Version 2
 https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html
