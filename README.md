@@ -51,8 +51,14 @@ https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html
 4. Download the decks
 5. On smartphones the decks download with.zip extension, so rename and remove .zip to import in AnkiMobile.
 
-### Demo
+## Demo (Desktop)
 ![](demo/multiple_cards.gif)
+
+<br>
+
+## Demo (iOS v13)
+![](demo/iOSv13_demo.gif)
+
 
 ### Version 1
 https://infinyte7.github.io/image-occlusion-in-browser
