@@ -49,6 +49,7 @@ https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html
 2. Draw rectangles, ellipses, polygons or textbox
 3. Add to decks
 4. Download the decks
+5. On smartphones the decks download with.zip extension, so rename and remove .zip to import in AnkiMobile.
 
 ### Demo
 ![](demo/multiple_cards.gif)
