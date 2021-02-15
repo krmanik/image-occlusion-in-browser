@@ -44,7 +44,7 @@ https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html
 - [Undo / Redo feature](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_undo_redo.gif)
 
 
-## Create Anki decks in four steps
+## Create Anki decks in five steps
 1. Select image to editor window
 2. Draw rectangles, ellipses, polygons or textbox
 3. Add to decks
