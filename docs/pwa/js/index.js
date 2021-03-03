@@ -496,7 +496,7 @@ function addImage() {
     undoStack = [];
 
     try {
-        document.getElementById("drawing").innerHTML = "<img id='uploadPreview'/>";
+        document.getElementById("drawing").innerHTML = "<img id='uploadPreview' style='-webkit-transform-origin-x: 0%; -webkit-transform-origin-y: 0%;'/>";
 
         var selectedFile = event.target.files[0];
         var reader = new FileReader();
@@ -528,6 +528,11 @@ function addImage() {
                     .width(imgWidth)
                     .id("SVG101")
                 temp_draw = draw['node'].innerHTML;
+
+                document.getElementById("SVG101").style.webkitTransformOriginX = "0%";
+                document.getElementById("SVG101").style.webkitTransformOriginY = "0%";
+
+                resetZoom();
             };
         };
 
@@ -720,12 +725,19 @@ function zoomIn() {
     document.getElementById("uploadPreview").style.transform = "scale(" + scaleVar + ")";
 }
 
-
 function resetZoom() {
-    document.getElementById("SVG101").style.transform = "scale(1.0)";
-    document.getElementById("uploadPreview").style.transform = "scale(1.0)";
-    scaleVar = 1.0;
+    
+    var scrWidth = screen.width;
+    if (imgWidth > scrWidth) {
+        scaleVar = scrWidth/imgWidth;
+    } else {
+        scaleVar = imgWidth/scrWidth;
+    }
+
+    document.getElementById("SVG101").style.transform = "scale(" + scaleVar + ")";
+    document.getElementById("uploadPreview").style.transform = "scale(" + scaleVar + ")";
 }
+
 
 function changePage(page) {
 
