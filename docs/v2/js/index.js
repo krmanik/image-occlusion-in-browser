@@ -38,8 +38,6 @@ SOFTWARE.
         })
 })*/
 
-var app_version = "1.3.7";
-
 var clozeMode = "normal";
 var selectedElement = "";
 var svgGroup = "";
