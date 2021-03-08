@@ -1245,3 +1245,7 @@ function exportAll() {
     exportDeck();
     downloadDeck();
 }
+
+function closeConsole() {
+    document.getElementById("pyodide-load-status").style.display = "none";
+}
