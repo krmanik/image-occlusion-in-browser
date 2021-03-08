@@ -547,3 +547,18 @@ tr:nth-child(odd) {
 @-webkit-keyframes spin {
   to { -webkit-transform: rotate(360deg); }
 }
+
+.pop-up {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 75%;
+  height: 0;
+  margin: auto;
+  background-color: #f3f3f3;
+  text-align: center;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+}

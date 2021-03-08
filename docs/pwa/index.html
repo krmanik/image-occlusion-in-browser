@@ -5,6 +5,28 @@ Author: Infinyte7 (Mani)
 <html>
 
 <head>
+
+  <script type="text/javascript">
+    // https://stackoverflow.com/questions/6604192/showing-console-errors-and-alerts-in-a-div-inside-the-page
+    if (typeof console != "undefined")
+      if (typeof console.log != 'undefined')
+        console.olog = console.log;
+      else
+        console.olog = function () { };
+
+    console.log = function (message) {
+      console.olog(message);
+      document.getElementById("pyodide-load-msg").innerHTML += '<p>' + message + '</p>';
+    };
+    console.debug = console.info = console.log
+
+    console.error = function (message) {
+      console.olog(message);
+      document.getElementById("pyodide-load-msg").innerHTML += '<p style="color:red;">' + message + '</p>';
+    };
+  </script>
+
+
   <link rel="manifest" href="manifest.json">
 
   <meta name="apple-mobile-web-app-title" content="Anki Occlusion">
@@ -264,6 +286,19 @@ Author: Infinyte7 (Mani)
   <div class="card-added-msg-box">
     <div id="card-added" class="card-added-msg"></div>
   </div>
+
+  <div id="pyodide-load-status" class="pop-up"
+    style="display: table; position: absolute; text-align: left; padding: 14px;">
+    <div id="close-settings-btn" class="toolbar-button" style="float: right;" onclick="closeConsole()">
+      <i class="material-icons">close</i>
+    </div>
+    <div>
+      <h2>Status</h2>
+    </div>
+    <div id="pyodide-load-msg"></div>
+  </div>
+
+
 
   <div id="side-nav-container"></div>
 
