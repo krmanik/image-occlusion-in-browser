@@ -15,6 +15,9 @@ https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html
 ### PWA Version for offline
 https://infinyte7.github.io/image-occlusion-in-browser/pwa/index.html
 
+### Note latest pyodide v0.16.1 is not working or showing error on iOS v13 so try this test version it uses pyodide v0.15.0
+https://infinyte7.github.io/image-occlusion-in-browser/test/index.html
+
 #### Note: Rename and remove .zip at end of exported deck if present .zip extension to import in Anki
 
 ## Create Anki decks in five steps
