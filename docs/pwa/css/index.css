@@ -539,6 +539,7 @@ tr:nth-child(odd) {
   border-top-color: #2196F3;
   animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
+  z-index: 10000;
 }
 
 @keyframes spin {
