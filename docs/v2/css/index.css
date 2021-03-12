@@ -561,4 +561,5 @@ tr:nth-child(odd) {
   background-color: #f3f3f3;
   text-align: center;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
 }
