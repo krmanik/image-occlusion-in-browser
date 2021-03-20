@@ -9,14 +9,22 @@ Anki Image Occlusion app used to create normal, group and combine cloze anki car
 # QuickStart
 Open following websites in browser and start creating image occlusion decks. Wait for loading the page. It downloads approx. 30 mb files inside browser.
 
+<br>
+
 ### Version 2
 https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html
+
+<br>
 
 ### PWA Version for offline
 https://infinyte7.github.io/image-occlusion-in-browser/pwa/index.html
 
-View this [how to install for offline use](demo/pwa_install_ios.gif).
+View this [how to install for offline use](demo/pwa_install_ios.gif).<br>
+Read more about [Progressive Web App](https://en.wikipedia.org/wiki/Progressive_web_application)
+<br>
 ![](demo/pwa_install.png)
+
+<br>
 
 ### Note: First try above if does not work then try this one.
 Latest version of pyodide (v0.16.1) is not working or showing error on iOS v13 so try this test version it uses pyodide v0.15.0
