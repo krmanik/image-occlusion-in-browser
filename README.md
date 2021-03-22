@@ -9,6 +9,8 @@ Anki Image Occlusion app used to create normal, group and combine cloze anki car
 # QuickStart
 Open following websites in browser and start creating image occlusion decks. Wait for loading the page. It downloads approx. 30 mb files inside browser.
 
+View [Supported devices list](Supported%20Devices.md)
+
 ### Version 2
 https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html
 
