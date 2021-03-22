@@ -49,8 +49,7 @@ https://infinyte7.github.io/image-occlusion-in-browser/test15
 - [Create ellipse](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_multiple_polygon.gif)
 - [Create textbox](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_text_box.gif)
 - [Create polygon](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_multiple_polygon.gif)
-- [Create normal cloze](demo/demo_create.gif)
-- [Create group cloze](demo/demo_group_element.gif)
+- [Create normal cloze](demo/demo_create.gif) <!-- - [Create group cloze](demo/demo_group_element.gif) -->
 - [Create combine cloze](demo/combine_cloze_demo_browser.gif)
 - [Change color of masks](demo/demo_change_color.gif)
 - [Undo / Redo feature](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_undo_redo.gif)
