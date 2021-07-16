@@ -38,138 +38,173 @@ SOFTWARE.
         })
 })*/
 
+var app_version = "2.3.0";
+
 var clozeMode = "normal";
 var selectedElement = "";
 var svgGroup = "";
 var addedList = [];
-
-var canDraw = false;
-
-document.addEventListener('click', function (e) {
-    //console.log(e.target.id);
-    selectedElement = e.target.id;
-
-    if (canDraw) {
-        drawMultipleFigure();
-    }
-
-}, false);
-
-function enableDrawRect() {
-    canDraw = !canDraw;
-
-    if (canDraw) {
-        document.getElementById("enabledrawBtnIcon").style.color = "#fdd835";
-        document.getElementById("drawBtn").style.pointerEvents = "none";
-    } else {
-        document.getElementById("enabledrawBtnIcon").style.color = "#009688";
-        document.getElementById("drawBtn").style.pointerEvents = "unset";
-    }
-}
+var polygonStack = [];
 
 var note_num = 1;
 var originalImageName;
 var draw;
 var temp_draw;
-var rect;
 
-function drawFigure() {
+var canDraw = false;
+
+// Get point in global SVG space
+// https://stackoverflow.com/questions/10298658/mouse-position-inside-autoscaled-svg
+var pt;
+var svg;
+function cursorPoint(evt) {
+    pt.x = evt.clientX; pt.y = evt.clientY;
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+
+function handleMouseDown() {
+    canDraw = !canDraw;
+
+    svg = document.getElementById("SVG101");
+    pt = svg.createSVGPoint();
+
+    if (canDraw) {
+        svg.addEventListener('click', handler, false);
+    } else {
+        svg.removeEventListener('click', handler, false);
+    }
+}
+
+
+var isDrawing = true;
+var x1, y1, x2, y2, w, h;
+function handler(evt) {
+    if (evt.target.id != "SVG101") {
+        return;
+    }
+
+    var loc = cursorPoint(evt);
+
+    if (isDrawing) {
+        isDrawing = false;
+        console.log("Drawing started");
+        x1 = loc.x;
+        y1 = loc.y;
+        // console.log(loc.x);
+        // console.log(loc.y);
+    } else {
+        isDrawing = true;
+        console.log("Drawing stopped");
+        // console.log(loc.x);
+        // console.log(loc.y);
+
+        x2 = loc.x;
+        y2 = loc.y;
+
+        // console.log(x2);
+        // console.log(y2);
+
+        // console.log(x1);
+        // console.log(y1);
+
+        w = Math.abs(x2 - x1);
+        h = Math.abs(y2 - y1);
+
+        // x = Math.abs((x1 + x2) / 2);
+        // y = Math.abs((y1 + y2) / 2);
+
+        // console.log("w:"+w);
+        // console.log("h:"+h);
+
+        // console.log("x:"+x);
+        // console.log("y:"+y);
+
+        drawFunction(x1, y1, w, h);
+    }
+}
+
+/**
+ * Enable drawing rectangle in SVG window with draggable, selectize and resize
+ */
+
+function enableDrawing() {
+    handleMouseDown();
+
+    if (canDraw) {
+        document.getElementById("enabledrawBtnIcon").style.color = "#fdd835";
+    } else {
+        document.getElementById("enabledrawBtnIcon").style.color = "#009688";
+    }
+}
+
+
+function drawFunction(x1, y1, w, h) {
     if (drawFigureName == "Rectangle") {
-        drawRect();
+        drawRectangle(x1, y1, w, h);
     } else if (drawFigureName == "Ellipse") {
-        drawEllipse();
+        drawEllipse(x1, y1, w, h);
     } else if (drawFigureName == "Polygon") {
         drawPolygon();
     } else if (drawFigureName == "Textbox") {
-        drawText();
+        drawText(x1, y1, w, h);
     }
 }
 
-function drawRect() {
-    try {
+function drawRectangle(x1, y1, w, h) {
+    var rect = draw.rect(w, h).move(x1, y1).fill(originalColor)
+        .on('click', function () {
+            this
+                .draggable()
+                .selectize()
+                .resize()
+        })
 
-        document.getElementById("drawBtnIcon").style.color = "#fdd835";
-
-        var rect = draw.rect().draw().fill(originalColor)
-            .on('drawstop', function () {
-                document.getElementById("drawBtnIcon").style.color = "#009688";
-                polygonStack.push(rect);
-            })
-            .on('click', function () {
-                this
-                    .draggable()
-                    .selectize()
-                    .resize()
-            });
-
-    } catch (e) {
-        console.log(e);
-        showSnackbar("Add image first");
-        document.getElementById("drawBtnIcon").style.color = "#009688";
-    }
+    // console.log(rect);
+    polygonStack.push(rect);
 }
 
-function drawEllipse() {
-    try {
 
-        document.getElementById("drawBtnIcon").style.color = "#fdd835";
+function drawEllipse(x1, y1, w, h) {
+    var ellipse = draw.ellipse(w, h).move(x1, y1).fill(originalColor)
+        .on('click', function () {
+            this
+                .draggable()
+                .selectize()
+                .resize()
+        })
 
-        var ellipse = draw.ellipse().draw().fill(originalColor)
-            .on('drawstop', function () {
-                document.getElementById("drawBtnIcon").style.color = "#009688";
-                polygonStack.push(ellipse);
-            })
-            .on('click', function () {
-                this
-                    .draggable()
-                    .selectize()
-                    .resize()
-            });
-
-    } catch (e) {
-        console.log(e);
-        showSnackbar("Add image first");
-        document.getElementById("drawBtnIcon").style.color = "#009688";
-    }
+    // console.log(ellipse);
+    polygonStack.push(ellipse);
 }
 
-var polygon;
+
 function drawPolygon() {
-    try {
+    document.getElementById("drawBtnIcon").style.color = "#fdd835";
+    document.getElementById("statusMsg").innerHTML = "Press Enter to stop drawing";
 
-        document.getElementById("drawBtnIcon").style.color = "#fdd835";
-
-        document.getElementById("statusMsg").innerHTML = "Press Enter to stop drawing";
-
-        polygon = draw.polygon().draw().fill(originalColor)
-            .on('drawstop', function () {
-                document.getElementById("drawBtnIcon").style.color = "#009688";
-                // view stopDrawPolygon()
-                //polygonStack.push(polygon['node'].id);
-            })
-            .on('click', function () {
-                this
-                    .draggable()
-                    .selectize()
-                    .resize()
-            })
-            .on('drawstart', function () {
-                document.addEventListener('keydown', function (e) {
-                    if (e.keyCode == 13) {
-                        draw.polygon().draw('done');
-                        draw.polygon().off('drawstart');
-                        document.getElementById("drawBtnIcon").style.color = "#009688";
-                        document.getElementById("statusMsg").innerHTML = "";
-                    }
-                });
-
+    var polygon = draw.polygon().draw().fill(originalColor)
+        .on('drawstop', function () {
+            document.getElementById("drawBtnIcon").style.color = "#009688";
+        })
+        .on('click', function () {
+            this
+                .draggable()
+                .selectize()
+                .resize()
+        })
+        .on('drawstart', function () {
+            svg.addEventListener('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    draw.polygon().draw('done');
+                    draw.polygon().off('drawstart');
+                    document.getElementById("drawBtnIcon").style.color = "#009688";
+                    document.getElementById("statusMsg").innerHTML = "";
+                }
             });
+        });
 
-    } catch (e) {
-        console.log(e);
-        showSnackbar("Add image first");
-        document.getElementById("drawBtnIcon").style.color = "#009688";
-    }
+    // console.log(polygon);
+    polygonStack.push(polygon);
 }
 
 function stopDrawPolygon() {
@@ -183,57 +218,88 @@ function stopDrawPolygon() {
     }
 }
 
-var polygonStack = [];
-function drawText() {
-    try {
 
-        document.getElementById("drawBtnIcon").style.color = "#fdd835";
+function drawText(x1, y1, w, h) {
+    var textToInsert = addTextPopup();
+    var text = draw.text(textToInsert)
+        .move(x1, y1)
+        .font({ size: textSize, family: 'Helvetica', fill: textColor })
+        .on('click', function () {
+            this
+                .draggable()
+                .selectize()
+                .resize()
+        })
 
-        var group = draw.group();
-
-        var rect = group.rect().draw().fill(originalColor)
-            .on('drawstop', function () {
-                document.getElementById("drawBtnIcon").style.color = "#009688";
-
-                //popup get rect color, text, text color then put at the position
-
-                var textToInsert = addTextPopup();
-
-                var x = rect.x() + 0.5 * rect.width();
-                var y = rect.y() + 0.5 * rect.height();
-
-                var text = group.text(textToInsert)
-                    .font({ size: textSize, family: 'Helvetica', fill: textColor })
-                    .center(x, y);
-
-                group.draggable(true);
-                group.selectize(true);
-                group.resize(false);
-
-                var e = document.getElementById(group.id());
-                e.setAttribute("data-type", "text-box-g");
-
-                polygonStack.push(group);
-
-            })
-            .on('click', function () {
-                this
-                    .draggable()
-                    .selectize()
-                    .resize()
-            });
-
-    } catch (e) {
-        console.log(e);
-        showSnackbar("Add image first");
-        document.getElementById("drawBtnIcon").style.color = "#009688";
-    }
+    //console.log(text);
+    polygonStack.push(text);
 }
 
 function addTextPopup() {
     var text = prompt("Enter text", "");
     if (name != null) {
         return text;
+    }
+}
+
+
+var isDeleting = true;
+function removePolygon() {
+    console.log("Delete Polygon");
+    if (isDeleting) {
+        isDeleting = false;
+        svg.addEventListener('click', deleteHandler, false);
+        document.getElementById("removeBtnIcon").style.color = "#fdd835";
+
+        // add event listner to all child node of svg
+        for (i=0; i<polygonStack.length; i++) {
+            // console.log(polygonStack[i]);
+            delElem = document.getElementById(polygonStack[i].id());
+            delElem.addEventListener('touchstart', deleteHandler, false);
+        }
+
+    } else {
+        isDeleting = true;
+        svg.removeEventListener('click', deleteHandler, false);
+        document.getElementById("removeBtnIcon").style.color = "#f44336";
+
+        // remove event listner to all child node of svg
+        for (i=0; i<polygonStack.length; i++) {
+            // console.log(polygonStack[i]);
+            delElem = document.getElementById(polygonStack[i].id());
+            delElem.removeEventListener('touchstart', deleteHandler, false);
+        }
+    }
+}
+
+function deleteHandler(e) {
+    console.log(e.target.id);
+    selectedElement = e.target.id;
+
+    try {
+        var deleteElem;
+        var element = document.getElementById(selectedElement);
+        var elementTag = document.getElementById(selectedElement).tagName;
+
+        if (elementTag == "rect" || elementTag == "text" || elementTag == "ellipse" || elementTag == "polygon") {
+            if (element.parentElement.tagName == "svg") {
+                deleteElem = SVG.adopt(document.getElementById(selectedElement));
+
+                undoStack.push(deleteElem);
+
+                deleteElem.selectize(false);
+                deleteElem.remove();
+
+                for (l = 0; l < polygonStack.length; l++) {
+                    if (selectedElement == polygonStack[l]['node'].id) {
+                        polygonStack.splice(l, 1);
+                    }
+                }
+            }
+        }
+    } catch (e) {
+        console.log(e);
+        showSnackbar("Select a figure");
     }
 }
 
@@ -261,213 +327,6 @@ function redoDraw() {
         gElem.selectize(true);
 
         polygonStack.push(gElem);
-    }
-}
-
-function drawMultipleFigure() {
-    if (drawFigureName == "Rectangle") {
-        drawMultipleRect();
-    } else if (drawFigureName == "Ellipse") {
-        drawMultipleEllipse();
-    } else if (drawFigureName == "Textbox") {
-        drawMultipleText();
-    }
-}
-
-
-function drawMultipleRect() {
-    try {
-
-        var rect = draw.rect().draw().fill(originalColor)
-            .on('drawstop', function () {
-                polygonStack.push(rect);
-                this
-                    .selectize()
-                    .draggable()
-                    .resize()
-            })
-            .on('drawstart', function () {
-                if (!canDraw) {
-                    this.remove();
-                }
-            })
-            .on('click', function () {
-                this
-                    .draggable()
-                    .selectize()
-                    .resize()
-            });
-
-    } catch (e) {
-        console.log(e);
-        showSnackbar("Add image first");
-        document.getElementById("enabledrawBtnIcon").style.color = "#009688";
-    }
-}
-
-function drawMultipleEllipse() {
-    try {
-
-        var ellipse = draw.ellipse().draw().fill(originalColor)
-            .on('drawstop', function () {
-                polygonStack.push(ellipse);
-                this
-                    .selectize()
-                    .draggable()
-                    .resize()
-            })
-            .on('drawstart', function () {
-                if (!canDraw) {
-                    this.remove();
-                }
-            })
-            .on('click', function () {
-                this
-                    .draggable()
-                    .selectize()
-                    .resize()
-            });
-
-    } catch (e) {
-        console.log(e);
-        showSnackbar("Add image first");
-        document.getElementById("enabledrawBtnIcon").style.color = "#009688";
-    }
-}
-
-
-
-function drawMultipleText() {
-    try {
-
-        document.getElementById("drawBtnIcon").style.color = "#fdd835";
-
-        var group = draw.group();
-
-        var rect = group.rect().draw().fill(originalColor)
-            .on('drawstop', function () {
-                document.getElementById("drawBtnIcon").style.color = "#009688";
-
-                //popup get rect color, text, text color then put at the position
-
-                var textToInsert = addTextPopup();
-
-                var x = rect.x() + 0.5 * rect.width();
-                var y = rect.y() + 0.5 * rect.height();
-
-                var text = group.text(textToInsert)
-                    .font({ size: 30, family: 'Helvetica' })
-                    .center(x, y);
-
-                group.draggable(true);
-                group.selectize(true);
-                group.resize(false);
-
-                var e = document.getElementById(group.id());
-                e.setAttribute("data-type", "text-box-g");
-
-                polygonStack.push(group);
-
-            })
-            .on('drawstart', function () {
-                if (!canDraw) {
-                    this.remove();
-                }
-            })
-            .on('click', function () {
-                this
-                    .draggable()
-                    .selectize()
-                    .resize()
-            });
-
-    } catch (e) {
-        console.log(e);
-        showSnackbar("Add image first");
-        document.getElementById("drawBtnIcon").style.color = "#009688";
-    }
-}
-
-function addRect() {
-    try {
-        draw.rect(200, 50).move(100, 50).fill(originalColor)
-            .on('click', function () {
-                this
-                    .draggable()
-                    .selectize()
-                    .resize()
-            })
-    } catch (e) {
-        console.log(e);
-        showSnackbar("Add image first");
-    }
-}
-
-/*
-function deletePolygon() {
-    try {
-        for (i = 0; i < polygonStack.length; i++) {
-            if (polygonStack[i] != undefined) {
-                if (selectedElement == polygonStack[i]['node'].id) {
-                    var gElem = SVG.adopt(document.getElementById(selectedElement));
-                    gElem.selectize(false);
-                    undoStack.push(gElem);
-                    gElem.remove();
-                }
-            }
-        }
-    } catch (e) {
-        console.log(e);
-    }
-}
-*/
-
-function removePolygon() {
-    try {
-
-        var gElem;
-
-        if (document.getElementById(selectedElement).tagName == "tspan" || document.getElementById(selectedElement).tagName == "circle") {
-            var g = document.getElementById(selectedElement).parentElement;
-            gElem = SVG.adopt(document.getElementById(g.id));
-            selectedElement = g.id;
-        }
-
-        if (document.getElementById(selectedElement).parentElement == "g"
-            && (document.getElementById(selectedElement).parentElement.getAttribute("data-type") != "combine"
-                || document.getElementById(selectedElement).parentElement.getAttribute("data-type") != "text-box-g")) {
-            gElem = SVG.adopt(document.getElementById(selectedElement));            
-        }
-
-        if ((document.getElementById(selectedElement).tagName == "rect" || document.getElementById(selectedElement).tagName == "polygon"
-            || document.getElementById(selectedElement).tagName == "ellipse" || document.getElementById(selectedElement).tagName == "text")
-            && document.getElementById(selectedElement).parentElement.tagName == "svg") {
-
-            gElem = SVG.adopt(document.getElementById(selectedElement));
-
-        } else if ((document.getElementById(selectedElement).tagName == "rect" || document.getElementById(selectedElement).tagName == "ellipse"
-            || document.getElementById(selectedElement).tagName == "polygon" || document.getElementById(selectedElement).tagName == "text")
-            && document.getElementById(selectedElement).parentElement.tagName == "g") {
-
-            var g = document.getElementById(selectedElement).parentElement;
-            gElem = SVG.adopt(document.getElementById(g.id));
-            selectedElement = g.id;
-        }
-
-        undoStack.push(gElem);
-
-        gElem.selectize(false);
-        gElem.remove();
-
-        for (l=0; l<polygonStack.length; l++) {
-            if (selectedElement == polygonStack[l]['node'].id) {
-                polygonStack.splice(l, 1);
-            }
-        }
-
-    } catch (e) {
-        console.log(e);
-        showSnackbar("Select a figure");
     }
 }
 

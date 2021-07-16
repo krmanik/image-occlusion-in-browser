@@ -41,11 +41,11 @@ async function createNormalCloze() {
             for (j = 0; j < child.length; j++) {
 
                 // text
-                if (child[j].tagName == "g" && child[j].getAttribute("data-type") == "text-box-g") {
-                    
+                if (child[j].tagName == "text") {
+
                     // get bounding box of text, create and use rectangle as mask
 
-                    var textChild = child[j].getElementsByTagName("text")[0]
+                    var textChild = child[j];
 
                     var bb = textChild.getBBox();
                     var x = bb.x;
@@ -56,11 +56,11 @@ async function createNormalCloze() {
                     origSVG += textChild.outerHTML;
 
                     if (i == j) {
-                        svgQues += '<rect width="' + w + '" height="'+ h +'" fill="'+ questionColor +'" x="' + x + '" y="'+ y +'"></rect>';
+                        svgQues += '<rect width="' + w + '" height="' + h + '" fill="' + questionColor + '" x="' + x + '" y="' + y + '"></rect>';
                         svgAns += textChild.outerHTML;
                     } else {
-                        svgQues += '<rect width="' + w + '" height="'+ h +'" fill="'+ originalColor +'" x="' + x + '" y="'+ y +'"></rect>';
-                        svgAns += '<rect width="' + w + '" height="'+ h +'" fill="'+ originalColor +'" x="' + x + '" y="'+ y +'"></rect>';
+                        svgQues += '<rect width="' + w + '" height="' + h + '" fill="' + originalColor + '" x="' + x + '" y="' + y + '"></rect>';
+                        svgAns += '<rect width="' + w + '" height="' + h + '" fill="' + originalColor + '" x="' + x + '" y="' + y + '"></rect>';
                     }
                 }
 
@@ -92,7 +92,7 @@ async function createNormalCloze() {
             var timeStamp = new Date().getTime();
 
             if (child[i].tagName == "rect" || child[i].tagName == "polygon" 
-                || child[i].tagName == "ellipse" || (child[i].tagName == "g" && child[i].getAttribute("data-type") == "text-box-g")) {
+                || child[i].tagName == "ellipse" || (child[i].tagName == "text")) {
 
                 if (oneTime) {
                     // origin mask
