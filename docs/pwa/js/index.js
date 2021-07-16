@@ -270,7 +270,7 @@ function removePolygon() {
 
         // add event listner to all child node of svg
         for (i=0; i<polygonStack.length; i++) {
-            console.log(polygonStack[i]);
+            // console.log(polygonStack[i]);
             delElem = document.getElementById(polygonStack[i].id());
             delElem.addEventListener('touchstart', deleteHandler, false);
         }
@@ -282,7 +282,7 @@ function removePolygon() {
 
         // remove event listner to all child node of svg
         for (i=0; i<polygonStack.length; i++) {
-            console.log(polygonStack[i]);
+            // console.log(polygonStack[i]);
             delElem = document.getElementById(polygonStack[i].id());
             delElem.removeEventListener('touchstart', deleteHandler, false);
         }
