@@ -267,10 +267,25 @@ function removePolygon() {
         isDeleting = false;
         svg.addEventListener('click', deleteHandler, false);
         document.getElementById("removeBtnIcon").style.color = "#fdd835";
+
+        // add event listner to all child node of svg
+        for (i=0; i<polygonStack.length; i++) {
+            console.log(polygonStack[i]);
+            delElem = document.getElementById(polygonStack[i].id());
+            delElem.addEventListener('touchstart', deleteHandler, false);
+        }
+
     } else {
         isDeleting = true;
         svg.removeEventListener('click', deleteHandler, false);
         document.getElementById("removeBtnIcon").style.color = "#f44336";
+
+        // remove event listner to all child node of svg
+        for (i=0; i<polygonStack.length; i++) {
+            console.log(polygonStack[i]);
+            delElem = document.getElementById(polygonStack[i].id());
+            delElem.removeEventListener('touchstart', deleteHandler, false);
+        }
     }
 }
 
