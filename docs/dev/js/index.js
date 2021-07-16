@@ -1168,8 +1168,6 @@ function selectPolygon(e) {
         showSnackbar("Only normal cloze available.");
     }
 
-    document.getElementById("enableDrawBtn").style.pointerEvents = "unset";
-
     if (drawFigureName == "Rectangle") {
 
         document.getElementById("drawRectId").style.color = "#fdd835";
@@ -1190,9 +1188,6 @@ function selectPolygon(e) {
         document.getElementById("drawEllipseId").style.color = "#2196f3";
         document.getElementById("drawPolygonId").style.color = "#fdd835";
         document.getElementById("drawTextBoxId").style.color = "#2196f3";
-
-        document.getElementById("enableDrawBtn").style.pointerEvents = "none";
-        showSnackbar("Draw button disabled for Polygon.");
 
     } else if (drawFigureName == "Textbox") {
 

@@ -179,12 +179,12 @@ function drawEllipse(x1, y1, w, h) {
 
 
 function drawPolygon() {
-    document.getElementById("drawBtnIcon").style.color = "#fdd835";
+    document.getElementById("enabledrawBtnIcon").style.color = "#fdd835";
     document.getElementById("statusMsg").innerHTML = "Press Enter to stop drawing";
 
     var polygon = draw.polygon().draw().fill(originalColor)
         .on('drawstop', function () {
-            document.getElementById("drawBtnIcon").style.color = "#009688";
+            document.getElementById("enabledrawBtnIcon").style.color = "#009688";
         })
         .on('click', function () {
             this
@@ -197,7 +197,7 @@ function drawPolygon() {
                 if (e.keyCode == 13) {
                     draw.polygon().draw('done');
                     draw.polygon().off('drawstart');
-                    document.getElementById("drawBtnIcon").style.color = "#009688";
+                    document.getElementById("enabledrawBtnIcon").style.color = "#009688";
                     document.getElementById("statusMsg").innerHTML = "";
                 }
             });
@@ -210,7 +210,7 @@ function drawPolygon() {
 function stopDrawPolygon() {
     try {
         document.getElementById("statusMsg").innerHTML = "";
-        document.getElementById("drawBtnIcon").style.color = "#009688";
+        document.getElementById("enabledrawBtnIcon").style.color = "#009688";
         draw.polygon().draw('stop', event);
         polygonStack.push(polygon);
     } catch (e) {
