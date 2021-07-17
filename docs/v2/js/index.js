@@ -119,7 +119,17 @@ function handler(evt) {
         // console.log("x:"+x);
         // console.log("y:"+y);
 
-        drawFunction(x1, y1, w, h);
+        if (x1 > x2 && y1 < y2) {
+            drawFunction(x2, y1, w, h);
+        } else if (x1 > x2 && y1 > y2) {
+            drawFunction(x2, y2, w, h);
+        } else if (x1 < x2 && y1 > y2) {
+            drawFunction(x1, y2, w, h);
+        } else {
+            drawFunction(x1, y1, w, h);
+        }
+
+        // drawFunction(x1, y1, w, h);
     }
 }
 
@@ -252,7 +262,7 @@ function removePolygon() {
         document.getElementById("removeBtnIcon").style.color = "#fdd835";
 
         // add event listner to all child node of svg
-        for (i=0; i<polygonStack.length; i++) {
+        for (i = 0; i < polygonStack.length; i++) {
             // console.log(polygonStack[i]);
             delElem = document.getElementById(polygonStack[i].id());
             delElem.addEventListener('touchstart', deleteHandler, false);
@@ -264,7 +274,7 @@ function removePolygon() {
         document.getElementById("removeBtnIcon").style.color = "#f44336";
 
         // remove event listner to all child node of svg
-        for (i=0; i<polygonStack.length; i++) {
+        for (i = 0; i < polygonStack.length; i++) {
             // console.log(polygonStack[i]);
             delElem = document.getElementById(polygonStack[i].id());
             delElem.removeEventListener('touchstart', deleteHandler, false);
@@ -295,6 +305,19 @@ function deleteHandler(e) {
                         polygonStack.splice(l, 1);
                     }
                 }
+            } else if (element.parentElement.tagName == "g" && element.parentElement.getAttribute("data-type") == "combine") {
+                deleteElem = SVG.adopt(document.getElementById(element.parentElement.id));
+
+                undoStack.push(deleteElem);
+
+                deleteElem.selectize(false);
+                deleteElem.remove();
+
+                for (l = 0; l < polygonStack.length; l++) {
+                    if (element.parentElement.id == polygonStack[l]['node'].id) {
+                        polygonStack.splice(l, 1);
+                    }
+                }   
             }
         }
     } catch (e) {
@@ -419,7 +442,7 @@ async function saveSVG(name, rect, height, width) {
     var encodedData = btoa(svgData);
 
     var svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
-    
+
     // var svgUrl = URL.createObjectURL(svgBlob);
     // var downloadLink = document.createElement("a");
     // downloadLink.href = svgUrl;
@@ -467,7 +490,7 @@ function addCsvLineToViewNote(csv) {
     container.appendChild(textarea);
     document.getElementById(textarea.id).readOnly = true;
     textare_id += 1;
-    document.getElementById("card-added").innerHTML = textare_id + "  card added" ;
+    document.getElementById("card-added").innerHTML = textare_id + "  card added";
 }
 
 var textToExport = "";
@@ -570,12 +593,12 @@ function zoomIn() {
 
 
 function resetZoom() {
-    
+
     var scrWidth = screen.width;
     if (imgWidth > scrWidth) {
-        scaleVar = scrWidth/imgWidth;
+        scaleVar = scrWidth / imgWidth;
     } else {
-        scaleVar = imgWidth/scrWidth;
+        scaleVar = imgWidth / scrWidth;
     }
 
     document.getElementById("SVG101").style.transform = "scale(" + scaleVar + ")";
@@ -1063,8 +1086,8 @@ function selectPolygon(e) {
 }
 
 function alertAppUpdate() {
-    var req = new XMLHttpRequest(); 
-    
+    var req = new XMLHttpRequest();
+
     req.responseType = 'json';
     req.open('GET', "https://raw.githubusercontent.com/infinyte7/image-occlusion-in-browser/master/app-version.json", true);
     req.onload = function () {
@@ -1098,7 +1121,7 @@ if os.path.exists('images'):
 
 function exportAll() {
     document.getElementById('statusMsg').innerHTML = "Wait, deck generating...";
-    setTimeout(function () { document.getElementById('statusMsg').innerHTML=""; }, 3000);
+    setTimeout(function () { document.getElementById('statusMsg').innerHTML = ""; }, 3000);
 
     downloadAllNotes();
     exportDeck();
