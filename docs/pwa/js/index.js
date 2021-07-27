@@ -104,14 +104,14 @@ function handler(evt) {
 
     if (isDrawing) {
         isDrawing = false;
-        console.log("Drawing started");
+        // console.log("Drawing started");
         x1 = loc.x;
         y1 = loc.y;
         // console.log(loc.x);
         // console.log(loc.y);
     } else {
         isDrawing = true;
-        console.log("Drawing stopped");
+        // console.log("Drawing stopped");
         // console.log(loc.x);
         // console.log(loc.y);
 
@@ -271,7 +271,7 @@ function addTextPopup() {
 
 var isDeleting = true;
 function removePolygon() {
-    console.log("Delete Polygon");
+    // console.log("Delete Polygon");
     if (isDeleting) {
         isDeleting = false;
         svg.addEventListener('click', deleteHandler, false);
@@ -299,7 +299,7 @@ function removePolygon() {
 }
 
 function deleteHandler(e) {
-    console.log(e.target.id);
+    // console.log(e.target.id);
     selectedElement = e.target.id;
 
     try {
@@ -337,7 +337,7 @@ function deleteHandler(e) {
             }
         }
     } catch (e) {
-        console.log(e);
+        // console.log(e);
         showSnackbar("Select a figure");
     }
 }
