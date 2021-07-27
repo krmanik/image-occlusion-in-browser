@@ -81,11 +81,11 @@ document.addEventListener('click', function (e) {
 
             // console.log("Evenetype" + evnType);
             // remove event listner to all child node of svg
-            for (i = 0; i < polygonStack.length; i++) {
-                // console.log(polygonStack[i]);
-                cElem = document.getElementById(polygonStack[i].id());
-                cElem.removeEventListener(evnType, combineHandler, false);
-            }
+            // for (i = 0; i < polygonStack.length; i++) {
+            //     // console.log(polygonStack[i]);
+            //     cElem = document.getElementById(polygonStack[i].id());
+            //     cElem.removeEventListener(evnType, combineHandler, false);
+            // }
 
             if (document.getElementById("add-note").style.height == "100%" || document.getElementById("settingsSideNav").style.height == "100%"
                 || document.getElementById("viewHelpSideNav").style.height == "100%" || document.getElementById("viewNoteSideNav").style.height == "100%") {
@@ -236,16 +236,16 @@ async function createCombineCloze() {
                 if (oneTime) {
                     // origin mask
                     //console.log("orig " + origSVG);
-                    origFileName = "cordova-img-occ-orig-" + timeStamp;
+                    origFileName = "cordova-img-occ-orig-" + timeStamp + i;
                     saveSVG(origFileName, origSVG, imgHeight, imgWidth);
                     oneTime = false;
                 }
 
                 // Question Mask
-                var quesFileName = "cordova-img-occ-ques-" + timeStamp;
+                var quesFileName = "cordova-img-occ-ques-" + timeStamp + i;
 
                 // Answer mask
-                var ansFileName = "cordova-img-occ-ans-" + timeStamp;
+                var ansFileName = "cordova-img-occ-ans-" + timeStamp + i;
 
                 if (child[i].tagName == "rect") {
                     await saveSVG(quesFileName, svgQues, imgHeight, imgWidth);
@@ -262,7 +262,7 @@ async function createCombineCloze() {
                 // get all input note from form
                 getNoteFromForm();
 
-                var noteId = "cordova-img-occ-note-" + timeStamp;
+                var noteId = "cordova-img-occ-note-" + timeStamp + i;
 
                 csvLine = noteId +
                     "\t" + noteHeader +
