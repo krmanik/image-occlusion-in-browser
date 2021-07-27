@@ -4,22 +4,21 @@ Create image occlusion in browser for Desktop and iOS devices v13 and v14.
 
 Anki Image Occlusion app used to create normal, group and combine cloze anki cards for reviewing and studying cards in [Anki](https://apps.ankiweb.net) software (spaced repetition flashcard app). Anki decks created using [genanki](https://github.com/kerrickstaley/genanki) Python module using [pyodide](https://github.com/iodide-project/pyodide) to run inside browser and JavaScript library [svg.js](https://svgdotjs.github.io/). It create ready to import decks for Anki and AnkiMobile.
 
+#### Note: if .zip extension present in export deck file name, then rename and remove .zip
+<br>
+
 #### Anki Occlusion for AnkiDroid source code and apk moved here https://github.com/infinyte7/Anki-Occlusion, also download apk from [F-Droid](https://f-droid.org/en/packages/io.infinyte7.ankiimageocclusion/)
 
 # QuickStart
 Open following websites in browser and start creating image occlusion decks. Wait for loading the page. It downloads approx. 30 mb files inside browser.
 
-View [Supported devices list](Supported%20Devices.md)
-
-### Version 2
-https://infinyte7.github.io/image-occlusion-in-browser/v2/index.html
-
-<br>
-
-### PWA Version for offline
 https://infinyte7.github.io/image-occlusion-in-browser/pwa/index.html
 
-View this [how to install for offline use](demo/pwa_install_ios.gif).<br>
+View [Supported devices list](Supported%20Devices.md)
+
+### Note: If the website is not updated, then may be cache for the website should be cleared from settings in browser.
+
+View [how to install for offline use](demo/pwa_install_ios.gif).<br>
 Read more about [Progressive Web App](https://en.wikipedia.org/wiki/Progressive_web_application)
 
 <br>
@@ -28,18 +27,11 @@ Read more about [Progressive Web App](https://en.wikipedia.org/wiki/Progressive_
 
 <br>
 
-### Note: First try above if does not work then try this one.
-Latest version of pyodide (v0.16.1) is not working or showing error on iOS v13 so try this test version it uses pyodide v0.15.0
-
-https://infinyte7.github.io/image-occlusion-in-browser/test15
-
-#### Note: Rename and remove .zip at end of exported deck if present .zip extension to import in Anki
-
 ## Create Anki decks in five steps
 1. Select image to editor window
 2. Draw rectangles, ellipses, polygons or textbox
 3. Add notes to decks
-4. Download the decks
+4. Download the decks, (if .zip extension present in export deck file name, then rename and remove .zip)
 5. On smartphones the decks download with .zip extension, so rename and remove .zip to import in AnkiMobile.
 
 # Tutorials / Features
