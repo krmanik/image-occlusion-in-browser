@@ -11,17 +11,17 @@ function ankiHash(fields) {
     h.update(str)
     const hex = h.digest()
 
-    let hash_int = 0n
+    let hash_int = bigInt();
     for (let i = 0; i < 8; i++) {
-        hash_int *= 256n
-        hash_int += BigInt(hex[i])
+        hash_int *= bigInt("256");
+        hash_int += bigInt(hex[i])
     }
 
     // convert to the weird base91 format that Anki uses
     let rv_reversed = []
     while (hash_int > 0) {
-        rv_reversed.push(BASE91_TABLE[hash_int % 91n])
-        hash_int = (hash_int / 91n)
+        rv_reversed.push(BASE91_TABLE[hash_int % bigInt("91")])
+        hash_int = (hash_int / bigInt("91"))
     }
 
     return rv_reversed.reverse().join('')
