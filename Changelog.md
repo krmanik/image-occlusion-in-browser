@@ -1,3 +1,6 @@
+## 01-08-2021
+- version 3 implemented using sql.js, FileSaver.js and JSZip
+
 ## 11-02-2021
 - PWA version
 - Added option to change deck

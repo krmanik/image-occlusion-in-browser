@@ -1,43 +1,27 @@
-# image occlusion in browser
+# Image Occlusion in Browser v3
+Create image occlusion in browser for Desktop and iOS devices v12 or later.
 
-Create image occlusion in browser for Desktop and iOS devices v13 and v14.
+>Anki Image Occlusion app used to create normal and combine cloze anki cards for reviewing and studying flashcards in [Anki](https://apps.ankiweb.net) software (spaced repetition flashcard app). Anki decks created using [genanki-js](https://github.com/infinyte7/genanki-js), [sql.js](https://github.com/sql-js/sql.js), [FileSaver.js](https://github.com/eligrey/FileSaver.js), [JSZip](https://github.com/Stuk/jszip) and [svg.js](https://svgdotjs.github.io/) JavaScript library. It creates ready to import decks for Anki and AnkiMobile.
 
-Anki Image Occlusion app used to create normal, group and combine cloze anki cards for reviewing and studying cards in [Anki](https://apps.ankiweb.net) software (spaced repetition flashcard app). Anki decks created using [genanki](https://github.com/kerrickstaley/genanki) Python module using [pyodide](https://github.com/iodide-project/pyodide) to run inside browser and JavaScript library [svg.js](https://svgdotjs.github.io/). It create ready to import decks for Anki and AnkiMobile.
+# QuickStart
+Open following website in browser and start creating image occlusion decks.
 
-#### Note: if .zip extension present in export deck file name, then rename and remove .zip
-<br>
+>https://infinyte7.github.io/image-occlusion-in-browser/v3/index.html
+
 
 #### Anki Occlusion for AnkiDroid source code and apk moved here https://github.com/infinyte7/Anki-Occlusion, also download apk from [F-Droid](https://f-droid.org/en/packages/io.infinyte7.ankiimageocclusion/)
 
-# QuickStart
-Open following websites in browser and start creating image occlusion decks. Wait for loading the page. It downloads approx. 30 mb files inside browser.
-
-https://infinyte7.github.io/image-occlusion-in-browser/pwa/index.html
-
-View [Supported devices list](Supported%20Devices.md)
-
-### Note: If the website is not updated, then may be cache for the website should be cleared from settings in browser.
-
-View [how to install for offline use](demo/pwa_install_ios.gif).<br>
-Read more about [Progressive Web App](https://en.wikipedia.org/wiki/Progressive_web_application)
-
-<br>
-
-![](demo/pwa_install.png)
-
-<br>
 
 ## Create Anki decks in five steps
 1. Select image to editor window
 2. Draw rectangles, ellipses, polygons or textbox
 3. Add notes to decks
-4. Download the decks, (if .zip extension present in export deck file name, then rename and remove .zip)
-5. On smartphones the decks download with .zip extension, so rename and remove .zip to import in AnkiMobile.
+4. Download the decks
+5. Import in Anki
 
 # Tutorials / Features
 - [Create image occlusion anki deck inside browser](demo/iOSv13_demo.gif)
 - [Download ready to import deck](demo/multiple_cards.gif)
-- [PWA version for offline use](demo/install_pwa.gif)
 - [Create multiple cards in same deck](demo/multiple_cards.gif)
 - [Create rectangles](demo/demo_draw_anywhere.gif)
 - [Create ellipse](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_multiple_polygon.gif)
@@ -48,27 +32,8 @@ Read more about [Progressive Web App](https://en.wikipedia.org/wiki/Progressive_
 - [Change color of masks](demo/demo_change_color.gif)
 - [Undo / Redo feature](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_undo_redo.gif)
 
-
-## Demo (Desktop)
-![](demo/multiple_cards.gif)
-
-<br>
-
-## Demo (iOS v13)
-![](demo/iOSv13_demo.gif)
-
-
-### View updates
-[Changelog.md](Changelog.md)
-
-
-### Version 1
-https://infinyte7.github.io/image-occlusion-in-browser
-
-Download ```output-all-notes.txt``` and generate deck using this [python script](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/image-occ-deck-export.py).
-
-[Read more](Create-In-Browser.md)<br>
-[View demo](demo/combine_cloze_demo_browser.gif)
+# Demo
+![iOS v13](demo/iOSv13_demo.gif)
 
 # Faq ?
 ### How to change question and answer rectangles mask color?
@@ -93,8 +58,14 @@ View hex color example https://www.materialpalette.com/colors
 
 View [demo](https://user-images.githubusercontent.com/12841290/95605099-0d038b00-0a8b-11eb-81ed-58a7e03c254e.gif)
 
+### How to view version 1 and version 2 of this project?
+View [version2.md](Version2.md)
+
 # Contributions
 This is implemented using javascript. It has bugs and issues. Any contributions to improvement of codes and features will be appreciated.
+
+### View updates
+[Changelog.md](Changelog.md)
 
 # License
 View [License](License.md)
