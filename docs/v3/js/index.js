@@ -881,7 +881,7 @@ function get_local_file(path) {
             html = xhr.response;
             document.getElementById("side-nav-container").innerHTML = html;
         } else {
-            showSnackbar("Failed to load side navigation data.");
+            // showSnackbar("Failed to load side navigation data.");
         }
     }
     xhr.send();
