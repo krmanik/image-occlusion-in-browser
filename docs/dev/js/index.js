@@ -1202,7 +1202,7 @@ function alertAppUpdate() {
     var req = new XMLHttpRequest(); 
     
     req.responseType = 'json';
-    req.open('GET', "https://raw.githubusercontent.com/infinyte7/image-occlusion-in-browser/master/app-version.json", true);
+    req.open('GET', "https://raw.githubusercontent.com/krmanik/image-occlusion-in-browser/master/app-version.json", true);
     req.onload = function () {
         var jsonResponse = req.response;
 

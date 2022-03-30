@@ -1,17 +1,17 @@
 # Image Occlusion in Browser v3
 Create image occlusion in browser for Desktop and iOS devices v12 or later.
 
->Anki Image Occlusion app used to create normal and combine cloze anki cards for reviewing and studying flashcards in [Anki](https://apps.ankiweb.net) software (spaced repetition flashcard app). Anki decks created using [genanki-js](https://github.com/infinyte7/genanki-js), [sql.js](https://github.com/sql-js/sql.js), [FileSaver.js](https://github.com/eligrey/FileSaver.js), [JSZip](https://github.com/Stuk/jszip) and [svg.js](https://svgdotjs.github.io/) JavaScript library. It creates ready to import decks for Anki and AnkiMobile.
+>Anki Image Occlusion app used to create normal and combine cloze anki cards for reviewing and studying flashcards in [Anki](https://apps.ankiweb.net) software (spaced repetition flashcard app). Anki decks created using [genanki-js](https://github.com/krmanik/genanki-js), [sql.js](https://github.com/sql-js/sql.js), [FileSaver.js](https://github.com/eligrey/FileSaver.js), [JSZip](https://github.com/Stuk/jszip) and [svg.js](https://svgdotjs.github.io/) JavaScript library. It creates ready to import decks for Anki and AnkiMobile.
 
-> Use [version 3](https://infinyte7.github.io/image-occlusion-in-browser/v3/index.html) of this project because version 1 and version 2 of this project deprecated. [Read more](Version2.md)
+> Use [version 3](https://krmanik.github.io/image-occlusion-in-browser/v3/index.html) of this project because version 1 and version 2 of this project deprecated. [Read more](Version2.md)
 
 # QuickStart
 Open following website in browser and start creating image occlusion decks.
 
->https://infinyte7.github.io/image-occlusion-in-browser/v3/index.html
+>https://krmanik.github.io/image-occlusion-in-browser/v3/index.html
 
 
-#### Anki Occlusion for AnkiDroid source code and apk moved here https://github.com/infinyte7/Anki-Occlusion, also download apk from [F-Droid](https://f-droid.org/en/packages/io.infinyte7.ankiimageocclusion/)
+#### Anki Occlusion for AnkiDroid source code and apk moved here https://github.com/krmanik/Anki-Occlusion, also download apk from [F-Droid](https://f-droid.org/en/packages/io.krmanik.ankiimageocclusion/)
 
 
 ## Create Anki decks in five steps
@@ -26,13 +26,13 @@ Open following website in browser and start creating image occlusion decks.
 - [Download ready to import deck](demo/multiple_cards.gif)
 - [Create multiple cards in same deck](demo/multiple_cards.gif)
 - [Create rectangles](demo/demo_draw_anywhere.gif)
-- [Create ellipse](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_multiple_polygon.gif)
-- [Create textbox](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_text_box.gif)
-- [Create polygon](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_multiple_polygon.gif)
+- [Create ellipse](https://github.com/krmanik/image-occlusion-in-browser/blob/master/demo/demo_multiple_polygon.gif)
+- [Create textbox](https://github.com/krmanik/image-occlusion-in-browser/blob/master/demo/demo_text_box.gif)
+- [Create polygon](https://github.com/krmanik/image-occlusion-in-browser/blob/master/demo/demo_multiple_polygon.gif)
 - [Create normal cloze](demo/demo_create.gif) <!-- - [Create group cloze](demo/demo_group_element.gif) -->
 - [Create combine cloze](demo/combine_cloze_demo_browser.gif)
 - [Change color of masks](demo/demo_change_color.gif)
-- [Undo / Redo feature](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/demo/demo_undo_redo.gif)
+- [Undo / Redo feature](https://github.com/krmanik/image-occlusion-in-browser/blob/master/demo/demo_undo_redo.gif)
 
 # Demo
 ![iOS v13](demo/iOSv13_demo.gif)

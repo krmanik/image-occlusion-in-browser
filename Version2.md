@@ -1,6 +1,6 @@
 # image occlusion in browser version 2 (deprecated)
 
->### Note: Version 2 of this project is deprecated. Version 1 and 2 will not be updated, so use [version 3](https://infinyte7.github.io/image-occlusion-in-browser/v3/index.html) of the project to create decks.
+>### Note: Version 2 of this project is deprecated. Version 1 and 2 will not be updated, so use [version 3](https://krmanik.github.io/image-occlusion-in-browser/v3/index.html) of the project to create decks.
 
 <br>
 Create image occlusion in browser for Desktop and iOS devices v13 and v14.
@@ -13,7 +13,7 @@ Anki decks created using [genanki](https://github.com/kerrickstaley/genanki) Pyt
 ### QuickStart
 Open following websites in browser and start creating image occlusion decks. Wait for loading the page. It downloads approx. 30 mb files inside browser.
 
-https://infinyte7.github.io/image-occlusion-in-browser/pwa/index.html
+https://krmanik.github.io/image-occlusion-in-browser/pwa/index.html
 
 View [Supported devices list](Supported%20Devices.md)
 
@@ -33,9 +33,9 @@ Read more about [Progressive Web App](https://en.wikipedia.org/wiki/Progressive_
 #### [iOS v13](demo/iOSv13_demo.gif)
 
 ### Version 1 (Removed)
-https://infinyte7.github.io/image-occlusion-in-browser
+https://krmanik.github.io/image-occlusion-in-browser
 
-Download ```output-all-notes.txt``` and generate deck using this [python script](https://github.com/infinyte7/image-occlusion-in-browser/blob/master/image-occ-deck-export.py).
+Download ```output-all-notes.txt``` and generate deck using this [python script](https://github.com/krmanik/image-occlusion-in-browser/blob/master/image-occ-deck-export.py).
 
 [Read more](Create-In-Browser.md)<br>
 [View demo](demo/combine_cloze_demo_browser.gif)

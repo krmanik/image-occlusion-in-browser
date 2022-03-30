@@ -8,4 +8,4 @@
 
 ## 10-02-2021
 Anki Image Occlusion Source code moved here and all future updates and releases related to Android version will be there.
-https://github.com/infinyte7/Anki-Occlusion
+https://github.com/krmanik/Anki-Occlusion

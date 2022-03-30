@@ -2,12 +2,12 @@
 Image Occlusion in browser v3 is supported in all iOS devices with version 12 or later.
 
 Visit v3 of this project<br>
-https://infinyte7.github.io/image-occlusion-in-browser/v3/index.html
+https://krmanik.github.io/image-occlusion-in-browser/v3/index.html
 
 # version 1 and version 2
 ### Supported devices iOS v13 & v14
 Status column show if image occlusion in browser supported or not on that devices.
-Tested with [dev](https://infinyte7.github.io/image-occlusion-in-browser/dev) version.
+Tested with [dev](https://krmanik.github.io/image-occlusion-in-browser/dev) version.
 ### v13
 | Devices | Status |
 |--|--|
