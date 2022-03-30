@@ -11,7 +11,7 @@ Open following website in browser and start creating image occlusion decks.
 >https://krmanik.github.io/image-occlusion-in-browser/v3/index.html
 
 
-#### Anki Occlusion for AnkiDroid source code and apk moved here https://github.com/krmanik/Anki-Occlusion, also download apk from [F-Droid](https://f-droid.org/en/packages/io.krmanik.ankiimageocclusion/)
+#### Anki Occlusion for AnkiDroid source code and apk moved here https://github.com/krmanik/Anki-Occlusion.
 
 
 ## Create Anki decks in five steps
